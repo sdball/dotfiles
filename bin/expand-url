@@ -1,0 +1,22 @@
+#!/bin/bash
+
+main() {
+    if [ -z $1 ]; then
+        echo "Usage: expand-url URL"
+        exit 1
+    fi
+    url=$1
+    response $url | parse_redirect
+}
+
+response() {
+    wget --max-redirect=0 -S $url 2>&1
+}
+
+parse_redirect() {
+    ack "http.* " -o
+}
+
+main $1
+
+exit 0

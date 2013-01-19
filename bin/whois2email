@@ -1,0 +1,7 @@
+#!/bin/bash
+
+EMAILS=$(whois $1 | ack -o "\w+@$1" | uniq)
+
+for email in $EMAILS; do
+    echo $email
+done

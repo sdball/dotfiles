@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sqlite3 $HOME/Library/Application\ Support/Skype/xyzzyb/main.db "SELECT from_dispname, datetime(timestamp, 'unixepoch') as date, body_xml FROM Messages where body_xml like '%$1%' AND date(timestamp, 'unixepoch') == current_date ORDER BY timestamp;"

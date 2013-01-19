@@ -1,0 +1,20 @@
+#!/bin/bash
+
+start=$1
+end=$2
+
+run() {
+    echo "Hash,Prod Lines,Test Lines,Test Count"
+    full_command="echo $hash,$prod_lines,$test_lines"
+    $(dirname $0)/run-command-on-git-revisions -v $start $end "$full_command"
+}
+
+# Get the hash
+hash='`git log -1 --pretty=%h`'
+
+# Lines of code
+prod_lines='`find lib -iname "*.rb" | xargs cat | wc -l`'
+test_lines='`find test -iname "*.rb" | xargs cat | wc -l`'
+
+run
+
