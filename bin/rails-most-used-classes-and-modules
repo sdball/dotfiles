@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+find app lib -iname '*.rb' | xargs grep -h '^[[:space:]]*class[[:space:]]\|^[[:space:]]*module[[:space:]]' | sed 's/^[[:space:]]*//' | grep -v '<< self' | cut -d ' ' -f 2 | while read class; do echo `grep -rl "\b$class\b" app lib --include="*.rb" | wc -l` $class; done | sort -n 
+

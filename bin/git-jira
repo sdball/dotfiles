@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+git fetch
+matching_branches=`git b -a | grep $1`
+echo "matching branch(es) found"
+echo $matching_branches
+match_count=`git b -a | grep $1 | wc -l`
+
+if [ $match_count == "1" ]
+then
+    branch=`git b -a | grep $1 | cut -d '/' -f 3 | tr -d ' '`
+    echo "remote branch $branch found"
+    grb track $branch
+    git co $branch
+else
+    branch=`git b | grep $1 | cut -d '/' -f 3 | tr -d ' *'`
+    echo "local branch $branch found"
+    git co $branch
+fi
+

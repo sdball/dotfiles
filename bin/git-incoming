@@ -41,20 +41,6 @@ set -e
     ensure_valid_ref $LOCAL
     ensure_valid_ref $REMOTE
 
-    echo "changes from local ${LOCAL} to remote ${REMOTE}:"
-    echo
-
-    echo incoming:
-    echo
-    for rev in `git rev-list $LOCAL..$REMOTE`; do
-        show_rev $rev
-    done
-    
-    echo
-    echo outgoing:
-    echo
-    for rev in `git rev-list $REMOTE..$LOCAL`; do
-        show_rev $rev
-    done
-) | less -niSFXR
+    git rev-list $LOCAL..$REMOTE
+)
 

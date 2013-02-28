@@ -1,5 +1,3 @@
-[alias]
-    unadd = reset HEAD
 [user]
     name = Stephen Ball
     email = sdball@gmail.com
@@ -15,13 +13,13 @@
     aa = add --all
     head = !git l -1
     h = !git head
-    hp = "!. ~/.githelpers && show_git_head"
+    hp = "!show_git_head"
     r = !git l -30
     ra = !git r --all
     ff = merge --ff-only
     pullff = pull --ff-only
     noff = merge --no-ff
-    l = "!. ~/.githelpers && pretty_git_log"
+    l = "!pretty_git_log"
     la = !git l --all
     div = divergence
     gn = goodness
@@ -31,8 +29,13 @@
     b = branch
     ds = diff --stat=160,120
     dh1 = diff HEAD~1
+	unadd = reset HEAD
+    merged = branch --merged
 [merge]
     tool = vimdiff
 
+[core]
+	editor = vim
+	pager = less -r
 [push]
-	default = current
+	default = tracking
