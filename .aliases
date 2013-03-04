@@ -2,4 +2,5 @@ alias jsonpp="python -m json.tool"
 alias be="bundle exec"
 alias current-branch="git symbolic-ref HEAD | cut -d '/' -f 3"
 alias anniversaries="ack -a -h `date +"%m/%d"` /usr/share/calendar | sort"
+alias gnp="git --no-pager"
 
