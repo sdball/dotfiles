@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'beaneater'
+
+beanstalk = Beaneater::Pool.new(['localhost:11300'])
+
+given_tube = ARGV.first
+puts "clear-beanstalkd-queue tube-to-clear"; exit unless given_tube
+state = ARGV.fetch(1) { :ready }
+
+tube = beanstalk.tubes[given_tube]
+puts "clearing #{given_tube} #{state}"
+while job = tube.peek(state.to_sym)
+  job.delete
+end
+
+beanstalk.close
