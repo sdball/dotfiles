@@ -70,8 +70,8 @@ syntax on
 " 'cindent' is on in C files, etc.
 " Also load indent files, to automatically do language-dependent indenting.
 filetype plugin indent on
-" use emacs-style tab completion when selecting files, etc
-set wildmode=longest,list
+" zsh-style completion
+set wildmode=full
 " make tab completion for files/buffers act like bash
 set wildmenu
 
