@@ -1,1 +1,2 @@
 --smart-case
+--type-set=plaintext=.md,.mdown,.markdown
