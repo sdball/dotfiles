@@ -19,6 +19,8 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
+" colorschemes
+Bundle 'chriskempson/vim-tomorrow-theme'
 
 filetype plugin indent on
 
