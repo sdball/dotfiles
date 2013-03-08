@@ -19,7 +19,6 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
-Bundle 'wikitopian/hardmode'
 
 filetype plugin indent on
 
@@ -78,8 +77,6 @@ set wildmenu
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM AUTOCMDS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
-
 augroup vimrcEx
   " Clear all autocmds in the group
   autocmd!
@@ -183,8 +180,6 @@ map <leader>wl :topleft :split ~/worklog/worklog.md<cr>
 nnoremap <leader>x :set cursorcolumn!<cr>
 " vim writeroom
 nnoremap <leader>vr :VimroomToggle<cr>
-" hardmode
-nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PASTE MODE SANITY
