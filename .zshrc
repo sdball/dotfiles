@@ -45,7 +45,7 @@ COMPLETION_WAITING_DOTS="true"
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/local_bin:$HOME/bin:$PATH"
 
 # actual history
 export HISTSIZE=100000
