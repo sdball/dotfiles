@@ -56,8 +56,5 @@ IRB.conf[:PROMPT][:RAILS] = {
 }
 IRB.conf[:PROMPT_MODE] = :RAILS
 
-# output to console instead of development.log
-Object.const_set(:RAILS_DEFAULT_LOGGER, Logger.new(STDOUT))
-
 # turn on the loud logging by default
 IRB.conf[:IRB_RC] = Proc.new { loud_logger }
