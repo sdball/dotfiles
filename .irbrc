@@ -26,7 +26,7 @@ IRB.conf[:SAVE_HISTORY] = 1000
 IRB.conf[:HISTORY_FILE] = File::expand_path("~/.irbhistory")
 
 # load .railsrc in rails environments
-railsrc_path = File.expand_path('~/.railsrc')
+railsrc_path = File.expand_path('~/.irbrc_rails')
 if ( ENV['RAILS_ENV'] || defined? Rails ) && File.exist?( railsrc_path )
   begin
     load railsrc_path
