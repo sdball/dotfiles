@@ -9,15 +9,6 @@ rescue LoadError => err
   warn "Couldn't load interactive_editor: #{err}"
 end
 
-# wirble: irb colorization, and some other niceities
-begin
-  require 'wirble'
-  Wirble.init
-  Wirble.colorize
-rescue LoadError => err
-  warn "Couldn't load Wirble: #{err}"
-end
-
 # awesome print
 begin
   require 'awesome_print'
