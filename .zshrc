@@ -56,3 +56,4 @@ export EDITOR=vim
 export WORDCHARS='*?[]~&;!$%^<>'
 export ACK_COLOR_MATCH='red'
 
+setopt braceccl
