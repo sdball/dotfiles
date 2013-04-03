@@ -184,6 +184,9 @@ map <leader>wl :topleft :split ~/worklog/worklog.md<cr>
 nnoremap <leader>x :set cursorcolumn!<cr>
 " vim writeroom
 nnoremap <leader>vr :VimroomToggle<cr>
+" remove trailing whitespace
+nnoremap <Leader>rtw :%s/\s\+$//e<CR>
+nnoremap <Leader>raw :%s/\s\+$//e<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PASTE MODE SANITY
