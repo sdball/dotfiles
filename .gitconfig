@@ -39,3 +39,5 @@
 	pager = less -r
 [push]
 	default = tracking
+[advice]
+	statusHints = false
