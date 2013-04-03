@@ -41,3 +41,5 @@
 	default = tracking
 [advice]
 	statusHints = false
+[diff]
+	mnemonicprefix = true
