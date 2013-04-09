@@ -57,3 +57,5 @@ export WORDCHARS='*?[]~&;!$%^<>'
 export ACK_COLOR_MATCH='red'
 
 setopt braceccl
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
