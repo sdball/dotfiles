@@ -31,6 +31,7 @@
     dh1 = diff HEAD~1
 	unadd = reset HEAD
     merged = branch --merged
+    snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
 [merge]
     tool = vimdiff
 
