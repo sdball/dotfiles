@@ -44,3 +44,4 @@
 	statusHints = false
 [diff]
 	mnemonicprefix = true
+	algorithm = patience
