@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cat ~/.gitconfig | sed -e '1,/^\[alias\]/'d -e '/^\[/,$'d -e 's/[ \t]*//' | grep -e "^$1" --color=never
