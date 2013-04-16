@@ -102,7 +102,6 @@
 /.virtualenvs
 /test
 /local_bin
-/.bashrc
 /.bash_logout
 /.sudo_as_admin_successful
 /VirtualBoxVMs
