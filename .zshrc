@@ -45,17 +45,6 @@ COMPLETION_WAITING_DOTS="true"
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="$HOME/local_bin:$HOME/bin:$PATH"
-
-# actual history
-export HISTSIZE=100000
-export HISTFILE="$HOME/.history"
-export SAVEHIST=$HISTSIZE
-
-export EDITOR=vim
-export WORDCHARS='*?[]~&;!$%^<>'
-export ACK_COLOR_MATCH='red'
-
 setopt braceccl
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
