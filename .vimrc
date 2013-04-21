@@ -164,15 +164,11 @@ map <leader>gr :topleft :split config/routes.rb<cr>
 map <leader>rr :call ShowRoutes()<cr>
 " ctrl-p searches
 map <leader>pa :CtrlPClearCache<cr>\|:CtrlP app<cr>
-map <leader>pv :CtrlPClearCache<cr>\|:CtrlP app/views<cr>
-map <leader>pc :CtrlPClearCache<cr>\|:CtrlP app/controllers<cr>
-map <leader>pm :CtrlPClearCache<cr>\|:CtrlP app/models<cr>
-map <leader>ph :CtrlPClearCache<cr>\|:CtrlP app/helpers<cr>
+map <leader>pc :CtrlPClearCache<cr>\|:CtrlP config<cr>
 map <leader>pl :CtrlPClearCache<cr>\|:CtrlP lib<cr>
 map <leader>pp :CtrlPClearCache<cr>\|:CtrlP public<cr>
 map <leader>ps :CtrlPClearCache<cr>\|:CtrlP spec<cr>
 map <leader>pn :CtrlPClearCache<cr>\|:CtrlP vendor<cr>
-map <leader>pr :CtrlPClearCache<cr>\|:CtrlP app/services<cr>
 map <leader>pt :CtrlPClearCache<cr>\|:CtrlPTag<cr>
 map <leader>/ :CtrlPLine<cr>
 " ruby
