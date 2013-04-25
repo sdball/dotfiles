@@ -1,1 +1,0 @@
-@daily if [ -d /Volumes/GreyBox/vm_backup ]; then rsync -avz --delete ~/Documents/Virtual\ Machines.localized/ /Volumes/GreyBox/vm_backup/; fi
