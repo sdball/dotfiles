@@ -152,7 +152,9 @@ map <leader>e :edit %%
 " map to current file for command mode
 cnoremap $$ <C-R>=expand('%')<cr>
 " TESTING, WOO!
-map <leader>d :Dispatch rspec --format=Fivemat --color %<cr>
+nnoremap <F8> :Dispatch! rspec --format=Fivemat --color spec<cr>
+map <leader>d :Dispatch rspec --format=Fivemat --order=default --color %<cr>
+map <leader>D :Dispatch rspec --format=Fivemat --order=default --color %:
 nnoremap <leader>. :call OpenTestAlternate()<cr>
 map <leader>t :call RunTestFile()<cr>
 map <leader>T :call RunNearestTest()<cr>
