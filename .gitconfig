@@ -32,6 +32,7 @@
     unadd = reset HEAD
     merged = branch --merged
     snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+    s = !git fetch && git status
 [merge]
     tool = vimdiff
 
