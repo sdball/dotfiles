@@ -18,6 +18,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
+Bundle 'vim-ruby/vim-ruby'
 " colorschemes
 Bundle 'chriskempson/vim-tomorrow-theme'
 
