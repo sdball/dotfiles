@@ -11,7 +11,6 @@ Bundle 'gmarik/vundle'
 Bundle 'ervandew/supertab'
 Bundle 'kana/vim-scratch'
 Bundle 'kien/ctrlp.vim'
-Bundle 'mikewest/vimroom'
 Bundle 'mileszs/ack.vim'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-dispatch'
@@ -179,8 +178,6 @@ map <leader>pg :topleft 100 :split Gemfile<cr>
 map <leader>wl :topleft :split ~/worklog/worklog.md<cr>
 " when nested too deep
 nnoremap <leader>x :set cursorcolumn!<cr>
-" vim writeroom
-nnoremap <leader>vr :VimroomToggle<cr>
 " remove trailing whitespace
 nnoremap <Leader>rtw :%s/\s\+$//e<CR>
 nnoremap <Leader>raw :%s/\s\+$//e<CR>
