@@ -10,7 +10,6 @@ Bundle 'gmarik/vundle'
 " my bundles
 Bundle 'ervandew/supertab'
 Bundle 'kana/vim-scratch'
-Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mikewest/vimroom'
 Bundle 'mileszs/ack.vim'
