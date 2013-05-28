@@ -46,3 +46,6 @@
 [diff]
 	mnemonicprefix = true
 	algorithm = patience
+[format]
+    subjectprefix = git
+
