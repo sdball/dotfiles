@@ -47,3 +47,11 @@ class Object
     end
   end
 end
+
+module Kernel
+  def require_relative(file)
+    $:.unshift Dir.pwd
+    require file
+  end
+end
+
