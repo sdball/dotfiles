@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+(
+    if [[ $# == 1 ]]; then
+        git log -p -1 --format=email -- $1
+    fi
+
+    if [[ $# == 2 ]]; then
+        # git wtf app/models/user.rb 188
+        the_commit=`git annotate -p -L $2,$2 $1 -| head -1 | awk '{ print $1 }'`
+        if [[ $the_commit != '' ]]; then
+            git show --format=email $the_commit
+        fi
+    fi
+)
