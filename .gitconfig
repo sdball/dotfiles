@@ -49,3 +49,5 @@
 [format]
     subjectprefix = git
 
+[rerere]
+	enabled = 1
