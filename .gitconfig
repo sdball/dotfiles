@@ -18,7 +18,7 @@
     ra = !git r --all
     ff = merge --ff-only
     pullff = pull --ff-only
-    noff = merge --no-ff --no-commit
+    noff = merge --no-ff
     l = "!pretty_git_log"
     la = !git l --all
     div = divergence
