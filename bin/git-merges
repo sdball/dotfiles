@@ -1,0 +1,16 @@
+#!/bin/bash
+
+HASH="%C(yellow)%h%Creset"
+RELATIVE_TIME="%Cgreen(%ar)%Creset"
+AUTHOR="%C(bold blue)<%an>%Creset"
+SUBJECT="%s"
+
+FORMAT="$HASH}$RELATIVE_TIME}$AUTHOR}$SUBJECT"
+
+git log --merges --format="$FORMAT" $* |
+    sed -e "s/'//g" |
+    sed -e "s/Merge remote branch origin\///" |
+    sed -e "s/Merge branch //" |
+    sed -e "s/Merge remote-tracking branch origin\///" |
+    column -s '}' -t |
+    less -niSFX
