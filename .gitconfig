@@ -33,6 +33,15 @@
     merged = branch --merged
     snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
     s = !git fetch && git status
+
+    ; data analysis
+    authors = !git log --format="%aN"
+    unique-authors = !git authors | sort -u
+    ranked-authors = !git authors | sort | uniq -c | sort -n
+    emails = !git log --format="%aE"
+    email-domains = !git log --format="%aE" | awk -F'@' '{print $2}'
+    unique-email-domains = !git email-domains | sort -u
+    ranked-email-domains = !git email-domains | sort | uniq -c | sort -n
 [merge]
     tool = vimdiff
 
