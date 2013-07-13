@@ -3,6 +3,7 @@
 set -e
 
 (
+    git fetch
     git branch |
     sed 's/*/ /' |
     while read branch; do
