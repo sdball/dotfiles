@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+(
+    git branch |
+    sed 's/*/ /' |
+    while read branch; do
+        (
+            set +e
+            git show-ref origin/$branch > /dev/null
+            if [[ $? == 1 ]]; then
+                echo -e "\e[01;31m$branch\e[00m"
+            else
+                incoming_count=`git rev-list $branch..origin/$branch | wc -l`
+                outgoing_count=`git rev-list origin/$branch..$branch | wc -l`
+                echo "$branch}$incoming_count incoming}$outgoing_count outgoing";
+            fi
+        )
+    done |
+    column -s '}' -t
+)
