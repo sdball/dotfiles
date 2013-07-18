@@ -1,8 +1,14 @@
-[[ -s $HOME/.aliases ]] && source $HOME/.aliases
-[[ -s $HOME/.env ]] && source $HOME/.env
-[[ -s $HOME/.functions ]] && source $HOME/.functions
-[[ -s $HOME/.zsh/colors.zsh ]] && source $HOME/.zsh/colors.zsh
-[[ -s $HOME/.zsh/bindkeys.zsh ]] && source $HOME/.zsh/bindkeys.zsh
+source ~/.zsh/colors.zsh
+source ~/.zsh/setopt.zsh
+source ~/.zsh/exports.zsh
+source ~/.zsh/prompt.zsh
+source ~/.zsh/completion.zsh
+source ~/.zsh/aliases.zsh
+source ~/.zsh/bindkeys.zsh
+source ~/.zsh/functions.zsh
+source ~/.zsh/history.zsh
+source ~/.zsh/zsh_hooks.zsh
 
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-PATH=$PATH:$HOME/.rvm/bin
+
+[[ -s $HOME/.local_zshrc ]] && source $HOME/.local_zshrc
