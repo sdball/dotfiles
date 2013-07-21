@@ -49,5 +49,12 @@ setopt braceccl
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-echo
-fortune
+which fortune 1> /dev/null
+if [[ $? == 0 ]]; then
+    echo
+    fortune
+else
+    echo
+    echo "Not ready reading drive A"
+    echo "Abort, Retry, Fail?"
+fi
