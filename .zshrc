@@ -48,3 +48,6 @@ source $ZSH/oh-my-zsh.sh
 setopt braceccl
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+echo
+fortune
