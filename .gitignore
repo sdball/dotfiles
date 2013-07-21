@@ -110,3 +110,7 @@
 /src
 /.dropbox-two
 /mycrontab
+/.bundle
+/.hushlogin
+/.scout
+/.selected_editor
