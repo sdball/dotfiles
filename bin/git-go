@@ -12,7 +12,6 @@ if [ $match_count == "1" ]
 then
     branch=`git b -a | grep $1 | cut -d '/' -f 3 | tr -d ' '`
     echo "remote branch $branch found"
-    grb track $branch
     git co $branch
 else
     branch=`git b | grep $1 | cut -d '/' -f 3 | tr -d ' *'`
