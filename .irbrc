@@ -53,5 +53,9 @@ module Kernel
     $:.unshift Dir.pwd
     require file
   end
+
+  def guid(s)
+    s.scan(/[a-f0-9-]{36}/).first
+  end
 end
 
