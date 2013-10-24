@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+read -r -p "Are you sure you want to purge $1? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" ]]
+then
+    echo "Purging branch $1"
+    git branch -D $1
+    git push origin :$1
+fi
+
