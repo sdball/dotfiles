@@ -1,9 +1,11 @@
 #!/bin/bash
 
+set -e
+
 if [[ $2 ]]; then
-    $format=$2
+    format=$2
 else
-    $format='%a %F %R %Z'
+    format='%a %F %R %Z'
 fi
 
-echo -n "$(TZ=$1 date +'$format')"
+echo -n $(TZ=$1 date +"$format")
