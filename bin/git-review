@@ -2,10 +2,28 @@
 
 set -e
 
-git fetch
-branch=`git b -r | grep $1 | cut -c 3-`
+case "$1" in
+  -d | --diff)
+  diff="diff"
+  pattern=$2
+  shift
+  ;;
+esac
 
-if [ $2 == '--diff' ]; then
+case "$2" in
+  -d | --diff)
+  diff="diff"
+  pattern=$1
+  shift
+  ;;
+esac
+
+pattern=${pattern:-$1}
+
+git fetch
+branch=`git b -r | grep $pattern | cut -c 3-`
+
+if [ "$diff" ]; then
     git diff origin/master $branch
 else
     git log -p $branch --not origin/master
