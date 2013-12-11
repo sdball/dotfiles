@@ -282,16 +282,10 @@ function! RunTests(filename)
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    if match(a:filename, '\.feature$') != -1
-        exec ":!script/features " . a:filename
+    if filereadable("config/environment.rb")
+        exec ":!zeus rspec --color --format=nested --order default " . a:filename
     else
-        if filereadable("script/test")
-            exec ":!script/test " . a:filename
-        elseif filereadable("Gemfile")
-            exec ":!zeus rspec --color --format=nested --order default " . a:filename
-        else
-            exec ":!spec --color --format=nested " . a:filename
-        end
+        exec ":!rspec --color --format=nested " . a:filename
     end
 endfunction
 
