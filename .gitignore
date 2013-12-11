@@ -118,3 +118,6 @@
 /work.conf
 /.tmate-work.conf
 /Sites
+/.zcompdump*
+/tmux-client*
+/tmux-server*
