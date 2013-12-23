@@ -121,3 +121,5 @@
 /.zcompdump*
 /tmux-client*
 /tmux-server*
+/.vitetris
+/.frotzrc
