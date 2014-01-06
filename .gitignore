@@ -123,3 +123,4 @@
 /tmux-server*
 /.vitetris
 /.frotzrc
+/.jira.config
