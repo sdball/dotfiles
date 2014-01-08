@@ -43,11 +43,14 @@ COMPLETION_WAITING_DOTS="true"
 # tmuxinator: I'll be back
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
+# rubies!
+[[ -s /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
+[[ -s /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
+[[ -s ~/.ruby-version ]] && chruby `cat ~/.ruby-version`
+
 source $ZSH/oh-my-zsh.sh
 
 setopt braceccl
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 which fortune 1> /dev/null
 if [[ $? == 0 ]]; then
