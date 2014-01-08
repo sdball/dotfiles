@@ -51,6 +51,9 @@ COMPLETION_WAITING_DOTS="true"
 source $ZSH/oh-my-zsh.sh
 
 setopt braceccl
+unsetopt correct_all # don't try to correct arguments (it's usually wrong)
+setopt correct # but try to correct commands (it's usually right)
+setopt autocd # type the name of a subdirectory will cd into that subdirectory
 
 which fortune 1> /dev/null
 if [[ $? == 0 ]]; then
