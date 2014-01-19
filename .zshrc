@@ -35,6 +35,8 @@ COMPLETION_WAITING_DOTS="true"
 # needs to come before oh-my-zsh.sh since it includes plugins
 [[ -s $HOME/.local_zshrc ]] && source $HOME/.local_zshrc
 
+source $ZSH/oh-my-zsh.sh
+
 # generic shell stuff
 [[ -s $HOME/.aliases ]] && source $HOME/.aliases
 [[ -s $HOME/.env ]] && source $HOME/.env
@@ -46,9 +48,9 @@ COMPLETION_WAITING_DOTS="true"
 # rubies!
 [[ -s /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
 [[ -s /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
+[[ -s ~/.rvm/scripts/extras/chruby.sh ]] && source ~/.rvm/scripts/extras/chruby.sh
 [[ -s ~/.ruby-version ]] && chruby `cat ~/.ruby-version`
-
-source $ZSH/oh-my-zsh.sh
+[[ -e ~/.rvm/rubies ]] && RUBIES+=(~/.rvm/rubies/*)
 
 setopt braceccl
 unsetopt correct_all # don't try to correct arguments (it's usually wrong)
