@@ -53,32 +53,5 @@ FASTFOOD_DIR_="$FASTFOOD_DIR_COLOR%~\$(git_prompt_info) "
 FASTFOOD_PROMPT="$FASTFOOD_BRACKET_COLOR$FASTFOOD_EMOJI  "
 
 # Wrap up the left prompt
-PROMPT="$DALLAS_CURRENT_MACH_$FASTFOOD_RUBY_$FASTFOOD_DIR_$FASTFOOD_PROMPT%{$reset_color%}"
-
-mount | grep $FASTFOOD_BACKUP_DRIVE_VOLUME
-backup_drive_mounted=$?
-
-if [ $backup_drive_mounted -eq 0 ]; then
-    latest_backup=$(stat -f "%Sm" -t %s `tmutil latestbackup 2> /dev/null`)
-    time_since $latest_backup
-    if [ $hours -gt 8 ]; then
-        BACKUP_COLOR=$FASTFOOD_TIME_SINCE_LONG
-    elif [ $hours -gt 4]; then
-        BACKUP_COLOR=$FASTFOOD_TIME_SINCE_MEDIUM
-    else
-        BACKUP_COLOR=$FASTFOOD_TIME_SINCE_SHORT
-    fi
-
-    if [ $hours -gt 24 ]; then
-        BACKUP_PROMPT="$BACKUP_COLOR${days}d ${sub_hours}h ${sub_minutes}m%{$reset_color%}"
-    elif [ $minutes -gt 60 ]; then
-        BACKUP_PROMPT="$BACKUP_COLOR${hours}h${sub_minutes}m%{$reset_color%}"
-    else
-        BACKUP_PROMPT="$FASTFOOD_BACKUP_DRIVE_MOUNTED $BACKUP_COLOR${minutes}m%{$reset_color%}"
-    fi
-else
-    BACKUP_PROMPT="$FASTFOOD_BACKUP_DRIVE_UNMOUNTED $FASTFOOD_TIME_SINCE_LONG ???%{$reset_color%}"
-fi
-
-# Wrap up the right prompt
-RPROMPT="$BACKUP_PROMPT"
+PROMPT="$DALLAS_CURRENT_MACH_$FASTFOOD_BACKUP_$FASTFOOD_RUBY_$FASTFOOD_DIR_$FASTFOOD_PROMPT%{$reset_color%}"
+RPROMPT='$(backup_status)'
