@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+if [ -e $HOME/.pow/lebowski-api ]; then
+    if [[ $2 == '--quotes' ]]; then
+        lebowski_api="http://lebowski-api.dev/api/quotes/search?term="
+        curl -s $lebowski_api$1 | jq '.results[] .lines[] | .text + " —" + .character.name' | cat | ack --passthru $1
+    else
+        lebowski_api="http://lebowski-api.dev/api/lines/search?term="
+        curl -s $lebowski_api$1 | jq '.results[] | .text + " —" + .character.name' | cat | ack $1
+    fi
+else
+    echo "Your rug got stolen: the Lebowski API isn't running under pow."
+fi
