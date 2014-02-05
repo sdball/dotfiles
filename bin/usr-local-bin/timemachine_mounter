@@ -1,0 +1,10 @@
+#!/bin/bash
+vol_mount="Backup"
+
+if ! mount | grep "$vol_mount" ; then
+    # LaunchAgent will pick this OnMount action up and run the backup script
+    diskutil mount "$vol_mount"
+else
+    # Drive is mounted, so: run the backup script
+    timemachine_backup
+fi

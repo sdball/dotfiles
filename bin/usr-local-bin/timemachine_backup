@@ -1,0 +1,6 @@
+#!/bin/bash
+vol_mount="Backup"
+
+if mount | grep "$vol_mount"; then
+    tmutil startbackup -b && (echo `date +%s` > $HOME/.last_timemachine_backup) && diskutil eject "$vol_mount"
+fi
