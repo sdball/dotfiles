@@ -1,6 +1,6 @@
 #!/bin/bash
 
-lebowski_api="http://lebowski-api.dev/api"
+lebowski_api="http://lebowski-api.dev:20559/api"
 
 if [ -e $HOME/.pow/lebowski-api ]; then
     if [[ $2 == '--quotes' ]]; then
