@@ -2,7 +2,9 @@
 
 lebowski_api="http://lebowski-api.dev:20559/api"
 
-if [ -e $HOME/.pow/lebowski-api ]; then
+curl -s $lebowski_api &> /dev/null
+
+if [ $? -eq 0 ]; then
     if [[ $2 == '--quotes' ]]; then
         curl -s "$lebowski_api/quotes/search?term=$1" | jq '.results[] .lines[] | .text + " —" + .character.name' | cat | ack --passthru $1
     else
