@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo $1 | tr a-z A-Z
+echo
+letters=`echo $1 | sed 's/\(.\)/\1 /g'`
+for letter in $letters; do
+    echo `grep ^$letter /usr/share/dict/words | gshuf | head -n1`
+done
