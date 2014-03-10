@@ -57,12 +57,4 @@ unsetopt correct_all # don't try to correct arguments (it's usually wrong)
 setopt correct # but try to correct commands (it's usually right)
 setopt autocd # type the name of a subdirectory will cd into that subdirectory
 
-which lebowski 1> /dev/null
-if [[ $? == 0 ]]; then
-    echo
-    lebowski
-else
-    echo
-    echo "Not ready reading drive A"
-    echo "Abort, Retry, Fail?"
-fi
+lebowski || echo "Not ready reading drive A"; echo "Abort, Retry, Fail?"
