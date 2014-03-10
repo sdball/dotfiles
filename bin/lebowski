@@ -6,5 +6,5 @@ lebowski_api=http://lebowski-api.dev/api/quotes/random
 if [ -e $HOME/.pow/lebowski-api ]; then
     curl -s $lebowski_api | jq '.quote .lines[] | .text + " -- " + .character.name' | cat
 else
-    echo "Your rug got stolen: the Lebowski API isn't running under pow."
+    exit 1
 fi
