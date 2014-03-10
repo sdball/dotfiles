@@ -19,6 +19,7 @@
     noff = merge --no-ff
     l = "!pretty_git_log"
     la = !git l --all
+    ls = ls-files
     div = divergence
     gn = goodness
     gnc = goodness --cached
