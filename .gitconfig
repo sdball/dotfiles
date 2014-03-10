@@ -4,6 +4,7 @@
     st = status
     ci = commit
     co = checkout
+    com = !git checkout master && git fetch && git status
     di = diff
     dc = diff --cached
     amend = commit --amend
