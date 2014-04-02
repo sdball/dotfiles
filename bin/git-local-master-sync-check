@@ -1,0 +1,4 @@
+#!/bin/bash
+
+git fetch &> /dev/null
+[[ `git diff master...origin/master | wc -l` -eq 0 ]] || echo "local master out of sync with origin"

@@ -4,7 +4,7 @@
     st = status
     ci = commit
     co = checkout
-    com = !git checkout master && git fetch && git status
+    lms = !git local-master-sync-check
     current-branch= !git branch | grep '*' | cut -d ' ' -f 2
     di = diff
     dc = diff --cached
