@@ -129,3 +129,6 @@
 /.last_timemachine_backup
 /.psql_history
 /.config
+/.dropbox-master
+/.pia_manager
+/.pry_history
