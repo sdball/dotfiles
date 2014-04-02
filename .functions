@@ -65,3 +65,12 @@ cleartail() {
   clear
   tail -f "$1"
 }
+
+# look for a domain's IP defined in /etc/hosts
+dighosts() {
+  ack `dig +short $1` /etc/hosts
+}
+
+etchosts() {
+  ack $1 /etc/hosts
+}
