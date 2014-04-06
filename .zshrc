@@ -45,16 +45,13 @@ source $ZSH/oh-my-zsh.sh
 # tmuxinator: I'll be back
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
-# rubies!
-[[ -s /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
-[[ -s /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
-[[ -s ~/.rvm/scripts/extras/chruby.sh ]] && source ~/.rvm/scripts/extras/chruby.sh
-[[ -s ~/.ruby-version ]] && chruby `cat ~/.ruby-version`
-[[ -e ~/.rvm/rubies ]] && RUBIES+=(~/.rvm/rubies/*)
-
 setopt braceccl
 unsetopt correct_all # don't try to correct arguments (it's usually wrong)
 setopt correct # but try to correct commands (it's usually right)
 setopt autocd # type the name of a subdirectory will cd into that subdirectory
 
 lebowski || echo "Not ready reading drive A"; echo "Abort, Retry, Fail?"
+
+# RVM
+[[ -s $HOME/.rvm ]] && PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
+[[ -s $HOME/.rvm ]] && source $HOME/.rvm/scripts/rvm
