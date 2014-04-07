@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git fetch &> /dev/null
+
 for branch_pattern in "$@"; do
     matches=`git branch -r | grep $branch_pattern | wc -l`
     if [ $matches -gt 1 ]; then
