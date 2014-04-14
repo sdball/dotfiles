@@ -18,11 +18,11 @@ function time_since() {
     sub_minutes=$((minutes%60))
 }
 
-mount | grep $BACKUP_DRIVE_VOLUME &> /dev/null
+mount | grep "$BACKUP_DRIVE_VOLUME" &> /dev/null
 backup_drive_mounted=$?
 
 if [ $backup_drive_mounted -eq 0 ]; then
-    latest_backup=$(stat -f "%Sm" -t %s `tmutil latestbackup 2> /dev/null`)
+    latest_backup=$(stat -f "%Sm" -t %s "`tmutil latestbackup 2> /dev/null`")
     mount_status=$BACKUP_DRIVE_MOUNTED
 else
     latest_backup=$(cat ~/.last_timemachine_backup)
