@@ -1,0 +1,179 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import getpass
+import json
+import os
+import socket
+import stat
+import sys
+import threading
+import time
+
+SOCK_PATH = '/tmp/pom-%s.sock' % getpass.getuser()
+
+DURATION_WORK = 25 * 60
+DURATION_BREAK = 5 * 60
+
+MODE_BREAK = 0
+MODE_WORK = 1
+
+STATUS_STOP = 0
+STATUS_RUN = 1
+STATUS_PAUSE = 2
+
+class PomodoroTimer:
+    def __init__(self, fork=True):
+        self.fork = fork
+        self.flash = False
+
+        if self.fork:
+            child_pid = os.fork()
+
+            if child_pid != 0:
+                sys.exit(0)
+
+        self.sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        self.seconds = 0
+        self.mode = MODE_WORK
+        self.status = STATUS_STOP
+
+        try:
+            os.remove(SOCK_PATH)
+        except OSError:
+            pass
+
+        self.sock.bind(SOCK_PATH)
+        os.chmod(SOCK_PATH, stat.S_IREAD | stat.S_IWRITE)
+        self.sock.listen(1)
+
+        t = threading.Thread(target=self._tick)
+        t.daemon = True
+        t.start()
+
+    def _tick(self):
+        while True:
+            time.sleep(1)
+
+            self.flash = not self.flash
+
+            if self.seconds > 0 and self.status == STATUS_RUN:
+                self.seconds = self.seconds - 1
+
+                if self.seconds == -1:
+                    if self.mode == MODE_WORK:
+                        self.mode = MODE_BREAK
+                        self.seconds = DURATION_BREAK
+                    else:
+                        self.stop()
+
+
+    def _control_loop(self):
+        while True:
+            conn, addr = self.sock.accept()
+            data = conn.recv(1024)
+
+            if data == 'ping':
+                conn.send('pong')
+            if data == 'stop':
+                self.stop()
+            elif data == 'start':
+                if self.seconds == 0:
+                    self.mode = MODE_WORK
+                    self.seconds = DURATION_WORK
+
+                self.status = STATUS_RUN
+
+                conn.send('ok')
+            elif data == 'json':
+                conn.send(json.dumps({
+                    'mode': self.mode,
+                    'status': self.status,
+                    'seconds': self.seconds,
+                    'flash': self.flash
+                }))
+            elif data == 'pause':
+                self.status = STATUS_PAUSE
+                conn.send('ok')
+            else:
+                conn.send("mkay thanks:  %s" % repr(data))
+
+    def server(self):
+        self._control_loop()
+
+    def stop(self):
+        self.mode == MODE_WORK
+        self.status = STATUS_STOP
+        self.seconds = 0
+
+    def shutdown(self):
+        self.sock.close()
+        os.remove(SOCK_PATH)
+        sys.exit(0)
+
+def send(cmd):
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+
+    sock.connect(SOCK_PATH)
+
+    sock.send(cmd)
+    data = sock.recv(1024)
+    sock.close()
+    return data
+
+def usage():
+    # TODO
+    print "usage..."
+
+def main(argv):
+    if len(argv) == 1:
+        argv.append('json')
+    elif len(argv) > 2:
+        usage()
+        sys.exit(1)
+
+    cmd = argv[1]
+
+    if cmd in ['start','stop','pause']:
+        send(cmd)
+    elif cmd == 'reset':
+        send('stop')
+        send('start')
+    elif cmd == 'server':
+        print 'Starting server..'
+        PomodoroTimer().server()
+    elif cmd == 'json':
+        data = send('json')
+        print repr(json.loads(data))
+    elif cmd == 'tmux':
+        data = send('json')
+        data = json.loads(data)
+
+        fg = None
+        bg = 'black'
+        pomodoro = "🍅"
+
+        if data['status'] == STATUS_STOP:
+            return
+
+        if data['mode'] == MODE_BREAK:
+            fg = 'red'
+        elif data['mode'] == MODE_WORK:
+            fg = 'green'
+
+        if data['status'] == STATUS_PAUSE:
+            fg,bg = bg,fg
+            if data['flash']:
+                pomodoro = ' '
+
+        if data['seconds'] < 30 and data['flash']:
+            pomodoro = ' '
+
+        time_left = time.strftime('%M:%S', time.gmtime(data['seconds']))
+        print pomodoro, " #[nobright fg=%s bg=%s]%s#[bg=default fg=#707070] | " % (fg, bg, time_left)
+    else:
+        usage()
+
+if __name__ == '__main__':
+    main(sys.argv)
+
