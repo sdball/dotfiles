@@ -1,2 +1,3 @@
 --smart-case
 --type-set=plaintext=.md,.mdown,.markdown
+--type-set=css=.scss,.css
