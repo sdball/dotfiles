@@ -2,20 +2,16 @@
 
 set -e
 
-git fetch
-matching_branches=`git b -a | grep $1`
-echo "matching branch(es) found"
-echo $matching_branches
-match_count=`git b -a | grep $1 | wc -l`
+git fetch &> /dev/null
+branch_pattern=$1
 
-if [ $match_count == "1" ]
-then
-    branch=`git b -a | grep $1 | cut -d '/' -f 3 | tr -d ' '`
-    echo "remote branch $branch found"
-    git co $branch
+matches=`git branch -r | grep $branch_pattern | wc -l`
+if [ $matches -gt 1 ]; then
+    echo "$branch_pattern matches $matches remote branches."
+elif [ $matches -eq 0 ]; then
+    echo "$branch_pattern not found on origin"
 else
-    branch=`git b | grep $1 | cut -d '/' -f 3 | tr -d ' *'`
-    echo "local branch $branch found"
+    echo "$branch_pattern matches `git branch -r | grep $branch_pattern`"
+    branch=`git b -r | grep $branch_pattern | cut -d '/' -f 2`
     git co $branch
 fi
-
