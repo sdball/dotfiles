@@ -73,17 +73,19 @@ class PomodoroTimer:
             conn, addr = self.sock.accept()
             data = conn.recv(1024)
 
-            if data == 'ping':
-                conn.send('pong')
-            if data == 'stop':
+            if data == 'toggle':
+                if self.status == STATUS_RUN:
+                    self.pause()
+                else:
+                    self.start()
+                conn.send('ok')
+            elif data == 'stop':
                 self.stop()
             elif data == 'start':
-                if self.seconds == 0:
-                    self.mode = MODE_WORK
-                    self.seconds = DURATION_WORK
-
-                self.status = STATUS_RUN
-
+                self.start()
+                conn.send('ok')
+            elif data == 'pause':
+                self.pause()
                 conn.send('ok')
             elif data == 'json':
                 conn.send(json.dumps({
@@ -92,19 +94,26 @@ class PomodoroTimer:
                     'seconds': self.seconds,
                     'flash': self.flash
                 }))
-            elif data == 'pause':
-                self.status = STATUS_PAUSE
-                conn.send('ok')
             else:
                 conn.send("mkay thanks:  %s" % repr(data))
 
     def server(self):
         self._control_loop()
 
+    def start(self):
+        if self.seconds == 0:
+            self.mode = MODE_WORK
+            self.seconds = DURATION_WORK
+
+        self.status = STATUS_RUN
+
     def stop(self):
         self.mode == MODE_WORK
         self.status = STATUS_STOP
         self.seconds = 0
+
+    def pause(self):
+        self.status = STATUS_PAUSE
 
     def shutdown(self):
         self.sock.close()
@@ -134,7 +143,7 @@ def main(argv):
 
     cmd = argv[1]
 
-    if cmd in ['start','stop','pause']:
+    if cmd in ['start','stop','pause','toggle']:
         send(cmd)
     elif cmd == 'reset':
         send('stop')
@@ -150,7 +159,7 @@ def main(argv):
         data = json.loads(data)
 
         fg = None
-        bg = 'black'
+        bg = 'default'
         pomodoro = "🍅"
 
         if data['status'] == STATUS_STOP:
@@ -162,7 +171,9 @@ def main(argv):
             fg = 'green'
 
         if data['status'] == STATUS_PAUSE:
-            fg,bg = bg,fg
+            bg = fg
+            fg = 'black'
+
             if data['flash']:
                 pomodoro = ' '
 
@@ -170,7 +181,7 @@ def main(argv):
             pomodoro = ' '
 
         time_left = time.strftime('%M:%S', time.gmtime(data['seconds']))
-        print pomodoro, " #[nobright fg=%s bg=%s]%s#[bg=default fg=#707070] | " % (fg, bg, time_left)
+        print pomodoro, " #[nobright fg=%s bg=%s]%s#[bg=default fg=#500000] |" % (fg, bg, time_left)
     else:
         usage()
 
