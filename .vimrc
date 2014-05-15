@@ -114,7 +114,7 @@ augroup END
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
-colorscheme base16-chalk
+colorscheme Tomorrow-Night-Eighties
 map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
