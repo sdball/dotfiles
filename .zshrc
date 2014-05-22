@@ -51,7 +51,7 @@ ZSH_CUSTOM=/home/deploy/.omz-custom
 # plugins=(git)
 
 # ----> setup plugins in .local_zshrc <----
-[[ -s $HOME/.local_zshrc ]] && source $HOME/.local_zshrc
+source $HOME/.local_zshrc
 
 source $ZSH/oh-my-zsh.sh
 
