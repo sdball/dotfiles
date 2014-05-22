@@ -13,5 +13,5 @@ elif [ $matches -eq 0 ]; then
 else
     echo "$branch_pattern matches `git branch -r | grep $branch_pattern`"
     branch=`git b -r | grep $branch_pattern | cut -d '/' -f 2`
-    git co $branch
+    git co -B $branch origin/$branch
 fi
