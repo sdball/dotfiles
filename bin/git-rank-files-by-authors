@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -e
+
+git ls-files $1 | while read file; do author_count=`git log --format="%aN" $file | sort | uniq | wc -l`; echo $author_count $file; done | sort -n
