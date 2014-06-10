@@ -135,3 +135,5 @@
 /.rbx
 /source
 /.lein
+/.aptitude
+/.erlang.cookie
