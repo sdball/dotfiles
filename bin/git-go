@@ -6,12 +6,9 @@ git fetch &> /dev/null
 branch_pattern=$1
 
 matches=`git branch -r | grep $branch_pattern | wc -l`
-if [ $matches -gt 1 ]; then
-    echo "$branch_pattern matches $matches remote branches."
-elif [ $matches -eq 0 ]; then
+if [ $matches -eq 0 ]; then
     echo "$branch_pattern not found on origin"
 else
-    echo "$branch_pattern matches `git branch -r | grep $branch_pattern`"
-    branch=`git b -r | grep $branch_pattern | cut -d '/' -f 2`
+    branch=`git b -r | grep $branch_pattern | cut -d '/' -f 2 | selecta`
     git co -B $branch origin/$branch
 fi
