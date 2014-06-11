@@ -10,45 +10,62 @@
 # If this seems confusing, don't worry. You can treat it as a normal Ruby file
 # starting with the "!ruby" shebang below.
 
-exec /usr/bin/env ruby --disable-gems -x "$0"
+exec /usr/bin/env ruby --disable-gems -x "$0" $*
 #!ruby
 
 if RUBY_VERSION < '1.9.3'
   abort "error: Selecta requires Ruby 1.9.3 or higher."
 end
 
+require "optparse"
 require "io/console"
 
 KEY_CTRL_C = ?\C-c
 KEY_CTRL_N = ?\C-n
 KEY_CTRL_P = ?\C-p
+KEY_CTRL_U = ?\C-u
+KEY_CTRL_H = ?\C-h
 KEY_CTRL_W = ?\C-w
-# I don't know how to get this key code other than by hard-coding the ordinal
-KEY_DELETE = 127.chr
+KEY_CTRL_J = ?\C-j
+KEY_CTRL_M = ?\C-m
+KEY_DELETE = 127.chr # Equivalent to ?\C-?
 
 class Selecta
-  def main
-    config = Configuration.from_inputs($stdin.readlines)
-    search = Search.blank(config)
+  VERSION = [0, 0, 2]
 
-    search = run_in_screen(config, search)
-    puts search.selected_choice
+  def main
+    # We have to parse options before setting up the screen or trying to read
+    # the input in case the user did '-h', an invalid option, etc. and we need
+    # to terminate.
+    options = Configuration.parse_options(ARGV)
+
+    search = Screen.with_screen do |screen, tty|
+      config = Configuration.from_inputs($stdin.readlines, options, screen.height)
+      run_in_screen(config, screen, tty)
+    end
+
+    unless search.selection == Search::NoSelection
+      puts search.selection
+    end
+  rescue ScreenValidator::NotATTY
+    $stderr.puts(
+      "Can't get a working TTY. Selecta requires an ANSI-compatible terminal.")
   end
 
-  # Initialize the screen (and tear it down properly when done).
-  def run_in_screen(config, search)
-    Screen.with_screen do |screen, tty|
-      # We emit the number of lines we'll use later so we don't clobber whatever
-      # was already on the screen.
-      (config.visible_choices).times { tty.puts }
-      begin
-        ui_event_loop(search, screen, tty)
-      ensure
-        # Always move the cursor to the bottom so the next program doesn't draw
-        # over whatever we left on the screen.
-        screen.move_cursor(screen.height - 1, 0)
-      end
+  def run_in_screen(config, screen, tty)
+    search = Search.blank(config)
+
+    # We emit the number of lines we'll use later so we don't clobber whatever
+    # was already on the screen.
+    config.visible_choices.times { tty.puts }
+    begin
+      search = ui_event_loop(search, screen, tty)
+    ensure
+      # Always move the cursor to the bottom so the next program doesn't draw
+      # over whatever we left on the screen.
+      screen.move_cursor(screen.height - 1, 0)
     end
+    search
   end
 
   # Use the search and screen to process user actions until they quit.
@@ -67,11 +84,11 @@ class Selecta
     when KEY_CTRL_N then search.down
     when KEY_CTRL_P then search.up
 
+    when KEY_CTRL_U then search.clear_query
     when KEY_CTRL_W then search.delete_word
-    when KEY_DELETE then search.backspace
+    when KEY_CTRL_H, KEY_DELETE then search.backspace
 
-    when ?\r then search.done
-    when KEY_CTRL_C then raise SystemExit
+    when ?\r, KEY_CTRL_J, KEY_CTRL_M then search.done
 
     when /[[:print:]]/ then search.append_search_string(key.chr)
 
@@ -80,16 +97,56 @@ class Selecta
   end
 end
 
-class Configuration < Struct.new(:visible_choices, :choices)
-  def initialize(visible_choices, choices)
+class Configuration < Struct.new(:visible_choices, :initial_search, :choices)
+  def initialize(visible_choices, initialize, choices)
     # Constructor is defined to force argument presence; otherwise Struct
     # defaults missing arguments to nil
     super
   end
 
-  def self.from_inputs(choices)
+  def self.from_inputs(choices, options, screen_height=21)
+    # Shrink the number of visible choices if the screen is too small
+    visible_choices = [20, screen_height - 1].min
+
     choices = massage_choices(choices)
-    Configuration.new(20, choices)
+    Configuration.new(visible_choices, options.fetch(:search), choices)
+  end
+
+  def self.default_options
+    parse_options([])
+  end
+
+  def self.parse_options(argv)
+    options = {}
+
+    parser = OptionParser.new do |opts|
+      opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
+
+      opts.on_tail("-h", "--help", "Show this message") do |v|
+        puts opts
+        exit
+      end
+
+      opts.on_tail("--version", "Show version") do
+        puts Selecta::VERSION.join('.')
+        exit
+      end
+
+      options[:search] = ""
+      opts.on("-s", "--search SEARCH", "Specify an initial search string") do |search|
+        options[:search] = search
+      end
+    end
+
+    begin
+      parser.parse!(argv)
+    rescue OptionParser::InvalidOption => e
+      $stderr.puts e
+      $stderr.puts parser
+      exit 1
+    end
+
+    options
   end
 
   def self.massage_choices(choices)
@@ -125,7 +182,7 @@ class Search
     new(:config => config,
         :choices => config.choices,
         :index => 0,
-        :query => "",
+        :query => config.initial_search,
         :done => false)
   end
 
@@ -137,8 +194,8 @@ class Search
     @done
   end
 
-  def selected_choice
-    matches.fetch(@index)
+  def selection
+    matches.fetch(@index) { NoSelection }
   end
 
   def down
@@ -160,18 +217,93 @@ class Search
           :query => @query[0...-1])
   end
 
+  def clear_query
+    merge(:index => 0,
+          :query => "")
+  end
+
   def delete_word
-    merge(:query => @query.sub(/[^ ]* *$/, ""))
+    merge(:index => 0,
+          :query => @query.sub(/[^ ]* *$/, ""))
   end
 
   def matches
-    re = query.split(//).map(&Regexp.method(:escape)).join('.*')
-    re = /#{re}/i
-    @choices.select { |s| s =~ re }
+    @choices.map do |choice|
+      [choice, Score.score(choice, query)]
+    end.select do |choice, score|
+      score > 0.0
+    end.sort_by do |choice, score|
+      -score
+    end.map do |choice, score|
+      choice
+    end
   end
 
   def done
     merge(:done => true)
+  end
+
+  class NoSelection; end
+end
+
+class Score
+  class << self
+    def score(choice, query)
+      return 1.0 if query.length == 0
+      return 0.0 if choice.length == 0
+
+      choice = choice.downcase
+      query = query.downcase
+
+      match_length = compute_match_length(choice, query.each_char.to_a)
+      return 0.0 unless match_length
+
+      # Penalize longer matches.
+      score = query.length.to_f / match_length.to_f
+
+      # Normalize vs. the length of the choice, penalizing longer strings.
+      score / choice.length
+    end
+
+    # Find the length of the shortest substring matching the given characters.
+    def compute_match_length(string, chars)
+      first_char, *rest = chars
+      first_indexes = find_char_in_string(string, first_char)
+
+      first_indexes.map do |first_index|
+        last_index = find_end_of_match(string, rest, first_index)
+        if last_index
+          last_index - first_index + 1
+        else
+          nil
+        end
+      end.compact.min
+    end
+
+    # Find all occurrences of the character in the string, returning their indexes.
+    def find_char_in_string(string, char)
+      index = 0
+      indexes = []
+      while index
+        index = string.index(char, index)
+        if index
+          indexes << index
+          index += 1
+        end
+      end
+      indexes
+    end
+
+    # Find each of the characters in the string, moving strictly left to right.
+    def find_end_of_match(string, chars, first_index)
+      last_index = first_index
+      chars.each do |this_char|
+        index = string.index(this_char, last_index + 1)
+        return nil unless index
+        last_index = index
+      end
+      last_index
+    end
   end
 end
 
@@ -192,8 +324,8 @@ class Renderer < Struct.new(:search, :screen)
       matches[search.index] = Text[:inverse, matches.fetch(search.index), :reset]
     end
     matches = correct_match_count(matches)
-    choices = [search_line] + matches
-    Rendered.new(choices, search_line)
+    lines = [search_line] + matches
+    Rendered.new(lines, search_line)
   end
 
   def correct_match_count(matches)
@@ -212,6 +344,7 @@ class Screen
       screen = self.new(tty)
       screen.configure_tty
       begin
+        ScreenValidator.raise_unless_screen_is_valid(screen.height)
         yield screen, tty
       ensure
         screen.restore_tty
@@ -297,23 +430,21 @@ class Screen
   end
 
   def write_text_object(line, column, text)
-    highlight = false
+    # Blank the line before drawing to it
+    ansi.setpos!(line, 0)
+    ansi.addstr!(" " * width)
+
     text.components.each do |component|
       if component.is_a? String
         ansi.setpos!(line, column)
         # Don't draw off the edge of the screen.
-        #   - (column + component.length) is the number of bytes we'd draw if
-        #     we just dumped the string out.
-        #   - Subtracting that from width gives the number of bytes we should
-        #     draw to avoid going off the edge of the screen.
-        #   - Subtracting 1 from that gives us the zero-indexed location of the
-        #     last character we should draw.
-        chars_to_draw = width - (column + component.length) - 1
+        #   - width - 1 is the last column we have (zero-indexed)
+        #   - subtract the current column from that to get the number of
+        #   columns we have left.
+        chars_to_draw = [0, width - 1 - column].max
         component = component[0..chars_to_draw]
         ansi.addstr!(component)
         column += component.length
-      elsif component == :highlight
-        highlight = true
       elsif component == :inverse
         ansi.inverse!
       elsif component == :reset
@@ -327,9 +458,15 @@ class Screen
         ansi.color!(fg, bg)
       end
     end
-    remaining_cols = [width - column, 0].max
-    ansi.addstr!(" " * remaining_cols)
   end
+end
+
+class ScreenValidator
+  def self.raise_unless_screen_is_valid(screen_height)
+    raise NotATTY if screen_height == 0
+  end
+
+  class NotATTY < RuntimeError; end
 end
 
 class Text
@@ -478,7 +615,7 @@ end
 if $0 == __FILE__
   begin
     Selecta.new.main
-  rescue SystemExit, Interrupt
+  rescue Interrupt
     exit(1)
   end
 end
