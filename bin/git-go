@@ -8,6 +8,9 @@ branch_pattern=$1
 matches=`git branch -r | grep $branch_pattern | wc -l`
 if [ $matches -eq 0 ]; then
     echo "$branch_pattern not found on origin"
+elif [ $matches -eq 1 ]; then
+    branch=`git b -r | grep $branch_pattern | cut -d '/' -f 2`
+    git co -B $branch origin/$branch
 else
     branch=`git b -r | grep $branch_pattern | cut -d '/' -f 2 | selecta`
     git co -B $branch origin/$branch
