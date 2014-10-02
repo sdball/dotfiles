@@ -214,24 +214,13 @@ set showmode
 "endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" BIG RED TRAILING WHITESPACE
+" BIG RED UNWANTED WHITESPACE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
+match ExtraWhitespace /(\s\+$|\t)/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" BIG RED TABS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-highlight Tab ctermbg=red guibg=red
-match Tab /\t/
-autocmd BufWinEnter * match ExtraWhitespace /\t/
-autocmd InsertEnter * match ExtraWhitespace /\t/
-autocmd InsertLeave * match ExtraWhitespace /\t/
 autocmd BufWinLeave * call clearmatches()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
