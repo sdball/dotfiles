@@ -174,7 +174,7 @@ map <leader>sv :!spec spec/views<cr>
 map <leader>gr :topleft :split config/routes.rb<cr>
 map <leader>rr :call ShowRoutes()<cr>
 " ctrl-p searches
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files --others --cached --exclude-standard']
 map <leader>pa :CtrlPClearCache<cr>\|:CtrlP app<cr>
 map <leader>pc :CtrlPClearCache<cr>\|:CtrlP config<cr>
 map <leader>pl :CtrlPClearCache<cr>\|:CtrlP lib<cr>
