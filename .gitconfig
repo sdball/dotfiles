@@ -35,6 +35,7 @@
     edit-branch-commits = !git rebase -i `git outgoing master | tail -1 | xargs git log --format="%P" -1`
     ss = local-to-remote-status
     pu = push -u
+    fp = !git push -u origin `git current-branch`
 
     ; data analysis
     authors = !git log --format="%aN"
