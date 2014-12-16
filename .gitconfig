@@ -64,3 +64,5 @@
 
 [rerere]
 	enabled = 1
+[status]
+    showUntrackedFiles = all
