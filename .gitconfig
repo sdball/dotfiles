@@ -37,6 +37,10 @@
     pu = push -u
     fp = !git push -u origin `git current-branch`
 
+    ; project automation
+    changed-specs = !git diff --name-only master -- spec | egrep '.rb'
+    run-changed-specs = !zeus rspec `git changed-specs`
+
     ; data analysis
     authors = !git log --format="%aN"
     unique-authors = !git authors | sort -u
