@@ -12,7 +12,6 @@ function time_since() {
     sub_minutes=$((minutes%60))
 }
 
-FASTFOOD_BACKUP_DRIVE_VOLUME="Backup"
 FASTFOOD_BRACKET_COLOR="%{$fg[white]%}"
 FASTFOOD_TIME_COLOR="%{$fg[yellow]%}"
 FASTFOOD_RUBY_COLOR="%{$fg[magenta]%}"
@@ -24,8 +23,6 @@ FASTFOOD_TIME_SINCE_LONG="%{$fg[red]%}"
 FASTFOOD_TIME_SINCE_MEDIUM="%{$fg[yellow]%}"
 FASTFOOD_TIME_SINCE_SHORT="%{$fg[green]%}"
 FASTFOOD_EMOJI="$"
-FASTFOOD_BACKUP_DRIVE_MOUNTED="[M]"
-FASTFOOD_BACKUP_DRIVE_UNMOUNTED="[_]"
 
 # These Git variables are used by the oh-my-zsh git_prompt_info helper:
 ZSH_THEME_GIT_PROMPT_PREFIX="$FASTFOOD_BRACKET_COLOR:$FASTFOOD_GIT_BRANCH_COLOR"
@@ -53,5 +50,4 @@ FASTFOOD_DIR_="$FASTFOOD_DIR_COLOR%~\$(git_prompt_info) "
 FASTFOOD_PROMPT="$FASTFOOD_BRACKET_COLOR$FASTFOOD_EMOJI "
 
 # Wrap up the left prompt
-PROMPT="$DALLAS_CURRENT_MACH_$FASTFOOD_BACKUP_$FASTFOOD_RUBY_$FASTFOOD_DIR_$FASTFOOD_PROMPT%{$reset_color%}"
-RPROMPT='$(backup_status)'
+PROMPT="$DALLAS_CURRENT_MACH_$FASTFOOD_RUBY_$FASTFOOD_DIR_$FASTFOOD_PROMPT%{$reset_color%}"
