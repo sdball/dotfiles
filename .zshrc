@@ -55,6 +55,10 @@ source $HOME/.local_zshrc
 
 source $ZSH/oh-my-zsh.sh
 
+# custom theme outside of ZSH
+# Only load Liquid Prompt in interactive shells, not from a script or from scp
+[[ $- = *i* ]] && source ~/github/nojhan/liquidprompt/liquidprompt
+
 # generic shell stuff
 [[ -s $HOME/.aliases ]] && source $HOME/.aliases
 [[ -s $HOME/.env ]] && source $HOME/.env
