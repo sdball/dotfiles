@@ -40,6 +40,7 @@
     ; project automation
     changed-specs = !git diff --name-only master -- spec | egrep '.rb'
     run-changed-specs = !zeus rspec `git changed-specs`
+    changed-files = !git diff --name-only master | cat
 
     ; data analysis
     authors = !git log --format="%aN"
