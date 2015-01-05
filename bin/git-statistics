@@ -13,8 +13,8 @@ run() {
 hash='`git log -1 --pretty=%h`'
 
 # Lines of code
-prod_lines='`find lib -iname "*.rb" | xargs cat | wc -l`'
-test_lines='`find test -iname "*.rb" | xargs cat | wc -l`'
+prod_lines='`find app lib -iname "*.rb" | xargs cat | wc -l`'
+test_lines='`find spec -iname "*spec.rb" | xargs cat | wc -l`'
 
 run
 
