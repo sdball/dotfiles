@@ -1,10 +1,5 @@
 #!/bin/bash
 
-lebowski_api=http://lebowski-api.dev/api/quotes/random
+lebowski_api="http://lebowski.me/api/quotes/random"
 
-
-if [ -e $HOME/.pow/lebowski-api ]; then
-    curl -s $lebowski_api | jq '.quote .lines[] | .text + " -- " + .character.name' | cat
-else
-    exit 1
-fi
+curl -s $lebowski_api | jq '.quote.lines[] | .character.name + ": " + .text'
