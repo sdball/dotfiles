@@ -50,6 +50,7 @@
     email-domains = !git log --format="%aE" | awk -F'@' '{print $2}'
     unique-email-domains = !git email-domains | sort -u
     ranked-email-domains = !git email-domains | sort | uniq -c | sort -n
+    one-week = !git diff --stat `git log --since='1 week' --format=%H | tail -1`
 [merge]
     tool = vimdiff
 
