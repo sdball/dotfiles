@@ -35,7 +35,7 @@
     edit-branch-commits = !git rebase -i `git outgoing master | tail -1 | xargs git log --format="%P" -1`
     ss = local-to-remote-status
     pu = push -u
-    fp = !git push -u origin `git current-branch`
+    p = !git push -u origin `git current-branch`
 
     ; project automation
     changed-specs = !git diff --name-only master -- spec | egrep '.rb'
