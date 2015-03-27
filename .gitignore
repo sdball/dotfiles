@@ -137,3 +137,9 @@
 /.lein
 /.aptitude
 /.erlang.cookie
+/.boot2docker
+/bin/gitignored
+/.irssi/config
+/.jrnl_config
+/.ovftool.ssldb
+/.pip/pip.log
