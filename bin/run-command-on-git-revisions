@@ -16,19 +16,41 @@ if [[ $1 == -v ]]; then
     verbose=1
     shift
 fi
+
 start_ref=$1
 end_ref=$2
 test_command=$3
 
 main() {
+    abort_if_dirty_repo
     enforce_usage
     run_tests
+}
+
+abort_if_dirty_repo() {
+    set +e
+    git diff-index --quiet --cached HEAD
+    if [[ $? -ne 0 ]]; then
+        echo "You have staged but not committed changes that would be lost! Aborting."
+        exit 1
+    fi
+    git diff-files --quiet
+    if [[ $? -ne 0 ]]; then
+        echo "You have unstaged changes that would be lost! Aborting."
+        exit 1
+    fi
+    untracked=$(git ls-files --exclude-standard --others)
+    if [ -n "$untracked" ]; then
+        echo "You have untracked files that could be overwritten! Aborting."
+        exit 1
+    fi
+    set -e
 }
 
 enforce_usage() {
     if [ -z "$test_command" ]; then
         usage
-        exit $E_BADARGS
+        exit 1
     fi
 }
 
@@ -43,7 +65,7 @@ run_tests() {
         debug "Checking out: $(git log --oneline -1 $rev)"
         log_command git checkout --quiet $rev
         log_command $test_command
-        log_command git reset --hard
+        log_command git reset --hard --quiet
     done
     log_command git checkout --quiet $end_ref
     debug "OK for all revisions!"
@@ -51,7 +73,7 @@ run_tests() {
 
 log_command() {
     debug "=> $*"
-    eval $*
+    eval "$@"
 }
 
 debug() {
@@ -61,4 +83,3 @@ debug() {
 }
 
 main
-
