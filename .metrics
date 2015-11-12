@@ -1,0 +1,9 @@
+ENABLED = %i(cane rails_best_practices roodi)
+
+MetricFu.configuration.configure_metrics.each do |metric|
+  if ENABLED.include?(metric.name)
+    metric.enabled = true
+  else
+    metric.enabled = false
+  end
+end
