@@ -72,8 +72,6 @@ unsetopt correct_all # don't try to correct arguments (it's usually wrong)
 setopt correct # but try to correct commands (it's usually right)
 setopt autocd # type the name of a subdirectory will cd into that subdirectory
 
-echo "Not ready reading drive A"; echo "Abort, Retry, Fail?"
-
 # RVM
 [[ -s $HOME/.rvm ]] && PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 [[ -s $HOME/.rvm ]] && source $HOME/.rvm/scripts/rvm
