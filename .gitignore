@@ -143,3 +143,6 @@
 /.jrnl_config
 /.ovftool.ssldb
 /.pip/pip.log
+/.jira-cli
+/.slack.conf
+/.guard_history
