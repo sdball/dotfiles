@@ -41,11 +41,6 @@ class Object
 end
 
 module Kernel
-  def require_relative(file)
-    $:.unshift Dir.pwd
-    require file
-  end
-
   def guid(s)
     s.scan(/[a-f0-9-]{36}/).first
   end
