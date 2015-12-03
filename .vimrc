@@ -290,9 +290,9 @@ function! RunTests(filename)
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     if filereadable("config/environment.rb")
-        exec ":!zeus rspec --color --format=nested --order default " . a:filename
+        exec ":!rspec --order default " . a:filename
     else
-        exec ":!rspec --color --format=nested " . a:filename
+        exec ":!rspec " . a:filename
     end
 endfunction
 
