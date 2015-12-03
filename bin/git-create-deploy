@@ -1,0 +1,276 @@
+#!/bin/bash
+
+set -e
+
+create_deploy_log_file=/tmp/create_deploy$(pwd | sed -e 's/\//-/g')
+
+main() {
+    if [ ! $1 ]; then
+        echo "Usage: git create-deploy 1234 5678 9876"
+        exit
+    fi
+
+    if [ $1 == '--continue' ]; then
+        verify_create_deploy
+        set +e
+        grep "REBASING" $create_deploy_log_file &> /dev/null
+        if [ $? == 1 ]; then
+            highlight "You are not in the middle of a git rebase."
+            echo "git create-deploy --continue must be run after resolving and staging a conflict resolution."
+            exit 1
+        fi
+        # search for git conflict markers and ensure they don't exist
+        current_branch=`grep "REBASING" $create_deploy_log_file | sed -e 's/REBASING //'`
+        git add --all &> /dev/null
+        git rebase --continue &> /dev/null
+        set -e
+        git checkout master &> /dev/null
+        sed -i -e "/$current_branch/s/^REBASING //" $create_deploy_log_file
+        remaining_branches=`grep -v DONE $create_deploy_log_file`
+        for branch_pattern in $remaining_branches; do
+            rebase_and_merge_to_master
+        done
+        show_review_status
+    elif [ $1 == '--abort' ]; then
+        verify_create_deploy
+        set +e
+        git rebase --abort &> /dev/null
+        set -e
+
+        branches=`cat $create_deploy_log_file | awk '{ print $2 }'`
+        for branch in $branches; do
+            git checkout $branch &> /dev/null
+            git reset --hard origin/$branch &> /dev/null
+            echo "$branch reset to origin/$branch"
+        done
+
+        git checkout master &> /dev/null
+        git reset --hard origin/master &> /dev/null
+        echo "master reset to origin/master"
+
+        remove_deploy_log
+        highlight "git create-deploy successfully aborted"
+        echo "master and all deploy branches have been reset to origin"
+        exit 0
+    elif [ $1 == '--status' ]; then
+        verify_create_deploy
+        set +e
+        grep REBASING $create_deploy_log_file &> /dev/null
+        if [ $? -eq 0 ]; then
+            echo "You are resolving a rebase conflict."
+            echo "  1. Fix the conflicted file(s)"
+            echo "  2. git add --all # DON'T run any git rebase commands directly"
+            echo "  3. git create-deploy --continue"
+            echo
+            echo "To abort the deploy:"
+            echo "  1. git create-deploy --abort"
+            echo
+        else
+            show_review_status
+        fi
+        set -e
+        exit 0
+    elif [ $1 == '--push' ]; then
+        verify_create_deploy
+        push_all_branches
+        highlight "All branches in the deploy pushed successfully."
+        echo "After the deploy is wrapped up, remember to delete the branches locally and remotely."
+        show_pushed_branches
+        remove_deploy_log
+    else
+        verify_no_create_deploy
+        verify_local_and_origin_master_are_in_sync
+        verify_each_pattern_matches_one_branch $@
+        write_deploy_log $@
+        for branch_pattern in "$@"; do
+            reset_branch_to_origin
+        done
+        for branch_pattern in "$@"; do
+            rebase_and_merge_to_master
+        done
+        show_review_status
+    fi
+}
+
+
+verify_local_and_origin_master_are_in_sync() {
+    set +e
+    git checkout master &> /dev/null
+
+    if [ $? != 0 ]; then
+        highlight "git checkout master failed"
+        echo "git create-deploy requires a master branch"
+        exit 1
+    fi
+
+    git fetch &> /dev/null
+
+    if [ $? != 0 ]; then
+        highlight "git fetch failed"
+        echo "git create-deploy requires a remote repository"
+        exit 1
+    fi
+
+    set -e
+
+    incoming=`git rev-list master..origin/master | wc -l`
+    outgoing=`git rev-list origin/master..master | wc -l`
+
+    if [ $incoming != 0 ] || [ $outgoing != 0 ]; then
+        git status | grep "Your branch" --color=never
+        echo "Sync your local master to origin and then re-run this script."
+        exit 1
+    fi
+}
+
+verify_each_pattern_matches_one_branch() {
+    verify=0
+    for branch_pattern in "$@"; do
+        matches=`git branch -r | grep $branch_pattern | wc -l`
+        if [ $matches -gt 1 ]; then
+            echo "$branch_pattern matches $matches remote branches."
+            git branch -r | grep $branch_pattern
+            echo "  Pick one of them by using a more specific pattern."
+            verify=1
+        elif [ $matches -eq 0 ]; then
+            echo "$branch_pattern not found on origin"
+            echo "  Maybe someone needs to push their feature branch?"
+            verify=1
+        fi
+    done
+
+    if [ $verify -ne 0 ]; then
+        exit 1
+    fi
+}
+
+write_deploy_log() {
+    if [[ -e $create_deploy_log_file ]]; then
+        highlight "existing create_deploy tracking file found"
+        echo "It looks like you have an existing .create_deploy."
+        echo "Did something go wrong? Are you in the middle of a deploy? Check on your merges and master branch status."
+        echo "Delete the .create_deploy file and re-run if things are ok."
+        exit 1
+    fi
+    for branch_pattern in "$@"; do
+        branch=`git branch -r | grep $branch_pattern | cut -d '/' -f 2`
+        echo $branch >> $create_deploy_log_file
+    done
+}
+
+reset_branch_to_origin() {
+    echo "Resetting $branch to origin to ensure we merge the latest code."
+    branch=`git branch -r | grep $branch_pattern | cut -d '/' -f 2`
+    git checkout $branch &> /dev/null
+    git reset --hard origin/$branch &> /dev/null
+    git checkout master &> /dev/null
+}
+
+rebase_and_merge_to_master() {
+    branch=`git branch -r | grep $branch_pattern | cut -d '/' -f 2`
+    sed -i -e "/$branch_pattern/s/^/REBASING /" $create_deploy_log_file
+    git checkout $branch &> /dev/null
+    set +e
+    git rebase master &> /dev/null
+
+    if [ $? != 0 ]; then
+        echo "rebasing $branch: ERROR"
+        highlight "conflict while rebasing $branch"
+        echo
+        echo "DON'T run any git rebase commands directly or you'll deeply confuse git create-deploy."
+        echo
+        echo "If you want to resolve the conflict and continue:"
+        echo "  1. Resolve the file conflict(s) as usual."
+        echo "  2. Stage the resolved files with something like: git add --all"
+        echo "  3. Again, DON'T run any git rebase commands directly!"
+        echo "  4. Run: git create-deploy --continue"
+        echo
+        echo "If you want to back out everything:"
+        echo "  1. Run: git create-deploy --abort"
+        echo
+        echo "To see this information again:"
+        echo "  1. Run: git create-deploy --status"
+        echo
+        exit 1
+    fi
+
+    set -e
+    git checkout master &> /dev/null
+    GIT_MERGE_AUTOEDIT=no git merge --no-ff $branch &> /dev/null
+    sed -i -e "/$branch_pattern/s/^REBASING/DONE/" $create_deploy_log_file
+    echo "rebasing $branch: DONE"
+}
+
+push_all_branches() {
+    rebased_branches=`grep DONE $create_deploy_log_file | sed -e 's/DONE //'` &> /dev/null
+    for branch in $rebased_branches; do
+        git push -f origin $branch &> /dev/null
+    done
+    git push origin master &> /dev/null
+}
+
+remove_deploy_log() {
+    rm $create_deploy_log_file &> /dev/null
+}
+
+show_pushed_branches() {
+    echo
+    echo
+    merge_count=`grep DONE $create_deploy_log_file | wc -l`
+    if [ $merge_count -eq 1 ]; then
+        echo "Successfully pushed $merge_count branch:"
+    else
+        echo "Successfully pushed $merge_count branches:"
+    fi
+    cat $create_deploy_log_file | sed -e 's/DONE //' | sort
+}
+
+show_review_status() {
+    merge_count=`grep DONE $create_deploy_log_file | wc -l`
+    if [ $merge_count -eq 1 ]; then
+        highlight "You have successfully merged $merge_count branch."
+    else
+        highlight "You have successfully merged $merge_count branches."
+    fi
+    cat $create_deploy_log_file | sed -e 's/DONE //' | sort
+    echo
+    echo "Now verify that things merged nicely."
+    echo
+    echo "When you are ready to push up the rebased branches and new master:"
+    echo "  git create-deploy --push"
+    echo
+    echo "To abort the deploy:"
+    echo "  git create-deploy --abort"
+    echo
+    echo "To check the unpushed commit graph:"
+    echo "  git l origin/master^..master"
+}
+
+verify_create_deploy() {
+    if [ ! -e $create_deploy_log_file ]; then
+        highlight "No $create_deploy_log_file file found."
+        echo "Have you started a create-deploy yet?"
+        echo
+        exit 1
+    fi
+}
+
+verify_no_create_deploy() {
+    if [ -e $create_deploy_log_file ]; then
+        highlight "$create_deploy_log_file file found."
+        echo "You appear to be in the middle of a deploy already."
+        echo "Check on its status with: git create-deploy --status"
+        echo
+        exit 1
+    fi
+}
+
+highlight() {
+    length=$((${#1} + 4))
+    printf -v line '%*s' "$length"
+    echo ${line// /-}
+    echo "! $1 !"
+    echo ${line// /-}
+}
+
+main $@
