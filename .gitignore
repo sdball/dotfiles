@@ -146,3 +146,5 @@
 /.jira-cli
 /.slack.conf
 /.guard_history
+/.chefdk
+/.berkshelf
