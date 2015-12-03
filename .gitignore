@@ -149,3 +149,4 @@
 /.chefdk
 /.berkshelf
 .marky_markov_dictionary.mmd
+.npmrc
