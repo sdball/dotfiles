@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+$stdin.each_line do |line|
+  urls = line.scan(%r{https?://[a-zA-Z0-9./%=?\-_;&]+})
+  urls.each do |url|
+    puts url
+  end
+end
