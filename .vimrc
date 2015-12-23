@@ -292,8 +292,8 @@ function! RunTests(filename)
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    if filereadable("config/environment.rb")
-        exec ":!rspec --order default " . a:filename
+    if filereadable("Gemfile")
+        exec ":!bundle exec rspec " . a:filename
     else
         exec ":!rspec " . a:filename
     end
