@@ -1,5 +1,7 @@
 # sdball's dotfiles
 
+[![Stories in Ready](https://badge.waffle.io/sdball/dotfiles.png?label=ready&title=Ready)](http://waffle.io/sdball/dotfiles)
+
 These dotfiles are my home directory.
 
 Seriously. Check out the .gitignore file. Anything look familiar?
