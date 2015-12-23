@@ -75,3 +75,6 @@
 	enabled = 1
 [status]
     showUntrackedFiles = all
+[user]
+	email = sdball@gmail.com
+	name = sdball
