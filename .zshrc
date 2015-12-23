@@ -5,6 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
+# Set this in .local_zshrc
 # ZSH_THEME="robbyrussell"
 
 # Example aliases
@@ -56,8 +57,9 @@ source $HOME/.local_zshrc
 source $ZSH/oh-my-zsh.sh
 
 # custom theme outside of ZSH
+# copy into .local_zshrc if desired
 # Only load Liquid Prompt in interactive shells, not from a script or from scp
-[[ $- = *i* ]] && source ~/github/nojhan/liquidprompt/liquidprompt
+# [[ $- = *i* ]] && source ~/github/nojhan/liquidprompt/liquidprompt
 
 # generic shell stuff
 [[ -s $HOME/.aliases ]] && source $HOME/.aliases
