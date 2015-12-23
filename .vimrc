@@ -24,6 +24,8 @@ Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-ruby/vim-ruby'
+Plugin 'xolox/vim-colorscheme-switcher'
+Plugin 'xolox/vim-misc'
 
 " Vundle colorschemes
 Plugin 'chriskempson/vim-tomorrow-theme'
@@ -119,6 +121,12 @@ augroup END
 set background=dark
 colorscheme Tomorrow-Night-Eighties
 map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+let g:colorscheme_switcher_define_mappings=0
+let g:colorscheme_switcher_exclude_builtins=1
+map <Left> :PrevColorScheme<cr>
+map <Right> :NextColorScheme<cr>
+map <Up> :RandomColorScheme<cr>
+map <Down> :colors default<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
@@ -146,11 +154,6 @@ imap <c-c> <esc>
 nnoremap <leader><leader> <c-^>
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
-" Arrow keys: UNACCEPTABLE
-map <Left> :echo "NOPE! Use h"<cr>
-map <Right> :echo "NOPE! Use l"<cr>
-map <Up> :echo "NOPE! Use k"<cr>
-map <Down> :echo "NOPE! Use j"<cr>
 " open files in directory of current file
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>e :edit %%
