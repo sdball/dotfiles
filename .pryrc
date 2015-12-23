@@ -24,6 +24,14 @@ if defined? Hirb
   Hirb.enable
 end
 
+# Rails SQL output
+if defined?(Rails) && !Rails.env.nil?
+  if Rails.logger
+    Rails.logger =Logger.new(STDOUT)
+    ActiveRecord::Base.logger = Rails.logger
+  end
+end
+
 class Object
   def interesting_methods
     case self.class
