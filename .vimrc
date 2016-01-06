@@ -29,6 +29,14 @@ Plugin 'xolox/vim-misc'
 
 " Vundle colorschemes
 Plugin 'chriskempson/vim-tomorrow-theme'
+Plugin 'ciaranm/inkpot'
+Plugin 'gosukiwi/vim-atom-dark'
+Plugin 'mkarmona/colorsbox'
+Plugin 'morhetz/gruvbox'
+Plugin 'sickill/vim-monokai'
+Plugin 'vim-scripts/darktango.vim'
+Plugin 'w0ng/vim-hybrid'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
