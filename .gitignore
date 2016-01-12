@@ -151,3 +151,5 @@
 .marky_markov_dictionary.mmd
 .npmrc
 /.bundler
+/Dropbox*
+/.bash_sessions
