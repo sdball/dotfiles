@@ -155,3 +155,5 @@
 /.bash_sessions
 /.rbenv
 /.kerl
+/.docker
+dev
