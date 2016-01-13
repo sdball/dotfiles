@@ -77,3 +77,6 @@ setopt autocd # type the name of a subdirectory will cd into that subdirectory
 # RVM
 [[ -s $HOME/.rvm ]] && PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 [[ -s $HOME/.rvm ]] && source $HOME/.rvm/scripts/rvm
+
+# rbenv
+command -v rbenv >& /dev/null && eval "$(rbenv init -)"
