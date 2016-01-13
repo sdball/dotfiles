@@ -153,3 +153,5 @@
 /.bundler
 /Dropbox*
 /.bash_sessions
+/.rbenv
+/.kerl
