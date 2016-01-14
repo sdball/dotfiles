@@ -74,3 +74,11 @@ dighosts() {
 etchosts() {
   ack $1 /etc/hosts
 }
+
+pout() {
+  tail -f ~/Library/Logs/Pow/apps/$1.log
+}
+
+pouts() {
+  tail -f ~/Library/Logs/Pow/apps/*.log
+}
