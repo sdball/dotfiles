@@ -28,7 +28,7 @@ Plugin 'xolox/vim-colorscheme-switcher'
 Plugin 'xolox/vim-misc'
 
 " Vundle colorschemes
-Plugin 'chriskempson/vim-tomorrow-theme'
+Plugin 'chriskempson/base16-vim'
 Plugin 'ciaranm/inkpot'
 Plugin 'gosukiwi/vim-atom-dark'
 Plugin 'mkarmona/colorsbox'
@@ -36,7 +36,6 @@ Plugin 'morhetz/gruvbox'
 Plugin 'sickill/vim-monokai'
 Plugin 'vim-scripts/darktango.vim'
 Plugin 'w0ng/vim-hybrid'
-
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -126,8 +125,9 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let base16colorspace=256
 set background=dark
-colorscheme Tomorrow-Night-Eighties
+colorscheme base16-mocha
 map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 let g:colorscheme_switcher_define_mappings=0
 let g:colorscheme_switcher_exclude_builtins=1
