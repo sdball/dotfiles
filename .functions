@@ -82,3 +82,7 @@ pout() {
 pouts() {
   tail -f ~/Library/Logs/Pow/apps/*.log
 }
+
+amgack() {
+  ack $HOME/github/sdball/active_merchant/lib/active_merchant/billing/gateways --match $1 $*
+}
