@@ -31,10 +31,10 @@ Plugin 'xolox/vim-misc'
 Plugin 'chriskempson/base16-vim'
 Plugin 'ciaranm/inkpot'
 Plugin 'gosukiwi/vim-atom-dark'
-Plugin 'mkarmona/colorsbox'
 Plugin 'morhetz/gruvbox'
 Plugin 'sickill/vim-monokai'
 Plugin 'vim-scripts/darktango.vim'
+Plugin 'vim-scripts/C64.vim'
 Plugin 'w0ng/vim-hybrid'
 
 " All of your Plugins must be added before the following line
@@ -131,15 +131,17 @@ if filereadable(expand("~/.vimrc_background"))
   map <F5> :source ~/.vimrc_background<CR>
 else
   set background=dark
-  colorscheme base16-mocha
-  map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
-  let g:colorscheme_switcher_define_mappings=0
-  let g:colorscheme_switcher_exclude_builtins=1
-  map <Left> :PrevColorScheme<cr>
-  map <Right> :NextColorScheme<cr>
-  map <Up> :RandomColorScheme<cr>
-  map <Down> :colors default<cr>
+  colorscheme default
 endif
+
+map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+let g:colorscheme_switcher_define_mappings=0
+let g:colorscheme_switcher_exclude_builtins=1
+let g:colorscheme_switcher_exclude = ["base16-3024","base16-apathy","base16-ashes","base16-atelierdune","base16-atelierforest","base16-atelierheath","base16-atelierlakeside","base16-atelierseaside","base16-bespin","base16-brewer","base16-bright","base16-chalk","base16-codeschool","base16-colors","base16-default","base16-eighties","base16-embers","base16-flat","base16-google","base16-grayscale","base16-greenscreen","base16-harmonic16","base16-isotope","base16-londontube","base16-marrakesh","base16-mocha","base16-monokai","base16-ocean","base16-paraiso","base16-pop","base16-railscasts","base16-shapeshifter","base16-solarized","base16-summerfruit","base16-tomorrow","base16-twilight"]
+map <Left> :PrevColorScheme<cr>
+map <Right> :NextColorScheme<cr>
+map <Up> :RandomColorScheme<cr>
+map <Down> :colors default<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
