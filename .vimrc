@@ -282,27 +282,24 @@ function! RunTestFile(...)
     let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
     if in_test_file
         call SetTestFile()
-    elseif !exists("t:grb_test_file")
+    elseif !exists("t:sdb_test_file")
         return
     end
-    call RunTests(t:grb_test_file . command_suffix)
+
+    call RunTests(t:sdb_test_file, command_suffix)
 endfunction
 
 function! RunNearestTest()
-    if exists("t:current_test")
-        call RunTestFile(" -n " . t:current_test)
-    else
-        let spec_line_number = line('.')
-        call RunTestFile(":" . spec_line_number)
-    endif
+    let spec_line_number = line('.')
+    call RunTestFile(spec_line_number)
 endfunction
 
 function! SetTestFile()
 " Set the spec file that tests will be run for.
-    let t:grb_test_file=@%
+    let t:sdb_test_file=@%
 endfunction
 
-function! RunTests(filename)
+function! RunTests(filename, line_number)
 " Write the file and run tests for the given filename
     :w
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
@@ -313,12 +310,17 @@ function! RunTests(filename)
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     if a:filename =~ "spec"
         if filereadable("Gemfile")
-            exec ":!bundle exec rspec " . a:filename
+            exec ":!bundle exec rspec " . a:filename . ':' . a:line_number
         else
-            exec ":!rspec " . a:filename
+            exec ":!rspec " . a:filename . ':' . a:line_number
         end
     else
-        exec ":!ruby -I'lib:test' " . a:filename
+        if a:line_number
+            let test_name=system("head -n " . a:line_number . " " . a:filename . " | ack 'def test_' | tail -1 | sed -e 's/.*def //'")
+            exec ":!ruby -I'lib:test' " . a:filename . " -n " . test_name
+        else
+            exec ":!ruby -I'lib:test' " . a:filename
+        end
     end
 endfunction
 
