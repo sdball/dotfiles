@@ -316,7 +316,7 @@ function! RunTests(filename, line_number)
         end
     else
         if a:line_number
-            let test_name=system("head -n " . a:line_number . " " . a:filename . " | ack 'def test_' | tail -1 | sed -e 's/.*def //'")
+            let test_name=system("head -n " . a:line_number . " " . a:filename . " | grep 'def test_' | tail -1 | sed -e 's/.*def //'")
             exec ":!ruby -I'lib:test' " . a:filename . " -n " . test_name
         else
             exec ":!ruby -I'lib:test' " . a:filename
