@@ -7,11 +7,15 @@ branch_pattern=$1
 
 matches=`git branch -r | grep $branch_pattern | grep -v HEAD | wc -l`
 if [ $matches -eq 0 ]; then
-    echo "$branch_pattern not found on origin"
+    echo "$branch_pattern not found"
 elif [ $matches -eq 1 ]; then
-    branch=`git b -r | grep $branch_pattern | grep -v HEAD | cut -d '/' -f 2`
-    git co -B $branch origin/$branch
+    match=`git b -r | grep $branch_pattern | grep -v HEAD | sed -e 's/^ *//'`
+    remote=`echo $match | cut -d '/' -f 1`
+    branch=`echo $match | cut -d '/' -f 2`
+    git co -B $branch $remote/$branch
 else
-    branch=`git b -r | grep $branch_pattern | grep -v HEAD | cut -d '/' -f 2 | selecta`
-    git co -B $branch origin/$branch
+    match=`git b -r | grep $branch_pattern | grep -v HEAD | sed -e 's/^ *//' | selecta`
+    remote=`echo $match | cut -d '/' -f 1`
+    branch=`echo $match | cut -d '/' -f 2`
+    git co -B $branch $remote/$branch
 fi
