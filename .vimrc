@@ -175,16 +175,9 @@ map <leader>e :edit %%
 " map to current file for command mode
 cnoremap $$ <C-R>=expand('%')<cr>
 " TESTING, WOO!
-nnoremap <F8> :Dispatch! rspec --format=Fivemat --color spec<cr>
-map <leader>d :Dispatch rspec --format=Fivemat --order=default --color %<cr>
-map <leader>D :Dispatch rspec --format=Fivemat --order=default --color %:
 nnoremap <leader>. :call OpenTestAlternate()<cr>
 map <leader>t :call RunTestFile()<cr>
 map <leader>T :call RunNearestTest()<cr>
-map <leader>sa :!spec spec<cr>
-map <leader>sc :!spec spec/controllers<cr>
-map <leader>sm :!spec spec/models<cr>
-map <leader>sv :!spec spec/views<cr>
 " rails maps
 map <leader>gr :topleft :split config/routes.rb<cr>
 map <leader>rr :call ShowRoutes()<cr>
