@@ -20,13 +20,19 @@ def quiet_logger
 end
 
 def set_logger_to(logger)
-  ActiveRecord::Base.logger = logger
-  ActiveRecord::Base.clear_reloadable_connections!
+  begin
+    ActiveRecord::Base.logger = logger
+    ActiveRecord::Base.clear_reloadable_connections!
+  rescue
+    puts "Error setting ActiveRecord logger"
+  end
 end
 
 def enable_hirb
   if HIRB_LOADED
-    Hirb::Formatter.dynamic_config['ActiveRecord::Base']
+    if ActiveRecord
+      Hirb::Formatter.dynamic_config['ActiveRecord::Base']
+    end
     Hirb.enable
   else
     puts "hirb is not loaded"
