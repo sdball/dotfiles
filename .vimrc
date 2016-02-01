@@ -303,9 +303,15 @@ function! RunTests(filename, line_number)
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     if a:filename =~ "spec"
         if filereadable("Gemfile")
-            exec ":!bundle exec rspec " . a:filename . ':' . a:line_number
+            let command="bundle exec rspec"
         else
-            exec ":!rspec " . a:filename . ':' . a:line_number
+            let command="rspec"
+        end
+
+        if a:line_number
+            exec ":!" . command . " " . a:filename . ":" . a:line_number
+        else
+            exec ":!" . command . " " . a:filename
         end
     else
         if a:line_number
