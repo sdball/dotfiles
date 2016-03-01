@@ -44,6 +44,8 @@
     changed-specs = !git diff --name-only master -- spec | egrep '.rb'
     run-changed-specs = !bundle exec rspec `git changed-specs`
     changed-files = !git diff --name-only master | cat
+    branch-files = !git changed-files
+    vim = !vim -O `git changed-files`
 
     ; data analysis
     authors = !git log --format="%aN"
