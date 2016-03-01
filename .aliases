@@ -8,3 +8,6 @@ alias gbg="git branch -a | ack"
 alias newrelic-check='curl -0v -H "Cache-Control: no-cache, max-age=0" -H "User-Agent: NewRelicPinger/1.0 (1)" -H "X-Newrelic-Ignore: true"'
 alias nrcheck=newrelic-check
 alias root='sudo $(fc -ln -1)'
+alias ack="sl"
+alias f="ag -u -g"
+alias r="ag -u"
