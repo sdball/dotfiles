@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -e
+
+main() {
+  file=$1
+  enforce_usage $file
+  extract_code_and_markers | trim_code_markers
+}
+
+enforce_usage() {
+  if [ -z $1 ]; then
+    echo "Usage: $0 file_with_markdown_code.txt"
+    exit 1
+  fi
+}
+
+extract_code_and_markers() {
+  sed -n '/```/,/```/p' $file
+}
+
+trim_code_markers() {
+  sed '/```/d'
+}
+
+main $1
