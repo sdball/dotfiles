@@ -162,3 +162,5 @@ dev
 .exenv
 .hex
 .mix
+.asdf
+.atom
