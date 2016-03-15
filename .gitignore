@@ -56,6 +56,7 @@
 /.vim/autoload
 /.vim/bundle
 /.vim/doc
+/.vim/plugged
 /.viminfo
 /.vimperator
 /.vimperatorrc

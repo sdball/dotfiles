@@ -4,42 +4,33 @@
 set nocompatible
 filetype off
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" -- Plugins: https://github.com/junegunn/vim-plug ---------------------------
+call plug#begin('~/.vim/plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plug 'ervandew/supertab'
+Plug 'kana/vim-scratch'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-ruby/vim-ruby'
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-colorscheme-switcher'
 
-" Vundle plugins
-Plugin 'ervandew/supertab'
-Plugin 'kana/vim-scratch'
-Plugin 'kien/ctrlp.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'xolox/vim-colorscheme-switcher'
-Plugin 'xolox/vim-misc'
+" ColorSchemes
+Plug 'chriskempson/base16-vim'
+Plug 'ciaranm/inkpot'
+Plug 'gosukiwi/vim-atom-dark'
+Plug 'morhetz/gruvbox'
+Plug 'sickill/vim-monokai'
+Plug 'vim-scripts/darktango.vim'
+Plug 'vim-scripts/C64.vim'
+Plug 'w0ng/vim-hybrid'
 
-" Vundle colorschemes
-Plugin 'chriskempson/base16-vim'
-Plugin 'ciaranm/inkpot'
-Plugin 'gosukiwi/vim-atom-dark'
-Plugin 'morhetz/gruvbox'
-Plugin 'sickill/vim-monokai'
-Plugin 'vim-scripts/darktango.vim'
-Plugin 'vim-scripts/C64.vim'
-Plugin 'w0ng/vim-hybrid'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
+" -- End Plugins -------------------------------------------------------------
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
