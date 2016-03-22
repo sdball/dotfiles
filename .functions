@@ -88,7 +88,7 @@ search-activemerchant-gateways-for() {
 }
 
 define() {
-  trans -d :en $1 | less -niSFX
+  trans -d en: $1 | less -niSFX
 }
 
 github-clone() {
