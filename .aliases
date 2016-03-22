@@ -9,3 +9,5 @@ alias newrelic-check='curl -0v -H "Cache-Control: no-cache, max-age=0" -H "User-
 alias nrcheck=newrelic-check
 alias root='sudo $(fc -ln -1)'
 alias ack="sl"
+alias trl=trans
+alias lookup=define

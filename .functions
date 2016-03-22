@@ -86,3 +86,8 @@ pouts() {
 search-activemerchant-gateways-for() {
   ag $1 $HOME/github/sdball/active_merchant/lib/active_merchant/billing/gateways ${@:2}
 }
+
+define() {
+  trans -d :en $1 | less -niSFX
+}
+
