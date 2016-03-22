@@ -91,3 +91,9 @@ define() {
   trans -d :en $1 | less -niSFX
 }
 
+github-clone() {
+  _github_url=$1
+  mkd $HOME/github/`echo $_github_url | cut -d '/' -f 1 | cut -d ':' -f 2`
+  git clone $_github_url
+}
+
