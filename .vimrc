@@ -7,6 +7,7 @@ filetype off
 " -- Plugins: https://github.com/junegunn/vim-plug ---------------------------
 call plug#begin('~/.vim/plugged')
 
+Plug 'elixir-lang/vim-elixir'
 Plug 'ervandew/supertab'
 Plug 'kana/vim-scratch'
 Plug 'kien/ctrlp.vim'
