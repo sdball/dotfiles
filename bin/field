@@ -1,0 +1,2 @@
+#!/bin/sh
+awk -v field=$1 '{print $(field)}'
