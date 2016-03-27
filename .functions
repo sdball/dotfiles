@@ -93,7 +93,10 @@ define() {
 
 github-clone() {
   _github_url=$1
-  mkd $HOME/github/`echo $_github_url | cut -d '/' -f 1 | cut -d ':' -f 2`
-  git clone $_github_url
+  _user=`echo $_github_url | cut -d '/' -f 1 | cut -d ':' -f 2`
+  _repo=`echo $_github_url | cut -d '/' -f 2 | cut -d '.' -f 1`
+  mkd $HOME/github/$_user
+  git clone $_github_url 2> /dev/null
+  cd $_repo
 }
 
