@@ -169,3 +169,6 @@ dev
 research/
 .fasd
 Virtualbox\ VMs
+erlang
+bin/kerl
+bin/rebar
