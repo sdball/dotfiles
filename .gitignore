@@ -172,3 +172,4 @@ Virtualbox\ VMs
 erlang
 bin/kerl
 bin/rebar
+.kerlrc
