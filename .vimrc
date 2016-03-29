@@ -117,21 +117,14 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-  map <F5> :source ~/.vimrc_background<CR>
-else
-  set background=dark
-  colorscheme monokai
-  let g:colorscheme_switcher_define_mappings=0
-  let g:colorscheme_switcher_exclude_builtins=1
-  map <Left> :PrevColorScheme<cr>
-  map <Right> :NextColorScheme<cr>
-  map <Up> :RandomColorScheme<cr>
-  map <Down> :colors default<cr>
-endif
-
+set background=dark
+colorscheme monokai
+let g:colorscheme_switcher_define_mappings=0
+let g:colorscheme_switcher_exclude_builtins=1
+map <Left> :PrevColorScheme<cr>
+map <Right> :NextColorScheme<cr>
+map <Up> :RandomColorScheme<cr>
+map <Down> :colors default<cr>
 map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
