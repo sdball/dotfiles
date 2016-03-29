@@ -22,6 +22,8 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'xolox/vim-misc' | Plug 'xolox/vim-colorscheme-switcher'
 
 " ColorSchemes
+Plug 'AlessandroYorba/Alduin'
+Plug 'AlessandroYorba/Sierra'
 Plug 'ciaranm/inkpot'
 Plug 'morhetz/gruvbox'
 Plug 'sickill/vim-monokai'
@@ -118,7 +120,17 @@ augroup END
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
-colorscheme monokai
+
+" alduin specific color options
+let g:alduin_Shout_Become_Ethereal = 1
+let g:alduin_Shout_Aura_Whisper = 1
+
+" sierra specific color options
+let g:sierra_Twilight = 0 " darker
+let g:sierra_Midnight = 1 " more darker
+let g:sierra_Pitch = 0    " darkest
+colorscheme sierra
+
 let g:colorscheme_switcher_define_mappings=0
 let g:colorscheme_switcher_exclude_builtins=1
 map <Left> :PrevColorScheme<cr>
