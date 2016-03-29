@@ -23,11 +23,10 @@ Plug 'xolox/vim-misc' | Plug 'xolox/vim-colorscheme-switcher'
 
 " ColorSchemes
 Plug 'ciaranm/inkpot'
-Plug 'gosukiwi/vim-atom-dark'
 Plug 'morhetz/gruvbox'
 Plug 'sickill/vim-monokai'
-Plug 'vim-scripts/darktango.vim'
 Plug 'vim-scripts/C64.vim'
+Plug 'vim-scripts/darktango.vim'
 Plug 'w0ng/vim-hybrid'
 
 call plug#end()
