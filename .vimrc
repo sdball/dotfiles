@@ -255,7 +255,7 @@ function! RunTestFile(...)
     endif
 
 " Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
+    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_test.exs\)$') != -1
     if in_test_file
         call SetTestFile()
     elseif !exists("t:sdb_test_file")
@@ -284,24 +284,34 @@ function! RunTests(filename, line_number)
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    if a:filename =~ "spec"
-        if filereadable("Gemfile")
-            let command="bundle exec rspec"
+    if a:filename =~ "\.rb$"
+        if a:filename =~ "spec"
+            if filereadable("Gemfile")
+                let command="bundle exec rspec"
+            else
+                let command="rspec"
+            end
+
+            if a:line_number
+                exec ":!" . command . " " . a:filename . ":" . a:line_number
+            else
+                exec ":!" . command . " " . a:filename
+            end
         else
-            let command="rspec"
+            if a:line_number
+                let test_name=system("head -n " . a:line_number . " " . a:filename . " | grep 'def test_' | tail -1 | sed -e 's/.*def //'")
+                exec ":!ruby -I'lib:test' " . a:filename . " -n " . test_name
+            else
+                exec ":!ruby -I'lib:test' " . a:filename
+            end
         end
+    elseif a:filename =~ "\.exs$"
+        let command="mix test"
 
         if a:line_number
             exec ":!" . command . " " . a:filename . ":" . a:line_number
         else
             exec ":!" . command . " " . a:filename
-        end
-    else
-        if a:line_number
-            let test_name=system("head -n " . a:line_number . " " . a:filename . " | grep 'def test_' | tail -1 | sed -e 's/.*def //'")
-            exec ":!ruby -I'lib:test' " . a:filename . " -n " . test_name
-        else
-            exec ":!ruby -I'lib:test' " . a:filename
         end
     end
 endfunction
