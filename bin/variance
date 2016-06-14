@@ -1,0 +1,8 @@
+#!/usr/bin/env awk -f
+{
+  sum += $1
+  sumsq += $1 * $1
+}
+END {
+  print sumsq / NR - (sum / NR)^2
+}
