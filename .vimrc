@@ -9,7 +9,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'elixir-lang/vim-elixir'
 Plug 'ervandew/supertab'
-Plug 'kana/vim-scratch'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
@@ -18,7 +17,6 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'vim-ruby/vim-ruby'
 Plug 'xolox/vim-misc' | Plug 'xolox/vim-colorscheme-switcher'
 
 " ColorSchemes
@@ -187,10 +185,6 @@ map <leader>ps :CtrlPClearCache<cr>\|:CtrlP spec<cr>
 map <leader>pn :CtrlPClearCache<cr>\|:CtrlP vendor<cr>
 map <leader>pt :CtrlPClearCache<cr>\|:CtrlPTag<cr>
 map <leader>/ :CtrlPLine<cr>
-" ruby
-map <leader>pg :topleft 100 :split Gemfile<cr>
-" notes
-map <leader>wl :topleft :split ~/worklog/worklog.md<cr>
 " when nested too deep
 nnoremap <leader>x :set cursorcolumn!<cr>
 " remove trailing whitespace
