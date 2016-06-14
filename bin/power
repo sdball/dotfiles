@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cat ~/img2ansi/battery.txt
