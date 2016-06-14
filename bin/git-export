@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [ "$#" -eq 1 ]; then
+    git clone $1 &>/tmp/clone.txt
+else
+    git clone $1 $2 &>/tmp/clone.txt
+fi
+
+clone_dir=`cut -d "'" -f 2 /tmp/clone.txt`
+cd $clone_dir
+rm -rf .git
+echo "Exported into $clone_dir"
