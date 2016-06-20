@@ -100,3 +100,10 @@ github-clone() {
   cd $_repo
 }
 
+vim() {
+  if [[ $# -eq 1 ]]; then
+    command vim $1
+  else
+    command vim -O $*
+  fi
+}
