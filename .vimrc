@@ -127,7 +127,7 @@ let g:alduin_Shout_Aura_Whisper = 1
 let g:sierra_Twilight = 0 " darker
 let g:sierra_Midnight = 1 " more darker
 let g:sierra_Pitch = 0    " darkest
-colorscheme sierra
+colorscheme default
 
 let g:colorscheme_switcher_define_mappings=0
 let g:colorscheme_switcher_exclude_builtins=1
