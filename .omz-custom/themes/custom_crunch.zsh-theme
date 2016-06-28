@@ -31,12 +31,13 @@ ZSH_THEME_GIT_PROMPT_DIRTY=" $CRUNCH_GIT_DIRTY_COLOR✗"
 # Our elements:
 CRUNCH_TIME_="$CRUNCH_BRACKET_COLOR{$CRUNCH_TIME_COLOR%T$CRUNCH_BRACKET_COLOR}%{$reset_color%}"
 
-if which asdf &> /dev/null; then
-    CRUNCH_EX_="$CRUNCH_BRACKET_COLOR"["$CRUNCH_EX_COLOR\${\$(asdf which elixir)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
-fi
-
 if which rbenv &> /dev/null; then
     CRUNCH_RB_="$CRUNCH_BRACKET_COLOR"["$CRUNCH_RB_COLOR\${\$(rbenv version | sed -e 's/ (set.*$//' -e 's/^ruby-//')}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
+else
+    if which asdf &> /dev/null; then
+        CRUNCH_RB_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_RB_COLOR}ruby \${\$(asdf which ruby)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
+        CRUNCH_EX_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_EX_COLOR}elixir \${\$(asdf which elixir)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
+    fi
 fi
 
 CRUNCH_DIR_="$CRUNCH_DIR_COLOR%~\$(git_prompt_info) "
