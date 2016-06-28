@@ -173,3 +173,4 @@ erlang
 bin/kerl
 bin/rebar
 .kerlrc
+.s3cfg
