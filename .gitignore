@@ -174,3 +174,4 @@ bin/kerl
 bin/rebar
 .kerlrc
 .s3cfg
+.local/share/ruby-advisory-db/
