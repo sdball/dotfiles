@@ -7,6 +7,7 @@ filetype off
 " -- Plugins: https://github.com/junegunn/vim-plug ---------------------------
 call plug#begin('~/.vim/plugged')
 
+Plug 'chriskempson/base16-vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'ervandew/supertab'
@@ -17,18 +18,6 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'xolox/vim-misc' | Plug 'xolox/vim-colorscheme-switcher'
-
-" ColorSchemes
-Plug 'AlessandroYorba/Alduin'
-Plug 'AlessandroYorba/Sierra'
-Plug 'ciaranm/inkpot'
-Plug 'morhetz/gruvbox'
-Plug 'sickill/vim-monokai'
-Plug 'tpope/vim-vividchalk'
-Plug 'vim-scripts/C64.vim'
-Plug 'vim-scripts/darktango.vim'
-Plug 'w0ng/vim-hybrid'
 
 call plug#end()
 " -- End Plugins -------------------------------------------------------------
@@ -118,24 +107,13 @@ augroup END
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
+let base16colorspace=256
+colorscheme base16-default-light
 
-" alduin specific color options
-let g:alduin_Shout_Become_Ethereal = 1
-let g:alduin_Shout_Aura_Whisper = 1
-
-" sierra specific color options
-let g:sierra_Twilight = 0 " darker
-let g:sierra_Midnight = 1 " more darker
-let g:sierra_Pitch = 0    " darkest
-colorscheme default
-
-let g:colorscheme_switcher_define_mappings=0
-let g:colorscheme_switcher_exclude_builtins=1
 map <Left> :PrevColorScheme<cr>
 map <Right> :NextColorScheme<cr>
-map <Up> :RandomColorScheme<cr>
+map <UP> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 map <Down> :colors default<cr>
-map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
