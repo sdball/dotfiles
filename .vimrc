@@ -108,11 +108,11 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
 let base16colorspace=256
-colorscheme base16-default-light
+colorscheme base16-default-dark
 
-map <Left> :PrevColorScheme<cr>
-map <Right> :NextColorScheme<cr>
-map <UP> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+map <Left> :set background=light<CR>
+map <Right> :set background=dark<CR>
+map <UP> :colors base16-default-light<CR>
 map <Down> :colors default<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
