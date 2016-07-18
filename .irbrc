@@ -9,8 +9,15 @@ rescue LoadError => err
   warn "Couldn't load interactive_editor: #{err}"
 end
 
-# configure irb
-#IRB.conf[:PROMPT_MODE] = :SIMPLE
+IRB.conf[:PROMPT][:CUSTOM] = {
+  :PROMPT_I => "irb> ",
+  :PROMPT_S => "%l>> ",
+  :PROMPT_C => ".. ",
+  :PROMPT_N => ".. ",
+  :RETURN => "=> %s\n"
+}
+IRB.conf[:PROMPT_MODE] = :CUSTOM
+IRB.conf[:AUTO_INDENT] = true
 
 # irb history
 IRB.conf[:EVAL_HISTORY] = 1000
