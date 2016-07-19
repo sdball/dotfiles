@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -e
+
+echo $1 | sed -e 's/ /-/g' | tr A-Z a-z | xargs git checkout -b

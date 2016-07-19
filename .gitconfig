@@ -39,6 +39,7 @@
     ss = local-to-remote-status
     pu = push -u
     p = !git push -u origin `git current-branch`
+    fb = create-feature-branch
 
     ; project automation
     changed-specs = !git diff --name-only master -- spec | egrep '.rb'
