@@ -175,3 +175,4 @@ bin/rebar
 .kerlrc
 .s3cfg
 .local/share/ruby-advisory-db/
+.local/share/heroku
