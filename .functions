@@ -107,3 +107,12 @@ vim() {
     command vim -O $*
   fi
 }
+
+base16-theme() {
+  ln -sf $HOME/.config/base16-shell/scripts/$1 $HOME/.base16_theme
+  source $HOME/.base16_theme
+}
+_base16-theme() {
+  _files -W $HOME/.config/base16-shell/scripts/
+}
+compdef _base16-theme base16-theme
