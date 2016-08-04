@@ -176,3 +176,4 @@ bin/rebar
 .s3cfg
 .local/share/ruby-advisory-db/
 .local/share/heroku
+.puma-dev
