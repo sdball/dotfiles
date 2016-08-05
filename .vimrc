@@ -316,3 +316,19 @@ let g:ctrlp_mruf_relative = 1
 let g:ctrlp_working_path_mode = 'w'
 command! CtrlPLine call ctrlp#init(ctrlp#line#id())
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" REVEAL
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! SetupReveal()
+    let t:sdb_reveal_file="~/Dropbox/talks/powerup-your-prompt/outline.txt"
+    let t:sdb_reveal_line=0
+endfunction
+
+function! Reveal()
+    :normal 1GdG
+    let t:sdb_reveal_line=t:sdb_reveal_line + 1
+    exec ":read !head -" . t:sdb_reveal_line . " " . t:sdb_reveal_file
+    :normal gg
+    :normal dd
+endfunction
