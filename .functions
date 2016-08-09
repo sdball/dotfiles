@@ -109,8 +109,12 @@ vim() {
 }
 
 base16-theme() {
-  ln -sf $HOME/.config/base16-shell/scripts/$1 $HOME/.base16_theme
-  source $HOME/.base16_theme
+  if [[ $# -eq 2 ]]; then
+      source $HOME/.config/base16-shell/scripts/$1
+  else
+      ln -sf $HOME/.config/base16-shell/scripts/$1 $HOME/.base16_theme
+      source $HOME/.base16_theme
+  fi
 }
 _base16-theme() {
   _files -W $HOME/.config/base16-shell/scripts/
