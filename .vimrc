@@ -153,16 +153,6 @@ map <leader>T :call RunNearestTest()<cr>
 " rails maps
 map <leader>gr :topleft :split config/routes.rb<cr>
 map <leader>rr :call ShowRoutes()<cr>
-" ctrl-p searches
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files --others --cached --exclude-standard']
-map <leader>pa :CtrlPClearCache<cr>\|:CtrlP app<cr>
-map <leader>pc :CtrlPClearCache<cr>\|:CtrlP config<cr>
-map <leader>pl :CtrlPClearCache<cr>\|:CtrlP lib<cr>
-map <leader>pp :CtrlPClearCache<cr>\|:CtrlP public<cr>
-map <leader>ps :CtrlPClearCache<cr>\|:CtrlP spec<cr>
-map <leader>pn :CtrlPClearCache<cr>\|:CtrlP vendor<cr>
-map <leader>pt :CtrlPClearCache<cr>\|:CtrlPTag<cr>
-map <leader>/ :CtrlPLine<cr>
 " when nested too deep
 nnoremap <leader>x :set cursorcolumn!<cr>
 " remove trailing whitespace
@@ -311,10 +301,15 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTRLP STUFFS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files --others --cached --exclude-standard']
 let g:ctrlp_max_height = 30
 let g:ctrlp_mruf_relative = 1
 let g:ctrlp_working_path_mode = 'w'
 command! CtrlPLine call ctrlp#init(ctrlp#line#id())
+
+" custom ctrl-p searches
+map <leader>pt :CtrlPClearCache<cr>\|:CtrlPTag<cr>
+map <leader>/ :CtrlPLine<cr>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
