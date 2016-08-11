@@ -321,7 +321,7 @@ command! CtrlPLine call ctrlp#init(ctrlp#line#id())
 " REVEAL
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! SetupReveal()
-    let t:sdb_reveal_file="~/Dropbox/talks/powerup-your-prompt/outline.txt"
+    let t:sdb_reveal_file="outline.txt"
     let t:sdb_reveal_line=0
 endfunction
 
