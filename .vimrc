@@ -7,6 +7,7 @@ filetype off
 " -- Plugins: https://github.com/junegunn/vim-plug ---------------------------
 call plug#begin('~/.vim/plugged')
 
+Plug 'airblade/vim-gitgutter'
 Plug 'chriskempson/base16-vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elixir-lang/vim-elixir'
@@ -320,3 +321,9 @@ function! Reveal()
     :normal gg
     :normal dd
 endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" GIT GUTTER
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>g :GitGutterToggle<cr>
+set updatetime=250
