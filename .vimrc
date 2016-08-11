@@ -146,9 +146,6 @@ cnoremap $$ <C-R>=expand('%')<cr>
 nnoremap <leader>. :call OpenTestAlternate()<cr>
 map <leader>t :call RunTestFile()<cr>
 map <leader>T :call RunNearestTest()<cr>
-" rails maps
-map <leader>gr :topleft :split config/routes.rb<cr>
-map <leader>rr :call ShowRoutes()<cr>
 " when nested too deep
 nnoremap <leader>x :set cursorcolumn!<cr>
 " remove trailing whitespace
