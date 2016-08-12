@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+# vim: set ft=ruby:
+
+# """
+# This file executes as a bash script, which turns around and executes Ruby via
+# the line below. The -x argument to Ruby makes it discard everything before
+# the second "!ruby" shebang. This allows us to work on Linux, where the
+# shebang can only have one argument so we can't directly say
+# "#!/usr/bin/env ruby --disable-gems". Thanks for that, Linux.
+#
+# If this seems confusing, don't worry. You can treat it as a normal Ruby file
+# starting with the "!ruby" shebang below.
+#
+# - Gary Bernhardt
+# """
+
+exec /usr/bin/env ruby --disable-gems -x "$0" $*
+#!ruby
+
+unless pb_dir = ENV['PB_DIR']
+  puts "PB_DIR not set"
+  exit 2
+end
+
+unless `command -v imgcat`
+  puts "imgcat command not found"
+  exit 2
+end
+
+class Main
+  def self.call(pb_dir)
+    behavior = if ARGV.empty?
+                 RandomGif.new(pb_dir)
+               else
+                 ChosenGif.new(pb_dir, ARGV)
+               end
+
+    behavior.call
+  end
+end
+
+class GifSelection
+  attr :directory, :gif
+
+  def call
+    puts `imgcat #{directory}/#{gif}`
+  end
+end
+
+class RandomGif < GifSelection
+  def initialize(directory)
+    @directory = directory
+    @gif = File.basename Dir.glob(File.join(directory, "*")).sample
+  end
+end
+
+class ChosenGif < GifSelection
+  def initialize(directory, args)
+    @directory = directory
+    @gif=args.join("_").gsub(/\W*/, '') + ".gif"
+  end
+end
+
+Main.call(pb_dir)
