@@ -120,3 +120,7 @@ _base16-theme() {
   _files -W $HOME/.config/base16-shell/scripts/
 }
 compdef _base16-theme base16-theme
+
+stargazers() {
+  curl -s https://api.github.com/repos/$1 | jq ".stargazers_count"
+}
