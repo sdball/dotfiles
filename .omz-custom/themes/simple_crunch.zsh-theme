@@ -46,7 +46,8 @@ if command -v asdf &> /dev/null && asdf which elixir &> /dev/null; then
 fi
 
 CRUNCH_DIR_="$CRUNCH_DIR_COLOR%~\$(git_prompt_info) "
-CRUNCH_PROMPT="${CRUNCH_BRACKET_COLOR}$ "
+CRUNCH_PROMPT="
+${CRUNCH_BRACKET_COLOR}$ "
 
 # Put it all together!
 PROMPT="$CRUNCH_PROMPT%{$reset_color%}"
