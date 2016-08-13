@@ -106,14 +106,10 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set background=dark
-let base16colorspace=256
-colorscheme base16-default-dark
-
-map <Left> :set background=light<CR>
-map <Right> :set background=dark<CR>
-map <UP> :colors base16-default-light<CR>
-map <Down> :colors default<cr>
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
