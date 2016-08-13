@@ -115,3 +115,7 @@ stargazers() {
 github-repo-stats() {
   curl -s https://api.github.com/repos/$1 | jq ". | {repo: .full_name, stars: .stargazers_count, watchers: .watchers_count, forks: .forks_count, subscribers: .subscribers_count, open_issues: .open_issues_count}"
 }
+
+weather() {
+  curl -s http://wttr.in/$1
+}
