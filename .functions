@@ -119,3 +119,12 @@ github-repo-stats() {
 weather() {
   curl -s http://wttr.in/$1
 }
+
+app-tree-imgcat() {
+  mix app.tree --format dot &> /dev/null && dot -Tpng app_tree.dot \
+  | imgcat; rm -f app_tree.dot
+}
+deps-tree-imgcat() {
+  mix deps.tree --format dot &> /dev/null && dot -Tpng deps_tree.dot \
+  | imgcat; rm -f app_tree.dot
+}
