@@ -57,6 +57,6 @@ if flag == 'color':
           + Fore.RESET + Style.RESET_ALL)
 else:
     if b_plugged:
-        print "%s (P)" % out
+        print "%s (P)" % out.encode('utf-8').strip()
     else:
-        print "%s (-)" % out
+        print "%s (-)" % out.encode('utf-8').strip()
