@@ -177,3 +177,4 @@ bin/rebar
 .local/share/ruby-advisory-db/
 .local/share/heroku
 .puma-dev
+.cargo
