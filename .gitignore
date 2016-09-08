@@ -178,3 +178,4 @@ bin/rebar
 .local/share/heroku
 .puma-dev
 .cargo
+.gopath
