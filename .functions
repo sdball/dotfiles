@@ -139,3 +139,13 @@ man() {
     LESS_TERMCAP_us=$'\e'"[1;32m" \
     command man "$@"
 }
+
+docker-for-mac() {
+  env | ag "^DOCKER_" | cut -d '=' -f 1 | while read variable; do unset $variable; done
+  echo "docker will now use docker for mac"
+}
+
+docker-toolbox() {
+  eval $(docker-machine env default)
+  echo "docker will now use the docker-machine vm"
+}
