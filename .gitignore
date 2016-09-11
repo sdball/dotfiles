@@ -179,3 +179,4 @@ bin/rebar
 .puma-dev
 .cargo
 .gopath
+.plexht
