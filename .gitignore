@@ -180,3 +180,4 @@ bin/rebar
 .cargo
 .gopath
 .plexht
+.aws
