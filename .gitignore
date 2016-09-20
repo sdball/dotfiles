@@ -181,3 +181,4 @@ bin/rebar
 .gopath
 .plexht
 .aws
+.rediscli_history
