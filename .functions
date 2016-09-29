@@ -149,3 +149,11 @@ docker-toolbox() {
   eval $(docker-machine env default)
   echo "docker will now use the docker-machine vm"
 }
+
+marked() {
+  if [ $1 ]; then
+    open -a "Marked 2" $1;
+  else
+    open -a "Marked 2";
+  fi
+}
