@@ -257,9 +257,9 @@ function! RunTests(filename, line_number)
         else
             if a:line_number
                 let test_name=system("head -n " . a:line_number . " " . a:filename . " | rg '(def test_|test \")' | tail -1 | sed -e 's/.*def //' -e 's/.*test //' -e 's/ do$//' | tr '\"' / | tr \"'\" / | tr ' ' _")
-                exec ":!ruby -I'lib:test' " . a:filename . " -n " . test_name
+                exec ":!ruby -I test " . a:filename . " -n " . test_name
             else
-                exec ":!ruby -I'lib:test' " . a:filename
+                exec ":!ruby -I test " . a:filename
             end
         end
     elseif a:filename =~ "\.exs$"
