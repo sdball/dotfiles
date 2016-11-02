@@ -182,3 +182,4 @@ bin/rebar
 .plexht
 .aws
 .rediscli_history
+.hyper_plugins
