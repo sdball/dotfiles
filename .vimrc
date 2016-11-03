@@ -107,10 +107,14 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme desert
-hi CursorLine cterm=NONE ctermbg=240 ctermfg=NONE
-autocmd InsertEnter * highlight CursorLine ctermbg=NONE ctermfg=NONE
-autocmd InsertLeave * highlight CursorLine ctermbg=240 ctermfg=NONE
+colorscheme industry
+
+" number line
+highlight LineNr ctermbg=237 ctermfg=240
+highlight CursorLineNr ctermbg=72 ctermfg=00
+
+" code line
+hi CursorLine cterm=NONE ctermbg=00 ctermfg=NONE
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
