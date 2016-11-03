@@ -54,12 +54,38 @@ ZSH_CUSTOM=$HOME/.omz-custom
 # ----> setup plugins in .local_zshrc <----
 source $HOME/.local_zshrc
 
-source $ZSH/oh-my-zsh.sh
+source "${HOME}/.zgen/zgen.zsh"
 
-# custom theme outside of ZSH
-# copy into .local_zshrc if desired
-# Only load Liquid Prompt in interactive shells, not from a script or from scp
-# [[ $- = *i* ]] && source ~/github/nojhan/liquidprompt/liquidprompt
+if ! zgen saved; then
+  echo "Creating a zgen save"
+
+  zgen oh-my-zsh
+
+  # plugins
+  zgen oh-my-zsh plugins/bundler
+  zgen oh-my-zsh plugins/cargo
+  zgen oh-my-zsh plugins/common-aliases
+  zgen oh-my-zsh plugins/docker
+  zgen oh-my-zsh plugins/encode64
+  zgen oh-my-zsh plugins/fasd
+  zgen oh-my-zsh plugins/gem
+  zgen oh-my-zsh plugins/git-extras
+  zgen oh-my-zsh plugins/gitfast
+  zgen oh-my-zsh plugins/mix
+  zgen oh-my-zsh plugins/osx
+  zgen oh-my-zsh plugins/sudo
+  zgen load zsh-users/zsh-syntax-highlighting
+
+  # completions
+  zgen load zsh-users/zsh-completions src
+
+  # theme
+  zgen oh-my-zsh themes/arrow
+  zgen load tylerreckart/hyperzsh
+
+  # save all to init script
+  zgen save
+fi
 
 # generic shell stuff
 [[ -s $HOME/.aliases ]] && source $HOME/.aliases
