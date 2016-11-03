@@ -86,11 +86,10 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
+    "hyperline",
     "hyperlinks",
-    "hyperterm-cursor",
     "hypersixteen",
-    "hyperterm-paste",
-    "hyperterm-final-say",
+    "hyperterm-cursor",
   ],
 
   // in development, you can create a directory under
