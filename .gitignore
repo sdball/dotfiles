@@ -183,3 +183,4 @@ bin/rebar
 .aws
 .rediscli_history
 .hyper_plugins
+.zgen
