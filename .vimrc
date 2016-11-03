@@ -8,7 +8,6 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 Plug 'airblade/vim-gitgutter'
-Plug 'chriskempson/base16-vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'ervandew/supertab'
@@ -108,10 +107,10 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-endif
+colorscheme elflord
+hi CursorLine cterm=NONE ctermbg=240 ctermfg=NONE
+autocmd InsertEnter * highlight CursorLine ctermbg=NONE ctermfg=NONE
+autocmd InsertLeave * highlight CursorLine ctermbg=240 ctermfg=NONE
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE

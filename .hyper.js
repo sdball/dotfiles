@@ -16,7 +16,7 @@ module.exports = {
     foregroundColor: '#fff',
 
     // terminal background color
-    backgroundColor: '#000',
+    backgroundColor: "#000",
 
     // border color (window, tabs)
     borderColor: '#333',
@@ -64,13 +64,17 @@ module.exports = {
     env: {},
 
     // set to false for no bell
-    bell: 'SOUND',
+    bell: false,
 
     // if true, selected text will automatically be copied to the clipboard
-    copyOnSelect: false
+    copyOnSelect: true,
 
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
+
+    base16: {
+      scheme: 'tomorrow',
+    }
 
     // for advanced config flags please refer to https://hyper.is/#cfg
   },
@@ -81,7 +85,9 @@ module.exports = {
   //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins: [],
+  plugins: [
+    'hypersixteen',
+  ],
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
