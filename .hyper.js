@@ -90,6 +90,8 @@ module.exports = {
     "hyperlinks",
     "hyperterm-cursor",
     "hypersixteen",
+    "hyperterm-paste",
+    "hyperterm-final-say",
   ],
 
   // in development, you can create a directory under
