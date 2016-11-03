@@ -107,7 +107,7 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme elflord
+colorscheme desert
 hi CursorLine cterm=NONE ctermbg=240 ctermfg=NONE
 autocmd InsertEnter * highlight CursorLine ctermbg=NONE ctermfg=NONE
 autocmd InsertLeave * highlight CursorLine ctermbg=240 ctermfg=NONE
