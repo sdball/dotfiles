@@ -67,7 +67,6 @@ if ! zgen saved; then
   zgen oh-my-zsh plugins/common-aliases
   zgen oh-my-zsh plugins/docker
   zgen oh-my-zsh plugins/encode64
-  zgen oh-my-zsh plugins/fasd
   zgen oh-my-zsh plugins/gem
   zgen oh-my-zsh plugins/git-extras
   zgen oh-my-zsh plugins/gitfast
@@ -86,6 +85,16 @@ if ! zgen saved; then
   # save all to init script
   zgen save
 fi
+
+fasd_cache="$HOME/.fasd-init-zsh"
+if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+  fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install >| "$fasd_cache"
+fi
+source "$fasd_cache"
+unset $fasd_cache
+
+# BASE16_SHELL=$HOME/.config/base16-shell/
+# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 # generic shell stuff
 [[ -s $HOME/.aliases ]] && source $HOME/.aliases
