@@ -15,13 +15,14 @@
 
 HASH="%C(yellow)%h%Creset"
 RELATIVE_TIME="%Cgreen%ar%Creset"
+ABSOLUTE_TIME="%Cgreen%ad%Creset"
 AUTHOR="%C(bold blue)%an%Creset"
 REFS="%C(red)%d%Creset"
 SUBJECT="%s"
 
-FORMAT="$HASH}$RELATIVE_TIME}$AUTHOR}$REFS $SUBJECT"
+FORMAT="$HASH}$ABSOLUTE_TIME ($RELATIVE_TIME)}$AUTHOR}$REFS $SUBJECT"
 
-git log --graph --abbrev-commit --date=relative --pretty="tformat:${FORMAT}" $* |
+git log --graph --abbrev-commit --date=short --pretty="tformat:${FORMAT}" $* |
     # Line columns up based on } delimiter
     column -s '}' -t |
     # Page only if we need to
