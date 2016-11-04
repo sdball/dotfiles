@@ -8,6 +8,7 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 Plug 'airblade/vim-gitgutter'
+Plug 'chriskempson/base16-vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'ervandew/supertab'
@@ -107,14 +108,9 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme industry
-
-" number line
-highlight LineNr ctermbg=237 ctermfg=240
-highlight CursorLineNr ctermbg=72 ctermfg=00
-
-" code line
-hi CursorLine cterm=NONE ctermbg=00 ctermfg=NONE
+set termguicolors
+let base16colorspace=256
+colorscheme base16-ashes
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
