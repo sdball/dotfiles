@@ -184,3 +184,4 @@ bin/rebar
 .rediscli_history
 .hyper_plugins
 .zgen
+.electron
