@@ -80,8 +80,7 @@ if ! zgen saved; then
   zgen load zsh-users/zsh-completions src
 
   # theme
-  zgen oh-my-zsh themes/arrow
-  zgen load tylerreckart/hyperzsh
+  zgen load .omz-custom/themes/custom_crunch
 
   # save all to init script
   zgen save
