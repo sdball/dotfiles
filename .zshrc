@@ -73,6 +73,7 @@ if ! zgen saved; then
   zgen oh-my-zsh plugins/mix
   zgen oh-my-zsh plugins/osx
   zgen oh-my-zsh plugins/sudo
+  zgen load zsh-users/zsh-autosuggestions
   zgen load zsh-users/zsh-syntax-highlighting
 
   # completions
