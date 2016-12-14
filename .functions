@@ -157,3 +157,7 @@ marked() {
     open -a "Marked 2";
   fi
 }
+
+readme() {
+  marked "README.md"
+}
