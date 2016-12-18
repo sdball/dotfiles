@@ -295,7 +295,7 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTRLP STUFFS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files --others --cached --exclude-standard']
+let g:ctrlp_user_command = ['rg --files']
 let g:ctrlp_max_height = 30
 let g:ctrlp_mruf_relative = 1
 let g:ctrlp_working_path_mode = 'w'
