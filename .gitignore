@@ -185,3 +185,4 @@ bin/rebar
 .hyper_plugins
 .zgen
 .electron
+.ansible/
