@@ -186,3 +186,4 @@ bin/rebar
 .zgen
 .electron
 .ansible/
+.rustup/
