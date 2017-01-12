@@ -159,5 +159,9 @@ marked() {
 }
 
 readme() {
-  marked "README.md"
+  if [[ -e /Applications/Marked\ 2.app ]]; then
+    marked "README.md" || marked "README.markdown" || echo "Markdown README not found";
+  else
+    less "README.md" || less "README.markdown" || echo "Markdown README not found";
+  fi
 }
