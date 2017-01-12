@@ -187,3 +187,4 @@ bin/rebar
 .electron
 .ansible/
 .rustup/
+.multirust
