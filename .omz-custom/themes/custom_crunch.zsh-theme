@@ -45,9 +45,12 @@ if command -v asdf &> /dev/null && asdf which elixir &> /dev/null; then
     CRUNCH_EX_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_EX_COLOR}elixir \${\$(asdf which elixir)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
 fi
 
+# state
+CRUNCH_STATE_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_STATE_COLOR}\${\$(prompt_state)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
+
 CRUNCH_DIR_="$CRUNCH_DIR_COLOR%~\$(git_prompt_info) "
 CRUNCH_PROMPT="$CRUNCH_BRACKET_COLOR
 $ "
 
 # Put it all together!
-PROMPT="$CRUNCH_EX_$CRUNCH_RB_$CRUNCH_DIR_$CRUNCH_PROMPT%{$reset_color%}"
+PROMPT="$CRUNCH_EX_$CRUNCH_RB_$CRUNCH_STATE_$CRUNCH_DIR_$CRUNCH_PROMPT%{$reset_color%}"
