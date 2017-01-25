@@ -188,3 +188,4 @@ bin/rebar
 .ansible/
 .rustup/
 .multirust
+.pivman/
