@@ -165,3 +165,7 @@ readme() {
     less "README.md" || less "README.markdown" || echo "Markdown README not found";
   fi
 }
+
+stretch-time() {
+  terminal-notifier -title 'Stretch Time' -message 'Time to get up and stretch!' -group 'works' -sound 'Glass'
+}
