@@ -8,9 +8,10 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 Plug 'chriskempson/base16-vim'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'ervandew/supertab'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
@@ -300,7 +301,7 @@ let g:ctrlp_max_height = 30
 let g:ctrlp_mruf_relative = 1
 let g:ctrlp_working_path_mode = 'w'
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp\|vendor\|deps$',
+  \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp\|vendor\|deps\|_build$',
   \ 'file': '\.so$\|\.dat$|\.DS_Store$'
   \ }
 command! CtrlPLine call ctrlp#init(ctrlp#line#id())
@@ -308,6 +309,25 @@ command! CtrlPLine call ctrlp#init(ctrlp#line#id())
 " custom ctrl-p searches
 map <leader>pt :CtrlPClearCache<cr>\|:CtrlPTag<cr>
 map <leader>g :CtrlPLine<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FZF                                                                        "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --glob "!_build/*" --glob "!deps/*" --glob "!.DS_Store" --glob "!public/*" --glob "!log/*" --glob "!tmp/*" --glob "!vendor/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+map <C-p> :Files<cr>
+map <C-g> :Find
+map <C-/> :Lines<cr>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

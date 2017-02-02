@@ -169,3 +169,120 @@ readme() {
 stretch-time() {
   terminal-notifier -title 'Stretch Time' -message 'Time to get up and stretch!' -group 'works' -sound 'Glass'
 }
+
+# -- cool fzf things --
+vb(){
+  #List all vagrant boxes available in the system including its status
+  cd $(cat ~/.vagrant.d/data/machine-index/index | jq '.machines[] | {name, vagrantfile_path, state}' | jq '.name + "," + .state  + "," + .vagrantfile_path'| sed 's/^"\(.*\)"$/\1/'| column -s, -t | sort -rk 2 | fzf | awk '{print $3}')
+}
+
+# c - browse chrome history
+chrome-history() {
+  local cols sep
+  cols=$(( COLUMNS / 3 ))
+  sep='{{::}}'
+
+  # Copy History DB to circumvent the lock
+  # - See http://stackoverflow.com/questions/8936878 for the file path
+  cp -f ~/Library/Application\ Support/Google/Chrome/Default/History /tmp/h
+
+  sqlite3 -separator $sep /tmp/h \
+    "select substr(title, 1, $cols), url
+     from urls order by last_visit_time desc" |
+  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\n", $1, $2}' |
+  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
+}
+
+# fshow - git commit browser
+fshow() {
+  git l |
+  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
+# -- from https://github.com/erichs
+pb () {
+  # 'clipboard DWIM tool'
+  # example 'pb  # paste'
+  # example 'echo hi | pb  # copy'
+  # example 'echo hi | pb | cat -  # copy and paste'
+  # example 'pb </tmp/file  # copy'
+  # example 'pb >/tmp/file  # paste'
+  # example 'pb </tmp/file1 >/tmp/file2  # copy and paste'
+  if [[ -p /dev/stdin ]]
+  then
+    pbcopy
+  fi
+  if [[ ! -t 0 && ! -p /dev/stdin ]]
+  then
+    pbcopy
+  fi
+  if [[ -t 1 ]]
+  then
+    if [[ -t 0 ]]
+    then
+      pbpaste
+    fi
+  fi
+  if [[ -p /dev/stdout ]]
+  then
+    pbpaste
+  fi
+  if [[ ! -t 1 && ! -p /dev/stdout ]]
+  then
+    pbpaste
+  fi
+}
+
+# -- from https://github.com/erichs
+wut () {
+  local needle="$*"
+  local out file key OIFS
+  OIFS=$IFS
+  IFS=$'\n' out=($(ag -il $needle | fzf --reverse \
+                   --preview="ag --color -C 5 $needle {}" \
+                   --prompt '(ctrl-{l,o,e,g} to link, open, edit, or browse in github)> ' \
+                   --expect=ctrl-l,ctrl-o,ctrl-e,ctrl-g))
+  IFS=$OIFS
+  if [ -z "$out" ]; then
+    return
+  fi
+  key=$(head -1 <<< "$out")
+  file=$(head -2 <<< "$out" | tail -1)
+  case $key in
+    (ctrl-l) linkto $file
+      return ;;
+    (ctrl-o) open $file ;;
+    (ctrl-e) ${EDITOR:-vim} "$file" ;;
+    (ctrl-g) gh $file ;;
+    (*)  ;;
+  esac
+  echo $file
+  echo -n $file | pbcopy
+}
+
+# -- from https://github.com/erichs
+linkto () {
+# given relative filepath, find corresponding github URL
+# copy this to pastebuffer, and emit to stdout
+  local origin=$(git ls-remote --get-url | sed -Ee 's#https?://##')
+  local user=$(echo $origin | sed -Ee 's#^.*[/:]+(.*)/.*$#\1#')
+  local project=$(echo $origin | sed -Ee 's#^.*[/:]+.*/(.*).git$#\1#')
+  (
+    cd $(dirname $*)
+    local urlpath=$(find $(pwd) -name $(basename $*) -maxdepth 1 | sed -n -e "s/^.*${project}//p")
+    local url="https://github.com/${user}/${project}/blob/master${urlpath}"
+    echo -n $url | pb | cat -
+  )
+}
+
+# -- from https://github.com/erichs
+gh () {
+# open relative filepath in github
+  open `linkto $*`
+}
+
