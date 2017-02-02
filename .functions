@@ -176,7 +176,7 @@ vb(){
   cd $(cat ~/.vagrant.d/data/machine-index/index | jq '.machines[] | {name, vagrantfile_path, state}' | jq '.name + "," + .state  + "," + .vagrantfile_path'| sed 's/^"\(.*\)"$/\1/'| column -s, -t | sort -rk 2 | fzf | awk '{print $3}')
 }
 
-# c - browse chrome history
+# browse chrome history
 chrome-history() {
   local cols sep
   cols=$(( COLUMNS / 3 ))
