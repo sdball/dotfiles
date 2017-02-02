@@ -5,3 +5,5 @@
 
 # tmuxinator: I'll be back
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
