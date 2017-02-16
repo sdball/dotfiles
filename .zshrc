@@ -1,3 +1,4 @@
+local _start=`gdate +%s%3N`
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 ZSH_CUSTOM=$HOME/.omz-custom
@@ -72,3 +73,6 @@ command -v rbenv >& /dev/null && eval "$(rbenv init -)"
 # --follow: Follow symlinks
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" --glob "!_build/*" --glob "!deps/*" --glob "!.DS_Store" --glob "!public/*" --glob "!log/*" --glob "!tmp/*" --glob "!vendor/*" --glob "!.git-crypt/*" --glob "!.vagrant/*"'
+
+local _end=`gdate +%s%3N`
+ruby -e "puts ($_end.to_i - $_start.to_i).to_s + 'ms to boot'"
