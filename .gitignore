@@ -189,3 +189,4 @@ bin/rebar
 .rustup/
 .multirust
 .pivman/
+.rationale.log
