@@ -100,14 +100,6 @@ github-clone() {
   cd $_repo
 }
 
-vim() {
-  if [[ $# -eq 1 ]]; then
-    command vim $1
-  else
-    command vim -O $*
-  fi
-}
-
 stargazers() {
   curl -s https://api.github.com/repos/$1 | jq ".stargazers_count"
 }
