@@ -262,11 +262,17 @@ function! RunTests(filename, line_number)
                 exec ":!" . command . " " . a:filename
             end
         else
+            if filereadable("Gemfile")
+                let command="bundle exec ruby"
+            else
+                let command="ruby"
+            end
+
             if a:line_number
                 let test_name=system("head -n " . a:line_number . " " . a:filename . " | rg '(def test_|test \")' | tail -1 | sed -e 's/.*def //' -e 's/.*test //' -e 's/ do$//' | tr '\"' / | tr \"'\" / | tr ' ' _")
-                exec ":!ruby -I test " . a:filename . " -n " . test_name
+                exec ":!" . command . " -Itest:lib " . a:filename . " -n " . test_name
             else
-                exec ":!ruby -I test " . a:filename
+                exec ":!" . command . " -Itest:lib " . a:filename
             end
         end
     elseif a:filename =~ "\.exs$"
