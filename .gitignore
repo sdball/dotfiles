@@ -191,3 +191,4 @@ bin/rebar
 .pivman/
 .rationale.log
 .dialyzer_plt
+.fzf/
