@@ -75,4 +75,4 @@ command -v rbenv >& /dev/null && eval "$(rbenv init -)"
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" --glob "!_build/*" --glob "!deps/*" --glob "!.DS_Store" --glob "!public/*" --glob "!log/*" --glob "!tmp/*" --glob "!vendor/*" --glob "!.git-crypt/*" --glob "!.vagrant/*"'
 
 local _end=`gdate +%s%3N`
-ruby -e "puts ($_end.to_i - $_start.to_i).to_s + 'ms to boot'"
+ruby -e "puts ($_end.to_i - $_start.to_i).to_s + 'ms to prompt'"
