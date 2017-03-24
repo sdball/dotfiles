@@ -192,3 +192,4 @@ bin/rebar
 .rationale.log
 .dialyzer_plt
 .fzf/
+.ansible-playbook-commands.log
