@@ -36,13 +36,13 @@ if command -v rbenv &> /dev/null; then
     CRUNCH_RB_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_RB_COLOR}ruby \${\$(rbenv version | sed -e 's/ (set.*$//' -e 's/^ruby-//')}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
 else
     if command -v asdf &> /dev/null && asdf current ruby &> /dev/null; then
-        CRUNCH_RB_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_RB_COLOR}ruby \${\$(asdf current ruby)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
+        CRUNCH_RB_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_RB_COLOR}ruby \${\$(asdf current ruby | cut -d ' ' -f 1)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
     fi
 fi
 
 # Elixir version
 if command -v asdf &> /dev/null && asdf current elixir &> /dev/null; then
-    CRUNCH_EX_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_EX_COLOR}elixir \${\$(asdf current elixir | cut -d ' ' -f1)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
+    CRUNCH_EX_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_EX_COLOR}elixir \${\$(asdf current elixir | cut -d ' ' -f 1)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
 fi
 
 # state
