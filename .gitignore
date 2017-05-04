@@ -193,3 +193,4 @@ bin/rebar
 .dialyzer_plt
 .fzf/
 .ansible-playbook-commands.log
+Projects/
