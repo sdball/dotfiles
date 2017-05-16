@@ -194,3 +194,4 @@ bin/rebar
 .fzf/
 .ansible-playbook-commands.log
 Projects/
+.tldrc/
