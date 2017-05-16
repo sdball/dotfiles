@@ -40,6 +40,7 @@
     pu = push -u
     p = !git push -u origin `git current-branch`
     fb = create-feature-branch
+    recent-branches = !git reflog --since '2 weeks ago' | grep checkout | grep -o 'moving from .*' | sed -e 's/moving from //' -e 's/.* to //' | sort | uniq
 
     ; project automation
     changed-specs = !git diff --name-only master -- spec | egrep '.rb'
