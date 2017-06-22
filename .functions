@@ -282,3 +282,11 @@ b16() {
   theme=$(ls $HOME/.config/base16-shell/scripts/base16*.sh | while read file; do basename $file | cut -d '.' -f 1 | sed -e 's/-/_/'; done | fzf --tac)
   eval $theme
 }
+
+git() {
+  if [[ "$*" =~ "pull" ]]; then
+    echo "Don't git pull."
+  else
+    command git $*
+  fi
+ }
