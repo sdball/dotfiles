@@ -270,9 +270,9 @@ function! RunTests(filename, line_number)
 
             if a:line_number
                 let test_name=system("head -n " . a:line_number . " " . a:filename . " | rg '(def test_|test \")' | tail -1 | sed -e 's/.*def //' -e 's/.*test //' -e 's/ do$//' | tr '\"' / | tr \"'\" / | tr ' ' _")
-                exec ":!" . command . " -Itest:lib " . a:filename . " -n " . test_name
+                exec ":!" . command . " -Itest " . a:filename . " -n " . test_name
             else
-                exec ":!" . command . " -Itest:lib " . a:filename
+                exec ":!" . command . " -Itest " . a:filename
             end
         end
     elseif a:filename =~ "\.exs$"
