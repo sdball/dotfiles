@@ -195,3 +195,4 @@ bin/rebar
 .ansible-playbook-commands.log
 Projects/
 .tldrc/
+.node_repl_history
