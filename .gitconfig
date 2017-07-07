@@ -82,6 +82,7 @@
 [user]
 	email = sdball@gmail.com
 	name = Stephen Ball
+	signingkey = 05F89257
 [pager]
 	diff = diff-so-fancy | less --tabs=4 -RFX
 	show = diff-so-fancy | less --tabs=4 -RFX
@@ -92,3 +93,5 @@
 	required = true
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
+[commit]
+	gpgsign = true
