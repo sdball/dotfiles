@@ -198,3 +198,4 @@ Projects/
 .node_repl_history
 .fzf.*
 .local/
+.account
