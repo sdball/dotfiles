@@ -196,3 +196,4 @@ bin/rebar
 Projects/
 .tldrc/
 .node_repl_history
+.fzf.*
