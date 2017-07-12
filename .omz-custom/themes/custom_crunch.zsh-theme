@@ -17,6 +17,7 @@ CRUNCH_BRACKET_COLOR="%{$fg[white]%}"
 CRUNCH_TIME_COLOR="%{$fg[yellow]%}"
 CRUNCH_RB_COLOR="%{$fg[red]%}"
 CRUNCH_EX_COLOR="%{$fg[magenta]%}"
+CRUNCH_JS_COLOR="%{$fg[green]%}"
 CRUNCH_DIR_COLOR="%{$fg[cyan]%}"
 CRUNCH_GIT_BRANCH_COLOR="%{$fg[green]%}"
 CRUNCH_GIT_CLEAN_COLOR="%{$fg[green]%}"
@@ -45,6 +46,12 @@ if command -v asdf &> /dev/null && asdf current elixir &> /dev/null; then
     CRUNCH_EX_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_EX_COLOR}elixir \${\$(asdf current elixir | cut -d ' ' -f 1)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
 fi
 
+# Node version
+if command -v node &> /dev/null; then
+    CRUNCH_JS_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_JS_COLOR}node \${\$(node --version)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
+fi
+
+
 # state
 CRUNCH_STATE_="$CRUNCH_BRACKET_COLOR"["${CRUNCH_STATE_COLOR}\${\$(prompt_state)}$CRUNCH_BRACKET_COLOR"]"%{$reset_color%}"
 
@@ -53,4 +60,4 @@ CRUNCH_PROMPT="$CRUNCH_BRACKET_COLOR
 $ "
 
 # Put it all together!
-PROMPT="$CRUNCH_EX_$CRUNCH_RB_$CRUNCH_STATE_$CRUNCH_DIR_$CRUNCH_PROMPT%{$reset_color%}"
+PROMPT="$CRUNCH_EX_$CRUNCH_RB_$CRUNCH_JS_$CRUNCH_STATE_$CRUNCH_DIR_$CRUNCH_PROMPT%{$reset_color%}"
