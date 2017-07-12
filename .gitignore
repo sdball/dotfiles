@@ -199,3 +199,4 @@ Projects/
 .fzf.*
 .local/
 .account
+.vscode/
