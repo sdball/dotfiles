@@ -200,3 +200,7 @@ Projects/
 .local/
 .account
 .vscode/
+.anyconnect
+.cisco/
+.packer.d/
+vmconfig.json
