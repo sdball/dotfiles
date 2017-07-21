@@ -298,3 +298,15 @@ sleep-screen() {
 lock-system() {
   "/System/Library/CoreServices/Menu Extras/User.menu/Contents/Resources/CGSession" -suspend
 }
+
+npm-package() {
+  jq ".$2" ~/.npm/$1/*/package/package.json | tail -1
+}
+
+npm-dependencies() {
+  jq -r '.dependencies | keys[]' package.json | while read package; do echo $package}`npm-package $package description | cut -c1-100`}`npm-package $package homepage`; done | column -s '}' -t | less -niSFX
+}
+
+npm-dev-dependencies() {
+  jq -r '.devDependencies | keys[]' package.json | while read package; do echo $package}`npm-package $package description | cut -c1-100`}`npm-package $package homepage`; done | column -s '}' -t | less -niSFX
+}
