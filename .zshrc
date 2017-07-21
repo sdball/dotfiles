@@ -29,7 +29,7 @@ if ! zgen saved; then
   zgen load zsh-users/zsh-completions src
 
   # theme
-  zgen load .omz-custom/themes/custom_crunch
+  zgen load $HOME/.omz-custom/themes/custom_crunch
 
   # save all to init script
   zgen save
