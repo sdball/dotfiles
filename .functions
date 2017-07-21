@@ -289,4 +289,12 @@ git() {
   else
     command git $*
   fi
- }
+}
+
+sleep-screen() {
+  pmset displaysleepnow
+}
+
+lock-system() {
+  "/System/Library/CoreServices/Menu Extras/User.menu/Contents/Resources/CGSession" -suspend
+}
