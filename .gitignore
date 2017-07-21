@@ -205,3 +205,4 @@ Projects/
 .packer.d/
 vmconfig.json
 .v8flags*
+.nvm/
