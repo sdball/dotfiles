@@ -8,6 +8,7 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 Plug 'chriskempson/base16-vim'
+Plug 'conormcd/matchindent.vim'
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'ervandew/supertab'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
