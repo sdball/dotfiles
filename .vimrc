@@ -165,6 +165,12 @@ nnoremap <Leader>raw :%s/\s\+$//e<CR>
 " toggle numbers
 map <leader># :set number!<cr>
 
+" fugitive mapping
+map <right> :Glog<cr>
+map <up> :let line = line('.')\|:cprev\|:exec ':' . line<cr>
+map <down> :let line = line('.')\|:cnext\|:exec ':' . line<cr>
+map <left> :Gedit<cr>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PASTE MODE SANITY
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
