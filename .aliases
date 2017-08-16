@@ -11,3 +11,9 @@ alias cmon='sudo $(fc -ln -1)'
 alias ack="sl"
 alias trl=trans
 alias lookup=define
+
+if command -v exa >/dev/null; then
+  alias ls=exa
+  alias ll="exa --long -bhm --time-style=long-iso"
+  alias lg="exa -lah --git --time-style=long-iso"
+fi
