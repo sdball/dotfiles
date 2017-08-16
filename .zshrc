@@ -1,3 +1,4 @@
+export PATH="/usr/local/bin:$PATH"
 local _start=`gdate +%s%3N`
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
