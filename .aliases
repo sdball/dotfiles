@@ -11,6 +11,7 @@ alias cmon='sudo $(fc -ln -1)'
 alias ack="sl"
 alias trl=trans
 alias lookup=define
+alias mux=tmuxinator
 
 if command -v exa >/dev/null; then
   alias ls=exa
