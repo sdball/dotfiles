@@ -1,3 +1,0 @@
-#!/bin/sh
-
-perl -MURI::Escape -lne 'print uri_unescape($_)'
