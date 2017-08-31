@@ -243,8 +243,9 @@ wut () {
   if [ -z "$out" ]; then
     return
   fi
-  key=$(head -1 <<< "$out")
-  file=$(head -2 <<< "$out" | tail -1)
+  key=$(echo "$out" | cut -d ' ' -f 1)
+  file=$(echo "$out" | sed -e 's/[^ ]* //')
+  echo $out
   case $key in
     (ctrl-l) linkto $file
       return ;;
