@@ -54,11 +54,6 @@ unset fasd_cache
 # tmuxinator: I'll be back
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
-setopt braceccl
-unsetopt correct_all # don't try to correct arguments (it's usually wrong)
-setopt correct # but try to correct commands (it's usually right)
-setopt autocd # type the name of a subdirectory will cd into that subdirectory
-
 # NVM
 [ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"
 
