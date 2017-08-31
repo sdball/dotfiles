@@ -54,6 +54,9 @@ unset fasd_cache
 # tmuxinator: I'll be back
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
+# thefuck
+command -v thefuck >&/dev/null && eval $(thefuck --alias oops)
+
 # NVM
 [ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"
 
