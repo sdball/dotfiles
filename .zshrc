@@ -82,4 +82,3 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.g
 local _end=`gdate +%s%3N`
 ruby -e "puts ($_end.to_i - $_start.to_i).to_s + 'ms to prompt'"
 
-[ -f ~/.config/tmuxinator/completion/tmuxinator.zsh ] && source ~/.config/tmuxinator/completion/tmuxinator.zsh
