@@ -208,3 +208,4 @@ vmconfig.json
 .nvm/
 TODO.md
 .vim/work/
+.pre-commit/
