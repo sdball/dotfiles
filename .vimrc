@@ -103,10 +103,11 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set termguicolors
-let base16colorspace=256
 
 if filereadable(expand("~/.vimrc_background"))
+  if has("termguicolors")
+    set termguicolors
+  endif
   let base16colorspace=256
   source ~/.vimrc_background
   map <F5> :source ~/.vimrc_background<CR>
