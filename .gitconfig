@@ -43,6 +43,7 @@
     recent-branches = !git reflog --since '2 weeks ago' | grep checkout | grep -o 'moving from .*' | sed -e 's/moving from //' -e 's/.* to //' | sort | uniq
     last-commit = log -1 -p
     changed-files = diff --name-only
+    remix = rebase -i --autosquash
 
     ; data analysis
     authors = !git log --format="%aN"
