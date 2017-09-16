@@ -36,9 +36,9 @@ set hidden
 " remember more commands and search history
 set history=10000
 set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set autoindent
 set laststatus=2
 set showmatch
@@ -97,7 +97,9 @@ augroup vimrcEx
   autocmd FileType python set sw=4 sts=4 et
   autocmd FileType javascript set ai sw=4 sts=4 et
 
-  source ~/.vim/work/autocmds.vim
+  if filereadable(expand("~/.vim/work/autocmds.vim"))
+    source ~/.vim/work/autocmds.vim
+  endif
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
