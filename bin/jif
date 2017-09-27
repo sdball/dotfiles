@@ -17,8 +17,8 @@
 exec /usr/bin/env ruby --disable-gems -x "$0" $*
 #!ruby
 
-unless pb_dir = ENV['PB_DIR']
-  puts "PB_DIR not set"
+unless pb_dir = ENV['JIF_DIR']
+  puts "JIF_DIR not set"
   exit 2
 end
 
