@@ -58,7 +58,13 @@ unset fasd_cache
 command -v thefuck >&/dev/null && eval $(thefuck --alias oops)
 
 # NVM
-[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"
+# [ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"
+if [[ -s "$HOME/.nvm/nvm.sh" ]]; then
+  export NVM_BIN=/Users/stephen.ball/.nvm/versions/node/v6.11.1/bin
+  export NVM_CD_FLAGS=-q
+  export NVM_DIR=$HOME/.nvm
+  export PATH="$HOME/.nvm/versions/node/v6.11.1/bin:$PATH"
+fi
 
 # RVM
 [[ -s $HOME/.rvm ]] && PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
