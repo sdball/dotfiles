@@ -4,5 +4,5 @@ echo $1 | tr a-z A-Z
 echo
 letters=`echo $1 | sed 's/\(.\)/\1 /g'`
 for letter in $letters; do
-    echo `grep ^$letter ~/Documents/google-10000-english-usa.txt | gshuf | head -n4 | tr "\n" " "`
+    echo `grep ^$letter ~/Documents/acronym-words.txt | gshuf | head -n4 | tr "\n" " "`
 done
