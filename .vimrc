@@ -126,39 +126,57 @@ endif
 " just a bit of cartography
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=","
+
+" Yank a movement
 map <leader>y "*y
+
 " Move around splits with <c-hjkl>
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+
 " Insert a hash rocket with <c-l>
 imap <c-l> <space>=><space>
+
 " insert current datetime
-imap <c-d> <c-R>=strftime("%c")<cr>
+imap <c-d> <c-R>=strftime("%Y-%m-%d %A")<cr>
+
 " Can't be bothered to understand ESC vs <c-c> in insert mode
 imap <c-c> <esc>
+
 " Clear the search buffer when hitting return
 :nnoremap <CR> :nohlsearch<cr>
+
+" Jump to previous file
 nnoremap <leader><leader> <c-^>
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <s-tab> <c-n>
+
 " open files in directory of current file
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>e :edit %%
+
 " map to current file for command mode
 cnoremap $$ <C-R>=expand('%')<cr>
+
 " TESTING, WOO!
 nnoremap <leader>. :call OpenTestAlternate()<cr>
 map <leader>t :call RunTestFile()<cr>
 map <leader>T :call RunNearestTest()<cr>
+
 " when nested too deep
 nnoremap <leader>x :set cursorcolumn!<cr>
+
 " remove trailing whitespace
 nnoremap <Leader>rtw :%s/\s\+$//e<CR>
 nnoremap <Leader>raw :%s/\s\+$//e<CR>
+
 " toggle numbers
 map <leader># :set number!<cr>
+
+" misc
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>
+
 
 " fugitive mapping
 map <right> :Glog<cr>
