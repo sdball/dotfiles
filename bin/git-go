@@ -5,16 +5,16 @@ set -e
 git fetch &> /dev/null
 branch_pattern=$1
 
-matches=`git branch -r | grep $branch_pattern | grep -v HEAD | wc -l`
+matches=`git branch -r | grep -i $branch_pattern | grep -v HEAD | wc -l`
 if [ $matches -eq 0 ]; then
     echo "$branch_pattern not found"
 elif [ $matches -eq 1 ]; then
-    match=`git b -r | grep $branch_pattern | grep -v HEAD | sed -e 's/^ *//'`
+    match=`git b -r | grep -i $branch_pattern | grep -v HEAD | sed -e 's/^ *//'`
     remote=`echo $match | cut -d '/' -f 1`
     branch=`echo $match | cut -d '/' -f 2`
     git co -B $branch $remote/$branch
 else
-    match=`git b -r | grep $branch_pattern | grep -v HEAD | sed -e 's/^ *//' | selecta`
+    match=`git b -r | grep -i $branch_pattern | grep -v HEAD | sed -e 's/^ *//' | selecta`
     remote=`echo $match | cut -d '/' -f 1`
     branch=`echo $match | cut -d '/' -f 2`
     git co -B $branch $remote/$branch
