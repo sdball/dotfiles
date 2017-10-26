@@ -18,3 +18,8 @@ if command -v exa >/dev/null; then
   alias ll="exa --long -bhm --time-style=long-iso"
   alias lg="exa -lah --git --time-style=long-iso"
 fi
+
+if command -v rg >/dev/null; then
+  alias rg="rg -i"
+  alias nofit="rg -s '(fit|fdescribe)' --type-not=xml"
+fi
