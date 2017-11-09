@@ -1,4 +1,7 @@
+# ensure that gdate is available for timing
 export PATH="/usr/local/bin:$PATH"
+
+# start timing the prompt boot
 local _start=`gdate +%s%3N`
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
@@ -9,30 +12,8 @@ source "${HOME}/.zgen/zgen.zsh"
 
 if ! zgen saved; then
   echo "Creating a zgen save"
-
-  zgen oh-my-zsh
-
-  # plugins
-  zgen oh-my-zsh plugins/bundler
-  zgen oh-my-zsh plugins/cargo
-  zgen oh-my-zsh plugins/common-aliases
-  zgen oh-my-zsh plugins/docker
-  zgen oh-my-zsh plugins/encode64
-  zgen oh-my-zsh plugins/gem
-  zgen oh-my-zsh plugins/git-extras
-  zgen oh-my-zsh plugins/gitfast
-  zgen oh-my-zsh plugins/mix
-  zgen oh-my-zsh plugins/osx
-  zgen oh-my-zsh plugins/sudo
   zgen load zsh-users/zsh-syntax-highlighting
-
-  # completions
   zgen load zsh-users/zsh-completions src
-
-  # theme
-  zgen load $HOME/.omz-custom/themes/custom_crunch
-
-  # save all to init script
   zgen save
 fi
 
@@ -42,9 +23,6 @@ if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
 fi
 source "$fasd_cache"
 unset fasd_cache
-
-# BASE16_SHELL=$HOME/.config/base16-shell/
-# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 # generic shell stuff
 [[ -s $HOME/.aliases ]] && source $HOME/.aliases
@@ -57,19 +35,6 @@ unset fasd_cache
 # thefuck
 command -v thefuck >&/dev/null && eval $(thefuck --alias oops)
 
-# NVM
-# [ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"
-if [[ -s "$HOME/.nvm/nvm.sh" ]]; then
-  export NVM_BIN=/Users/stephen.ball/.nvm/versions/node/v6.11.1/bin
-  export NVM_CD_FLAGS=-q
-  export NVM_DIR=$HOME/.nvm
-  export PATH="$HOME/.nvm/versions/node/v6.11.1/bin:$PATH"
-fi
-
-# RVM
-[[ -s $HOME/.rvm ]] && PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
-[[ -s $HOME/.rvm ]] && source $HOME/.rvm/scripts/rvm
-
 # rbenv
 command -v rbenv >& /dev/null && eval "$(rbenv init -)"
 
@@ -81,11 +46,28 @@ command -v rbenv >& /dev/null && eval "$(rbenv init -)"
 # --follow: Follow symlinks
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" --glob "!_build/*" --glob "!deps/*" --glob "!.DS_Store" --glob "!public/*" --glob "!log/*" --glob "!tmp/*" --glob "!vendor/*" --glob "!.git-crypt/*" --glob "!.vagrant/*"'
-# '
 
-# direnv
+# # direnv
 command -v direnv >& /dev/null && eval "$(direnv hook zsh)"
 
+# bind up and down arrows to search through history
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
+
+# custom low level zsh prompt
+autoload -Uz vcs_info
+# autoload -U colors && colors
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:git*' formats "%{$fg[green]%}(%b) %{$reset_color%}%m%u%c%{$reset_color%}"
+precmd() {
+  vcs_info
+}
+setopt prompt_subst
+PROMPT='%/ ${vcs_info_msg_0_}
+%% '
+
+# finish timing the prompt boot
 local _end=`gdate +%s%3N`
 ruby -e "puts ($_end.to_i - $_start.to_i).to_s + 'ms to prompt'"
 
