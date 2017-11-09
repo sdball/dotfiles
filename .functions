@@ -287,9 +287,15 @@ b16() {
 git() {
   if [[ "$*" =~ "pull" ]]; then
     echo "Don't git pull."
-  else
-    command git $*
+    return 0
   fi
+
+  if [[ "$*" =~ "push --all" ]]; then
+    echo "Don't git push --all."
+    return 0
+  fi
+
+  command git $*
 }
 
 sleep-screen() {
