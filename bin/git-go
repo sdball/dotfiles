@@ -12,10 +12,10 @@ elif [ $matches -eq 1 ]; then
     match=`git b -r | grep -i $branch_pattern | grep -v HEAD | sed -e 's/^ *//'`
     remote=`echo $match | cut -d '/' -f 1`
     branch=`echo $match | cut -d '/' -f 2`
-    git co -B $branch $remote/$branch
+    git checkout $remote/$branch
 else
     match=`git b -r | grep -i $branch_pattern | grep -v HEAD | sed -e 's/^ *//' | selecta`
     remote=`echo $match | cut -d '/' -f 1`
     branch=`echo $match | cut -d '/' -f 2`
-    git co -B $branch $remote/$branch
+    git checkout $remote/$branch
 fi
