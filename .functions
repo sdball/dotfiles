@@ -317,3 +317,7 @@ npm-dependencies() {
 npm-dev-dependencies() {
   jq -r '.devDependencies | keys[]' package.json | while read package; do echo $package}`npm-package $package description | cut -c1-100`}`npm-package $package homepage`; done | column -s '}' -t | less -niSFX
 }
+
+rga() {
+  rg "$*"
+}
