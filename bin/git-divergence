@@ -4,7 +4,7 @@ set -e
 
 (
     function branch() {
-        git branch 2>/dev/null | grep -e '^*' | tr -d '\* '
+        git branch 2>/dev/null | grep -e '^*' | sed -e "s/HEAD detached at //" | tr -d '()\* '
     }
 
     function ensure_valid_ref() {
@@ -49,7 +49,7 @@ set -e
     for rev in `git rev-list $LOCAL..$REMOTE`; do
         show_rev $rev
     done
-    
+
     echo
     echo outgoing:
     echo
