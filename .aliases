@@ -12,6 +12,7 @@ alias ack="sl"
 alias trl=trans
 alias lookup=define
 alias mux=tmuxinator
+alias tree="exa --tree"
 
 if command -v exa >/dev/null; then
   alias ls=exa
