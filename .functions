@@ -196,7 +196,7 @@ fshow() {
 FZF-EOF"
 }
 
-frecent-branches() {
+recent() {
   local branches branch
   branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
   branch=$(echo "$branches" |
@@ -204,7 +204,8 @@ frecent-branches() {
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
-fremote-branches() {
+remote() {
+  git fetch
   local branches branch
   branches=$(git branch --remote | grep -v HEAD) &&
   branch=$(echo "$branches" |
