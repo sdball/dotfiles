@@ -338,3 +338,7 @@ npm-dev-dependencies() {
 rga() {
   rg "$*"
 }
+
+external-ip-address() {
+  curl https://duckduckgo.com\?q=ip+address -s | rg -o "Your IP address is \S+"
+}
