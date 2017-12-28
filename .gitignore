@@ -211,4 +211,5 @@ TODO.md
 .pre-commit/
 .slideshow/
 .exercism.json
+.yarnrc
 exercism/
