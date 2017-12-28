@@ -210,3 +210,5 @@ TODO.md
 .vim/work/
 .pre-commit/
 .slideshow/
+.exercism.json
+exercism/
