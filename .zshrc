@@ -67,6 +67,8 @@ setopt prompt_subst
 PROMPT='%/ ${vcs_info_msg_0_}
 %% '
 
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # finish timing the prompt boot
 local _end=`gdate +%s%3N`
 ruby -e "puts ($_end.to_i - $_start.to_i).to_s + 'ms to prompt'"
