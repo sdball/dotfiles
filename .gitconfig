@@ -34,6 +34,8 @@
     unadd = reset HEAD
     merged = branch --merged
     snapshot = !git stash save --include-untracked "snapshot: $(date)" && git stash apply "stash@{0}"
+    show-stash = "!f() { git stash show stash@{/$*} -p; }; f"
+    apply-stash = "!f() { git stash apply stash@{/$*}; }; f"
     s = !git fetch && git status
     edit-branch-commits = !git rebase -i `git outgoing master | tail -1 | xargs git log --format="%P" -1`
     ss = local-to-remote-status
