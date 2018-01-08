@@ -342,3 +342,16 @@ rga() {
 external-ip-address() {
   curl https://duckduckgo.com\?q=ip+address -s | rg -o "Your IP address is \S+"
 }
+
+random-md5() {
+  ruby -r faker -e "puts Faker::Crypto.md5"
+}
+
+random-sha1() {
+  ruby -r faker -e "puts Faker::Crypto.sha1"
+}
+
+random-sha256() {
+  ruby -r faker -e "puts Faker::Crypto.sha256"
+}
+
