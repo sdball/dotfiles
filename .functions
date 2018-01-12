@@ -355,3 +355,6 @@ random-sha256() {
   ruby -r faker -e "puts Faker::Crypto.sha256"
 }
 
+ht() {
+  head $*; echo ".\n.\n.\n."; tail $*
+}
