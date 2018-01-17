@@ -13,6 +13,7 @@ Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'ervandew/supertab'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'terryma/vim-multiple-cursors'
