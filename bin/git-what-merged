@@ -1,0 +1,10 @@
+#!/bin/bash
+
+merge_commit=`git log $1..master --format=%H --ancestry-path --merges | tail -1`
+
+if [[ $merge_commit != '' ]]; then
+  git log -1 $merge_commit
+else
+  echo "No merge commit for $1 found"
+fi
+
