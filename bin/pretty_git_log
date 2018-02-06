@@ -22,7 +22,7 @@ SUBJECT="%s"
 
 FORMAT="$HASH}$ABSOLUTE_TIME ($RELATIVE_TIME)}$AUTHOR}$REFS $SUBJECT"
 
-git log --graph --abbrev-commit --date=short --pretty="tformat:${FORMAT}" $* |
+git log --color --graph --abbrev-commit --date=short --pretty="tformat:${FORMAT}" $* |
     # Line columns up based on } delimiter
     column -s '}' -t |
     # Page only if we need to
