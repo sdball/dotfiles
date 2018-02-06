@@ -13,6 +13,7 @@ alias trl=trans
 alias lookup=define
 alias mux=tmuxinator
 alias tree="exa --tree"
+alias serve="ruby -run -ehttpd . -p8000"
 
 if command -v exa >/dev/null; then
   alias ls=exa
