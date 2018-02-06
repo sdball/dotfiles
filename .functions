@@ -252,8 +252,8 @@ wut () {
   local needle="$*"
   local out file key OIFS
   OIFS=$IFS
-  IFS=$'\n' out=($(ag -il $needle | fzf --reverse \
-                   --preview="ag --color -C 5 $needle {}" \
+  IFS=$'\n' out=($(rg -l $needle | fzf --reverse \
+                   --preview="rg --color -C 5 $needle {}" \
                    --prompt '(ctrl-{l,o,e,g} to link, open, edit, or browse in github)> ' \
                    --expect=ctrl-l,ctrl-o,ctrl-e,ctrl-g))
   IFS=$OIFS
