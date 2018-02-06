@@ -214,3 +214,5 @@ TODO.md
 .standard-cache/
 .yarnrc
 exercism/
+.tig_history
+
