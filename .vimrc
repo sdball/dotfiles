@@ -163,6 +163,8 @@ cnoremap $$ <C-R>=expand('%')<cr>
 nnoremap <leader>. :call OpenTestAlternate()<cr>
 map <leader>t :call RunTestFile()<cr>
 map <leader>T :call RunNearestTest()<cr>
+map <leader>a :call RunAllTests()<cr>
+map <leader>s :call RunStyleChecks()<cr>
 
 " when nested too deep
 nnoremap <leader>x :set cursorcolumn!<cr>
@@ -201,37 +203,22 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SWITCH BETWEEN TEST AND PRODUCTION CODE
+" RUNNING TESTS AND STYLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! OpenTestAlternate()
-  let new_file = AlternateForCurrentFile()
-  exec ':e ' . new_file
-endfunction
-function! AlternateForCurrentFile()
-  let current_file = expand("%")
-  let new_file = current_file
-  let in_spec = match(current_file, '^spec/') != -1
-  let going_to_spec = !in_spec
-  let in_app = match(current_file, '\<controllers\>') != -1 || match(current_file, '\<models\>') != -1 || match(current_file, '\<views\>') != -1 || match(current_file, '\<services\>') != -1 || match(current_file, '\<helpers\>') != -1
-  if going_to_spec
-    if in_app
-      let new_file = substitute(new_file, '^app/', '', '')
-    end
-    let new_file = substitute(new_file, '\.rb$', '_spec.rb', '')
-    let new_file = 'spec/' . new_file
+function! RunStyleChecks()
+  if !exists("t:style_command")
+    echo "Unknown global style check command"
   else
-    let new_file = substitute(new_file, '_spec\.rb$', '.rb', '')
-    let new_file = substitute(new_file, '^spec/', '', '')
-    if in_app
-      let new_file = 'app/' . new_file
-    end
-  endif
-  return new_file
+    exec ":!" . t:style_command
+  end
 endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RUNNING TESTS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! RunAllTests()
+  if !exists("t:command")
+    echo "Unknown global test suite command"
+  else
+    exec ":!" . t:command
+  end
+endfunction
 function! RunTestFile(...)
     if a:0
         let command_suffix = a:1
@@ -240,7 +227,8 @@ function! RunTestFile(...)
     endif
 
 " Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_test.exs\)$') != -1
+    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_test.exs\|spec.js\)$') != -1
+    echo in_test_file
     if in_test_file
         call SetTestFile()
     elseif !exists("t:sdb_test_file")
@@ -261,8 +249,8 @@ function! SetTestFile()
 endfunction
 
 function! RunTests(filename, line_number)
-" Write the file and run tests for the given filename
-    :w
+" Write the open files and run tests for the given filename
+    :wall
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
@@ -304,27 +292,11 @@ function! RunTests(filename, line_number)
         else
             exec ":!" . command . " " . a:filename
         end
+    elseif a:filename =~ "\.js$"
+      echo a:line_number
+      let basename=system("echo -n `basename " . a:filename . "`")
+      exec ':!' . t:command . ' --filter="' . basename . '"'
     end
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RAILS STUFFS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! ShowRoutes()
-" Requires 'scratch' plugin
-  :topleft 100 :split __Routes__
-" Make sure Vim doesn't write __Routes__ as a file
-  :set buftype=nofile
-" Delete everything
-  :normal 1GdG
-" Put routes output in buffer
-  :0r! rake -s routes
-" Size window to number of lines (1 plus rake output length)
-  :exec ":normal " . line("$") . _ "
-" Move cursor to bottom
-  :normal 1GG
-" Delete empty trailing line
-  :normal dd
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
