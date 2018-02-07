@@ -228,7 +228,6 @@ function! RunTestFile(...)
 
 " Run the tests for the previously-marked file.
     let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_test.exs\|spec.js\)$') != -1
-    echo in_test_file
     if in_test_file
         call SetTestFile()
     elseif !exists("t:sdb_test_file")
@@ -249,14 +248,8 @@ function! SetTestFile()
 endfunction
 
 function! RunTests(filename, line_number)
-" Write the open files and run tests for the given filename
+    " Write the open files and run tests for the given filename
     :wall
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     if a:filename =~ "\.rb$"
         if a:filename =~ "spec"
             if filereadable("Gemfile")
@@ -293,9 +286,25 @@ function! RunTests(filename, line_number)
             exec ":!" . command . " " . a:filename
         end
     elseif a:filename =~ "\.js$"
-      echo a:line_number
-      let basename=system("echo -n `basename " . a:filename . "`")
-      exec ':!' . t:command . ' --filter="' . basename . '"'
+      let current_file=expand('%')
+      if a:line_number && current_file == a:filename
+        " run the specific test containing the selected line by
+        " - finding the relevant it or describe declaration
+        " - changing it to fit or fdescribe
+        " - running the filtered test file
+        " - reverting the fit/fdescribe back to it/describe
+        normal j
+        ?\(it\|describe\)
+        normal If
+        :silent w
+        let basename=system("echo -n `basename " . a:filename . "`")
+        exec ':!' . t:command . ' --filter="' . basename . '"'
+        normal x
+        :silent w
+      else
+        let basename=system("echo -n `basename " . a:filename . "`")
+        exec ':!' . t:command . ' --filter="' . basename . '"'
+      end
     end
 endfunction
 
