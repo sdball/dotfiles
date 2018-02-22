@@ -141,7 +141,7 @@ nnoremap <c-l> <c-w>l
 imap <c-l> <space>=><space>
 
 " insert current datetime
-imap <c-d> <c-R>=strftime("%Y-%m-%d %A")<cr>
+imap <c-d> # <c-R>=strftime("%Y-%m-%d %A")<cr>
 
 " Can't be bothered to understand ESC vs <c-c> in insert mode
 imap <c-c> <esc>
