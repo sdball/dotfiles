@@ -295,7 +295,7 @@ function! RunTests(filename, line_number)
         " - running the filtered test file
         " - reverting the fit/fdescribe back to it/describe
         normal j
-        ?\(it\|describe\)
+        ?\(\(^\|\s\)it\|\(^\|\s\)describe\)
         normal If
         :silent w
         let basename=system("echo -n `basename " . a:filename . "`")
