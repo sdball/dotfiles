@@ -96,7 +96,8 @@ augroup vimrcEx
 
   autocmd FileType ruby,haml,eruby,yaml,html,sass,cucumber set ai sw=2 sts=2 et
   autocmd FileType python set sw=4 sts=4 et
-  autocmd FileType javascript set ai sw=4 sts=4 et
+  autocmd FileType javascript set ai sw=2 sts=2 et
+  autocmd FileType javascript let t:command="npm test"
 
   if filereadable(expand("~/.vim/work/autocmds.vim"))
     source ~/.vim/work/autocmds.vim
