@@ -179,10 +179,12 @@ nnoremap <Leader>raw :%s/\s\+$//e<CR>
 map <leader># :set number!<cr>
 
 " :W should really be :w because I never want :W and always mean :w
-cmap W w
-
 " :Q should really be :q because Q doesn't even do anything
-cmap Q q
+" put them together and magic
+command WQ wq
+command Wq wq
+command W w
+command Q q
 
 " misc
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
