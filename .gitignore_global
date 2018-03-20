@@ -4,3 +4,4 @@
 .direnv
 .envrc
 EXCL
+node_modules
