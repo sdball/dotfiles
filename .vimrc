@@ -7,6 +7,7 @@ filetype off
 " -- Plugins: https://github.com/junegunn/vim-plug ---------------------------
 call plug#begin('~/.vim/plugged')
 
+Plug 'AndrewRadev/switch.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'conormcd/matchindent.vim'
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
