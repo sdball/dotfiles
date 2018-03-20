@@ -313,23 +313,6 @@ function! RunTests(filename, line_number)
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CTRLP STUFFS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ctrlp_user_command = ['rg --files']
-let g:ctrlp_max_height = 30
-let g:ctrlp_mruf_relative = 1
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp\|vendor\|deps\|_build$',
-  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
-  \ }
-command! CtrlPLine call ctrlp#init(ctrlp#line#id())
-
-" custom ctrl-p searches
-map <leader>pt :CtrlPClearCache<cr>\|:CtrlPTag<cr>
-map <leader>g :CtrlPLine<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FZF                                                                        "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " --column: Show column number
