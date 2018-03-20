@@ -73,3 +73,11 @@ export PATH="$HOME/.cargo/bin:$PATH"
 local _end=`gdate +%s%3N`
 ruby -e "puts ($_end.to_i - $_start.to_i).to_s + 'ms to prompt'"
 
+# neovim if possible
+if command -v nvim > /dev/null; then
+  export EDITOR=nvim
+  alias vim=nvim
+  alias vi=nvim
+else
+  export EDITOR=vim
+fi
