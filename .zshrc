@@ -81,3 +81,7 @@ if command -v nvim > /dev/null; then
 else
   export EDITOR=vim
 fi
+
+if [[ -d $HOME/Library/Python/3.6/bin ]]; then
+  export PATH="$HOME/Library/Python/3.6/bin:$PATH"
+fi
