@@ -60,7 +60,6 @@
     tool = vimdiff
 
 [core]
-	editor = vim
 	pager = less -r
 	excludesfile = ~/.gitignore_global
 [push]
