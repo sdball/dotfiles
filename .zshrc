@@ -65,19 +65,21 @@ $ '
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
-# finish timing the prompt boot
-local _end=`gdate +%s%3N`
-ruby -e "puts ($_end.to_i - $_start.to_i).to_s + 'ms to prompt'"
-
-# neovim if possible
-if command -v nvim > /dev/null; then
-  export EDITOR=nvim
-  alias vim=nvim
-  alias vi=nvim
-else
-  export EDITOR=vim
-fi
-
 if [[ -d $HOME/Library/Python/3.6/bin ]]; then
   export PATH="$HOME/Library/Python/3.6/bin:$PATH"
 fi
+
+# neovim if possible
+# NOT YET
+# if command -v nvim > /dev/null; then
+#   export EDITOR=nvim
+#   alias vim=nvim
+#   alias vi=nvim
+# else
+#   export EDITOR=vim
+# fi
+
+# finish timing the prompt boot
+local _end=`gdate +%s%3N`
+ruby --disable-gems -e "puts ($_end.to_i - $_start.to_i).to_s + 'ms to prompt'"
+
