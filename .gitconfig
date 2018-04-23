@@ -25,6 +25,7 @@
     div-count = divergence-count
     divc = divergence-count
     dim = !git fetch && git divergence-count origin/master
+    did = !git fetch && git divergence-count origin/develop
     gn = goodness
     gnc = goodness --cached
     fa = fetch --all
