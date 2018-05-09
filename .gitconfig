@@ -1,62 +1,65 @@
 [color]
     ui = auto
 [alias]
-    st = status
+    ; simple aliases
+    aa = add --all
+    amend = commit --amend
+    b = branch
+    changed-files = diff --name-only
     ci = commit
     co = checkout
-    lms = !git local-master-sync-check
-    current-branch= !git branch | grep '*' | cut -d ' ' -f 2
-    di = diff
     dc = diff --cached
-    amend = commit --amend
-    aa = add --all
-    head = !git l -1
-    h = !git head
-    hp = "!show_git_head"
-    r = !git l -30
-    ra = !git r --all
+    dh1 = diff HEAD~1
+    di = diff
+    ds = diff --stat=160,120
+    fa = fetch --all
     ff = merge --ff-only
-    pullff = pull --ff-only
-    noff = merge --no-ff
-    l = "!pretty_git_log"
-    la = !git l --all
+    last-commit = log -1 -p
     ls = ls-files
+    merged = branch --merged
+    noff = merge --no-ff
+    p = push -u origin HEAD
+    pullff = pull --ff-only
+    remix = rebase -i --autosquash
+    st = status
+    unadd = reset HEAD
+
+    ; custom commands and workflows
+    apply-stash = "!f() { git stash apply stash@{/$*}; }; f"
+    current-branch= !git branch | grep '*' | cut -d ' ' -f 2
+    did = !git fetch && git divergence-count origin/develop
+    dim = !git fetch && git divergence-count origin/master
     div = divergence
     div-count = divergence-count
     divc = divergence-count
-    dim = !git fetch && git divergence-count origin/master
-    did = !git fetch && git divergence-count origin/develop
+    edit = !vim -O `git diff HEAD --name-only`
+    edit-branch-commits = !git rebase -i `git outgoing master | tail -1 | xargs git log --format="%P" -1`
+    fb = create-feature-branch
     gn = goodness
     gnc = goodness --cached
-    fa = fetch --all
-    b = branch
-    ds = diff --stat=160,120
-    dh1 = diff HEAD~1
-    unadd = reset HEAD
-    merged = branch --merged
-    snapshot = !git stash save --include-untracked "snapshot: $(date)" && git stash apply "stash@{0}"
-    show-stash = "!f() { git stash show stash@{/$*} -p; }; f"
-    apply-stash = "!f() { git stash apply stash@{/$*}; }; f"
-    s = !git fetch && git status
-    edit-branch-commits = !git rebase -i `git outgoing master | tail -1 | xargs git log --format="%P" -1`
-    ss = local-to-remote-status
-    pu = push -u
-    p = !git push -u origin `git current-branch`
-    fb = create-feature-branch
+    h = !git head
+    head = !git l -1
+    hp = "!show_git_head"
+    l = "!pretty_git_log"
+    la = !git l --all
+    lms = !git local-master-sync-check
+    r = !git l -30
+    ra = !git r --all
     recent-branches = !git reflog --since '2 weeks ago' | grep checkout | grep -o 'moving from .*' | sed -e 's/moving from //' -e 's/.* to //' | sort | uniq
-    last-commit = log -1 -p
-    changed-files = diff --name-only
-    remix = rebase -i --autosquash
+    s = !git fetch && git status
+    show-stash = "!f() { git stash show stash@{/$*} -p; }; f"
+    snapshot = !git stash save --include-untracked "snapshot: $(date)" && git stash apply "stash@{0}"
+    ss = local-to-remote-status
 
     ; data analysis
     authors = !git log --format="%aN"
-    unique-authors = !git authors | sort -u
-    ranked-authors = !git authors | sort | uniq -c | sort -n
-    emails = !git log --format="%aE"
     email-domains = !git log --format="%aE" | awk -F'@' '{print $2}'
-    unique-email-domains = !git email-domains | sort -u
-    ranked-email-domains = !git email-domains | sort | uniq -c | sort -n
+    emails = !git log --format="%aE"
     one-week = !git diff --stat `git log --since='1 week' --format=%H | tail -1`
+    ranked-authors = !git authors | sort | uniq -c | sort -n
+    ranked-email-domains = !git email-domains | sort | uniq -c | sort -n
+    unique-authors = !git authors | sort -u
+    unique-email-domains = !git email-domains | sort -u
 [merge]
     tool = vimdiff
 
