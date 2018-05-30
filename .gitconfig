@@ -67,7 +67,7 @@
 	pager = less -r
 	excludesfile = ~/.gitignore_global
 [push]
-	default = tracking
+	default = simple
 [advice]
 	statusHints = false
 [diff]
