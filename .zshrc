@@ -47,8 +47,12 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 command -v direnv >& /dev/null && eval "$(direnv hook zsh)"
 
 # bind up and down arrows to search through history
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
 
 # custom low level zsh prompt
 autoload -Uz vcs_info
