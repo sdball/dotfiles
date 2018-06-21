@@ -247,6 +247,14 @@ pb () {
   fi
 }
 
+pbvim() {
+  local _pbfile=/var/tmp/pbvim
+  pbpaste > $_pbfile
+  vim -b $_pbfile
+  pbcopy <$_pbfile
+  rm $_pbfile
+}
+
 # -- from https://github.com/erichs
 wut () {
   local needle="$*"
