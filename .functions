@@ -377,3 +377,22 @@ ww() {
   git status -bs
   echo
 }
+
+terse() {
+  precmd() {
+    PS1="$ "
+  }
+}
+
+verbose() {
+  precmd() {
+    echo
+    if type lww &>/dev/null; then
+      lww
+    fi
+    echo "`git current-branch` ( `git divc | tr '\n' ' '`)"
+    git status --short
+    PS1="`pwd` $ "
+  }
+}
+
