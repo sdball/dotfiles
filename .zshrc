@@ -1,8 +1,6 @@
 # ensure that gdate is available for timing
 export PATH="/usr/local/bin:$PATH"
 
-# start timing the prompt boot
-local _start=`gdate +%s%3N`
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 ZSH_CUSTOM=$HOME/.omz-custom
@@ -68,8 +66,4 @@ fi
 # else
 #   export EDITOR=vim
 # fi
-
-# finish timing the prompt boot
-local _end=`gdate +%s%3N`
-ruby --disable-gems -e "puts ($_end.to_i - $_start.to_i).to_s + 'ms to prompt'"
 
