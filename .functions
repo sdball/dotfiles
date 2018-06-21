@@ -366,3 +366,14 @@ random-sha256() {
 ht() {
   head $*; echo ".\n.\n.\n."; tail $*
 }
+
+ww() {
+  if type lww &>/dev/null; then
+    lww
+  fi
+  echo; echo 'PWD'
+  pwd
+  echo; echo 'GIT STATUS'
+  git status -bs
+  echo
+}
