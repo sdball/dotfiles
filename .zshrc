@@ -32,9 +32,6 @@ unset fasd_cache
 # tmuxinator: I'll be back
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
-# thefuck
-command -v thefuck >&/dev/null && eval $(thefuck --alias oops)
-
 # rbenv
 command -v rbenv >& /dev/null && eval "$(rbenv init -)"
 
