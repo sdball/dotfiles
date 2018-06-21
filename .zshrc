@@ -51,18 +51,7 @@ zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
 
-# custom low level zsh prompt
-autoload -Uz vcs_info
-# autoload -U colors && colors
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git*' formats "%{$fg[green]%}(%b) %{$reset_color%}%m%u%c%{$reset_color%}"
-precmd() {
-  vcs_info
-}
-setopt prompt_subst
-PROMPT='%/ ${vcs_info_msg_0_}
-$ '
+PROMPT='$ '
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
