@@ -386,6 +386,12 @@ terse() {
 
 verbose() {
   precmd() {
+    PS1="`pwd` $ "
+  }
+}
+
+vverbose() {
+  precmd() {
     echo
     if type lww &>/dev/null; then
       lww
