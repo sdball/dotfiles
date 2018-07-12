@@ -4,7 +4,7 @@ export PATH="/usr/local/bin:$PATH"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 ZSH_CUSTOM=$HOME/.omz-custom
-source $HOME/.local_zshrc
+[[ -s $HOME/.local_zshrc ]] && source $HOME/.local_zshrc
 
 source "${HOME}/.zgen/zgen.zsh"
 
