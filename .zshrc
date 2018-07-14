@@ -57,6 +57,10 @@ if [[ -d $HOME/Library/Python/3.6/bin ]]; then
   export PATH="$HOME/Library/Python/3.6/bin:$PATH"
 fi
 
+if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
+  source ~/.config/exercism/exercism_completion.zsh
+fi
+
 # neovim if possible
 # NOT YET
 # if command -v nvim > /dev/null; then
