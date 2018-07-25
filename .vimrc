@@ -283,11 +283,16 @@ function! RunTests(filename, line_number)
             end
         end
     elseif a:filename =~ "\.exs$"
-        let command="mix test"
+        if filereadable("mix.exs")
+            let command="mix test"
 
-        if a:line_number
-            exec ":!" . command . " " . a:filename . ":" . a:line_number
+            if a:line_number
+                exec ":!" . command . " " . a:filename . ":" . a:line_number
+            else
+                exec ":!" . command . " " . a:filename
+            end
         else
+            let command="elixir"
             exec ":!" . command . " " . a:filename
         end
     elseif a:filename =~ "\.js$"
