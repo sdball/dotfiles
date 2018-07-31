@@ -26,7 +26,7 @@
 
     ; custom commands and workflows
     apply-stash = "!f() { git stash apply stash@{/$*}; }; f"
-    current-branch= !git branch | grep '*' | cut -d ' ' -f 2
+    current-branch=rev-parse --abbrev-ref HEAD
     did = !git fetch && git divergence-count origin/develop
     dim = !git fetch && git divergence-count origin/master
     div = divergence
