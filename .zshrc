@@ -1,5 +1,5 @@
-# ensure that gdate is available for timing
-export PATH="/usr/local/bin:$PATH"
+setopt inc_append_history # save every command before it is executed
+setopt share_history # retrieve the history file everytime history is called upon
 
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
