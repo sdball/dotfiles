@@ -412,9 +412,9 @@ vverbose() {
     if type lww &>/dev/null; then
       lww
     fi
-    echo "`git current-branch` ( `git divc | tr '\n' ' '`)"
+    echo "( `git divc | tr '\n' ' '`)"
     git status --short
-    PS1="`pwd` $ "
+    PS1="`pwd` (`git rev-parse --abbrev-ref HEAD`) $ "
   }
 }
 
