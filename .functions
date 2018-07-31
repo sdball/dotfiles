@@ -394,15 +394,19 @@ ww() {
   echo
 }
 
+check-for-fit-fdescribe() {
+  rg 'f(it|describe).*\{' -t js -q && echo "\033[1;30m(\033[1;31mf\033[0m\033[1;30m)\033[0m "
+}
+
 terse() {
   precmd() {
-    PS1="$ "
+    PS1="`check-for-fit-fdescribe`$ "
   }
 }
 
 verbose() {
   precmd() {
-    PS1="`pwd` $ "
+    PS1="`pwd` `check-for-fit-fdescribe`$ "
   }
 }
 
@@ -414,7 +418,7 @@ vverbose() {
     fi
     echo "( `git divc | tr '\n' ' '`)"
     git status --short
-    PS1="`pwd` (`git rev-parse --abbrev-ref HEAD`) $ "
+    PS1="`pwd` (`git rev-parse --abbrev-ref HEAD`) `check-for-fit-fdescribe`$ "
   }
 }
 
