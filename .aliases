@@ -18,6 +18,9 @@ alias t=terse
 alias v=verbose
 alias vv=vverbose
 
+# fasd and fzf
+alias s='cd `fasd -sl "$1" | fzf --tac +m`'
+
 if command -v exa >/dev/null; then
   alias ls=exa
   alias ll="exa --long -bhm --time-style=long-iso"
