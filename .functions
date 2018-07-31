@@ -418,3 +418,7 @@ vverbose() {
   }
 }
 
+cf() {
+  rg 'f(it|describe).*\{' -t js
+}
+
