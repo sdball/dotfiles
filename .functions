@@ -395,7 +395,7 @@ ww() {
 }
 
 check-for-fit-fdescribe() {
-  rg 'f(it|describe).*\{' -t js -q && echo "\033[1;30m(\033[1;31mf\033[0m\033[1;30m)\033[0m "
+  rg 'f(it|describe).*\{' -t js -q &>/dev/null && echo "\033[1;30m(\033[1;31mf\033[0m\033[1;30m)\033[0m "
 }
 
 terse() {
