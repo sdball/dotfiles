@@ -433,6 +433,6 @@ vvverbose() {
 }
 
 cf() {
-  rg 'f(it|describe).*\{' -t js
+  rg -i '\bf(it|describe)\b.*\{' -t js
 }
 
