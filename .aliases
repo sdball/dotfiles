@@ -17,6 +17,7 @@ alias serve="ruby -run -ehttpd . -p8000"
 alias t=terse
 alias v=verbose
 alias vv=vverbose
+alias vvv=vvverbose
 
 # fasd and fzf
 alias s='cd `fasd -sl "$1" | fzf --tac +m`'
