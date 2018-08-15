@@ -20,7 +20,7 @@ alias vv=vverbose
 alias vvv=vvverbose
 
 # fasd and fzf
-alias s='cd `fasd -sl "$1" | fzf --tac +m`'
+alias d='cd `fasd -dl "$1" | fzf --tac +m`'
 
 if command -v exa >/dev/null; then
   alias ls=exa
