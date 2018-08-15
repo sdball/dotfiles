@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -euo pipefail
+
+git ff $1 && git branch -d $1

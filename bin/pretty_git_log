@@ -7,8 +7,8 @@ AUTHOR="%C(bold blue)%an%Creset"
 REFS="%C(red)%d%Creset"
 SUBJECT="%s"
 
-FORMAT="$HASH}$ABSOLUTE_TIME}$RELATIVE_TIME}$AUTHOR}%<(60,trunc)$SUBJECT}$REFS"
+FORMAT="$HASH~$ABSOLUTE_TIME~$RELATIVE_TIME~$AUTHOR~%<(60,trunc)$SUBJECT~$REFS"
 
 git log --color --graph --abbrev-commit --date=short --pretty="tformat:${FORMAT}" $* |
-    column -s '}' -t |
+    column -s '~' -t |
     less -FXRS
