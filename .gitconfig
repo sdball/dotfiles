@@ -4,7 +4,7 @@
     ; simple aliases
     aa = add --all
     amend = commit --amend
-    b = branch
+    b = branch --list -vv
     changed-files = diff --name-only
     ci = commit
     co = checkout
