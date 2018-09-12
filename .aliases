@@ -18,6 +18,7 @@ alias t=terse
 alias v=verbose
 alias vv=vverbose
 alias vvv=vvverbose
+alias b=recent
 
 # fasd and fzf
 alias d='cd `fasd -dl "$1" | fzf --tac +m`'
