@@ -22,7 +22,7 @@
 
 BEGIN{
 	# If you want a filled in solid histogram use "\xDB", but that might not work on your terminal.
-	BAR_CHARACTER="_"
+	BAR_CHARACTER="◽"
 	LINES_DEFAULT=50
 	WIDTH_DEFAULT=100
 	REALTIME_RECORDS_DEFAULT=1000
