@@ -399,7 +399,7 @@ check-for-fit-fdescribe() {
 }
 
 check-for-dirty-working-tree() {
-  [[ -z $(git status -s) ]] || echo "$(tput setaf 0; tput bold)($(tput setaf 3)c$(tput setaf 0)) $(tput sgr0)"
+  [[ -z $(git --no-optional-locks status -s) ]] || echo "$(tput setaf 0; tput bold)($(tput setaf 3)c$(tput setaf 0)) $(tput sgr0)"
 }
 
 prompt-tags() {
