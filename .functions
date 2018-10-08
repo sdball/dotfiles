@@ -398,6 +398,10 @@ check-for-fit-fdescribe() {
   rg -i '\bf(it|describe)\b.*\{' -t js -q &> /dev/null && echo "$(tput setaf 0; tput bold)($(tput setaf 1)f$(tput setaf 0)) $(tput sgr0)"
 }
 
+f() {
+  rg -i '\bf(it|describe)\b.*\{' -t js
+}
+
 check-for-dirty-working-tree() {
   [[ -z $(git --no-optional-locks status -s) ]] || echo "$(tput setaf 0; tput bold)($(tput setaf 3)c$(tput setaf 0)) $(tput sgr0)"
 }
