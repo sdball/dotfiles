@@ -1,4 +1,4 @@
 #!/bin/bash
 
-xkcd=`curl -s http://xkcd.com/$1/ | ag -o "http://imgs.xkcd.com/comics/.*"`
+xkcd=`curl -s https://xkcd.com/$1/ | rg -o "https://imgs.xkcd.com/comics/.*"`
 curl -s $xkcd | imgcat
