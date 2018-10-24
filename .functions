@@ -453,3 +453,6 @@ cf() {
   rg -i '\bf(it|describe)\b.*\{' -t js
 }
 
+h() {
+  highlight $1 -O rtf | pb
+}
