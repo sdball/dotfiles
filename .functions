@@ -453,6 +453,17 @@ cf() {
   rg -i '\bf(it|describe)\b.*\{' -t js
 }
 
+check_letter() {
+  echo "$1: `type $1 >/dev/null && type $1 | sed -e \"s/^$1: //\" | tr '\n' ' '`";
+}
+
+letters() {
+  for letter in {a..z}; do
+    check_letter $letter
+    check_letter `echo $letter | tr a-z A-Z`
+  done
+}
+
 h() {
   highlight $1 -O rtf | pb
 }
