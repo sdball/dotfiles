@@ -16,6 +16,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
+Plug 'rhysd/clever-f.vim'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
