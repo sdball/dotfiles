@@ -395,11 +395,11 @@ ww() {
 }
 
 check-for-fit-fdescribe() {
-  rg -i '\bf(it|describe)\b.*\{' -t js -q &> /dev/null && echo "$(tput setaf 0; tput bold)($(tput setaf 1)f$(tput setaf 0)) $(tput sgr0)"
+  rg -i '\bf(it|describe)\(.*\{' -t js -q &> /dev/null && echo "$(tput setaf 0; tput bold)($(tput setaf 1)f$(tput setaf 0)) $(tput sgr0)"
 }
 
 f() {
-  rg -i '\bf(it|describe)\b.*\{' -t js
+  rg -i '\bf(it|describe)\(.*\{' -t js
 }
 
 c() {
