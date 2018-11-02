@@ -467,3 +467,18 @@ letters() {
 h() {
   highlight $1 -O rtf | pb
 }
+
+monitor-memory() {
+  mkdir -p ~/.memory_logs
+  local _name=`echo $1 | tr ' ' '-'`
+  echo "TIME VSZ RSS"
+  while true; do
+    local _pid=`pgrep $1`
+    if [[ ! -z $_pid ]]; then
+      echo "`date +%s` `ps -o vsz,rss $_pid | rg -v 'VSZ'`" | tee -a ~/.memory_logs/"memory-$_name-$_pid.log"
+    else
+      (>&2 echo "process not found")
+    fi
+    sleep 5
+  done
+}
