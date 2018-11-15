@@ -12,7 +12,6 @@ alias ack="sl"
 alias trl=trans
 alias lookup=define
 alias mux=tmuxinator
-alias tree="exa --tree"
 alias serve="ruby -run -ehttpd . -p8000"
 alias t=terse
 alias v=verbose
@@ -28,6 +27,7 @@ if command -v exa >/dev/null; then
   alias ls=exa
   alias ll="exa --long -bhm --time-style=long-iso"
   alias lg="exa -lah --git --time-style=long-iso"
+  alias tree="exa --tree"
 fi
 
 if command -v rg >/dev/null; then
