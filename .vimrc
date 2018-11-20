@@ -7,27 +7,23 @@ filetype off
 " -- Plugins: https://github.com/junegunn/vim-plug ---------------------------
 call plug#begin('~/.vim/plugged')
 
-Plug 'AndrewRadev/switch.vim'
-Plug 'chriskempson/base16-vim'
-Plug 'conormcd/matchindent.vim'
-Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
-Plug 'ervandew/supertab'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'pangloss/vim-javascript'
-Plug 'rhysd/clever-f.vim'
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'wellle/targets.vim'
+Plug 'AndrewRadev/switch.vim' " plugin to switch segments of text with predefined replacements
+Plug 'chriskempson/base16-vim' " Base16 for Vim, obviously
+Plug 'conormcd/matchindent.vim' " try to match indent style with the current file
+Plug 'ervandew/supertab' " insert mode tab completions against open buffers
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy finder
+Plug 'junegunn/fzf.vim' " fuzzy finder
+Plug 'rhysd/clever-f.vim' " smarter f,F,t,T commands
+Plug 'sheerun/vim-polyglot' " async language packs
+Plug 'terryma/vim-multiple-cursors' " multiple cursor selections
+Plug 'tpope/vim-commentary' " comment stuff more easily
+Plug 'tpope/vim-dispatch' " async build dispatcher
+Plug 'tpope/vim-fugitive' " git integration
+Plug 'tpope/vim-rhubarb' " GitHub integration
+Plug 'tpope/vim-sensible' " sensible defaults
+Plug 'tpope/vim-surround' " match matching tags and syntax
+Plug 'tpope/vim-unimpaired' " handy bracket mappings
+Plug 'wellle/targets.vim' " give vim more targets to operate on
 
 call plug#end()
 " -- End Plugins -------------------------------------------------------------
