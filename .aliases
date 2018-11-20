@@ -20,6 +20,7 @@ alias vvv=vvverbose
 alias b="git b"
 alias F="git fetch --prune"
 alias r="recent"
+alias s="git status"
 
 # fasd and fzf
 alias d='cd `fasd -dl "$1" | fzf --tac +m`'
