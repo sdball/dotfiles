@@ -415,7 +415,7 @@ prompt-tags() {
 }
 
 current-git-checkout() {
-  git status | head -1 | sed -e 's/On branch //'
+  git --no-optional-locks status | head -1 | sed -e 's/On branch //'
 }
 
 terse() {
@@ -447,7 +447,7 @@ vvverbose() {
     else
       echo "( local branch only )"
     fi
-    git status --short
+    git --no-optional-locks status --short
     git branch --list -vv
     PS1="`pwd` (`current-git-checkout`) `prompt-tags`$ "
   }
