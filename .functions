@@ -414,6 +414,10 @@ prompt-tags() {
   echo "`check-for-fit-fdescribe``check-for-dirty-working-tree`"
 }
 
+current-git-checkout() {
+  git status | head -1 | sed -e 's/On branch //'
+}
+
 terse() {
   precmd() {
     PS1="`prompt-tags`$ "
@@ -428,7 +432,7 @@ verbose() {
 
 vverbose() {
   precmd() {
-    PS1="`pwd` (`git rev-parse --abbrev-ref HEAD`) `prompt-tags`$ "
+    PS1="`pwd` (`current-git-checkout`) `prompt-tags`$ "
   }
 }
 
@@ -445,7 +449,7 @@ vvverbose() {
     fi
     git status --short
     git branch --list -vv
-    PS1="`pwd` (`git rev-parse --abbrev-ref HEAD`) `prompt-tags`$ "
+    PS1="`pwd` (`current-git-checkout`) `prompt-tags`$ "
   }
 }
 
