@@ -25,6 +25,7 @@
     unadd = reset HEAD
 
     ; custom commands and workflows
+    uncommit = !git reset --soft HEAD~ && git reset HEAD .
     apply-stash = "!f() { git stash apply stash@{/$*}; }; f"
     current-branch=rev-parse --abbrev-ref HEAD
     did = !git fetch && git divergence-count origin/develop
