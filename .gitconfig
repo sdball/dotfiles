@@ -56,7 +56,7 @@
     show-stash = "!f() { git stash show stash@{/$*} -p; }; f"
     snapshot = !git stash save --include-untracked "snapshot: $(date)" && git stash apply "stash@{0}"
     ss = local-to-remote-status
-    wip = "!f() { git add --all && git commit -m \"WIP $*\"; }; f"
+    wip = "!f() { git add --all && git commit -m \"✏ $*\"; }; f"
 
     ; data analysis
     authors = !git log --format="%aN"
