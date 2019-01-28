@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -euo pipefail
+
+base_branch() {
+  git current-branch | sed -e 's/--.*//'
+}
+
+experiment_number() {
+  git branch | rg `base_branch` | wc -l | sed -e 's/ //g'
+}
+
+experiment_name() {
+  echo $* | tr ' ' -
+}
+
+main() {
+  if [[ $# -eq 0 ]];
+  then
+    git branch -vv | rg `base_branch`
+    git checkout `base_branch`
+  else
+    git checkout -b `base_branch`--experiment-`experiment_number`-`experiment_name $*` `base_branch`
+  fi
+}
+
+main $*

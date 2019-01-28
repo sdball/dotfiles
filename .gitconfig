@@ -23,6 +23,7 @@
     remix = rebase -i --autosquash
     st = status
     unadd = reset HEAD
+    e = experiment
 
     ; custom commands and workflows
     uncommit = !git reset --soft HEAD~ && git reset HEAD .
