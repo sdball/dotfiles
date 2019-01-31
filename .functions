@@ -492,3 +492,11 @@ monitor-memory() {
     sleep 5
   done
 }
+
+slacklet() {
+  emojilet $1 $2 | sed -e 's/ /:blank:/g'
+}
+
+emojilet() {
+  figlet -f banner $1 | sed -e "s/#/$2/g"
+}
