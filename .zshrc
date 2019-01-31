@@ -80,3 +80,7 @@ fi
 
 export PATH="/usr/local/sbin:$PATH"
 
+if (( $+commands[direnv] )) ; then
+  eval "$(direnv hook zsh)"
+fi
+
