@@ -424,6 +424,11 @@ terse() {
   }
 }
 
+tterse() {
+  precmd() {}
+  PS1="$ "
+}
+
 verbose() {
   precmd() {
     PS1="`pwd` `prompt-tags`$ "

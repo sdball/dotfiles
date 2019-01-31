@@ -55,8 +55,8 @@ autoload -z edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
-# terse prompt by default
-terse
+# terse terse prompt by default
+tt
 
 export PATH="$HOME/.cargo/bin:$PATH"
 

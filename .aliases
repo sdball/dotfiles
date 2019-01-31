@@ -14,6 +14,7 @@ alias lookup=define
 alias mux=tmuxinator
 alias serve="ruby -run -ehttpd . -p8000"
 alias t=terse
+alias tt=tterse
 alias v=verbose
 alias vv=vverbose
 alias vvv=vvverbose
