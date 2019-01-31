@@ -78,3 +78,5 @@ fi
 #   export EDITOR=vim
 # fi
 
+export PATH="/usr/local/sbin:$PATH"
+
