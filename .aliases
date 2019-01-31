@@ -19,12 +19,13 @@ alias v=verbose
 alias vv=vverbose
 alias vvv=vvverbose
 alias b="git b"
+alias D="git di"
 alias F="git fetch --prune"
 alias r="recent"
 alias s="git status"
 
 # fasd and fzf
-alias d='cd `fasd -dl "$1" | fzf --tac +m`'
+alias D='cd `fasd -dl "$1" | fzf --tac +m`'
 
 if command -v exa >/dev/null; then
   alias ls=exa
