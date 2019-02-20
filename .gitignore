@@ -227,3 +227,4 @@ IDEAS.md
 ghe/
 .fnm/
 .osquery/
+build.properties
