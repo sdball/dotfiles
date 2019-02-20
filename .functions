@@ -425,8 +425,9 @@ terse() {
 }
 
 tterse() {
-  precmd() {}
-  PS1="$ "
+  precmd() {
+    PS1="$ "
+  }
 }
 
 verbose() {
