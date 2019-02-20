@@ -364,7 +364,7 @@ rga() {
 }
 
 external-ip-address() {
-  curl https://duckduckgo.com\?q=ip+address -s | rg -o "Your IP address is \S+"
+  curl -s https://api.duckduckgo.com/\?q=ip+address\&format=json | jq -r .Answer
 }
 
 random-md5() {
