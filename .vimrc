@@ -95,6 +95,7 @@ augroup vimrcEx
 
   autocmd FileType ruby,haml,eruby,yaml,html,sass,cucumber set ai sw=2 sts=2 et
   autocmd FileType python set sw=4 sts=4 et
+  autocmd FileType python let t:command="pytest"
   autocmd FileType javascript set ai sw=2 sts=2 et
   autocmd FileType javascript let t:command="npm test"
 
@@ -229,8 +230,9 @@ function! RunTestFile(...)
     endif
 
 " Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_test.exs\|spec.js\)$') != -1
+    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_test.exs\|spec.js\|_test.py\)$') != -1
     if in_test_file
+        echo "IN TEST FILE"
         call SetTestFile()
     elseif !exists("t:sdb_test_file")
         return
@@ -312,6 +314,8 @@ function! RunTests(filename, line_number)
         let basename=system("echo -n `basename " . a:filename . "`")
         exec ':!' . t:command . ' --filter="' . basename . '"'
       end
+    else
+      exec ':!' . t:command . ' ' . a:filename
     end
 endfunction
 
