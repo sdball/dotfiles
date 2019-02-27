@@ -84,3 +84,4 @@ if (( $+commands[direnv] )) ; then
   eval "$(direnv hook zsh)"
 fi
 
+export PATH="/usr/local/opt/ncurses/bin:$PATH"
