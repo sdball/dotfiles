@@ -229,3 +229,5 @@ ghe/
 .osquery/
 build.properties
 Google\ Drive\ File\ Stream
+.serverlessrc
+.serverless/
