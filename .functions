@@ -395,7 +395,7 @@ ww() {
 }
 
 check-for-fit-fdescribe() {
-  rg -i '\bf(it|describe)\(.*\{' -t js -q &> /dev/null && echo "$(tput setaf 0; tput bold)($(tput setaf 1)f$(tput setaf 0)) $(tput sgr0)"
+  rg -i '\bf(it|describe)\(.*\{' -t js -q &> /dev/null && echo "(f) "
 }
 
 f() {
@@ -407,7 +407,7 @@ c() {
 }
 
 check-for-dirty-working-tree() {
-  [[ -z $(git --no-optional-locks status -s) ]] || echo "$(tput setaf 0; tput bold)($(tput setaf 3)c$(tput setaf 0)) $(tput sgr0)"
+  [[ -z $(git --no-optional-locks status -s) ]] || echo "(c) "
 }
 
 prompt-tags() {
