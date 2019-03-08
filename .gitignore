@@ -233,3 +233,4 @@ Google\ Drive\ File\ Stream
 .serverless/
 zsh.debug
 .zsh_prompt*
+.wget-hsts
