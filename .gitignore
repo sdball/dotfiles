@@ -231,3 +231,5 @@ build.properties
 Google\ Drive\ File\ Stream
 .serverlessrc
 .serverless/
+zsh.debug
+.zsh_prompt*
