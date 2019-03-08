@@ -1,8 +1,12 @@
 # sdball's dotfiles
 
-[![Stories in Ready](https://badge.waffle.io/sdball/dotfiles.png?label=ready&title=Ready)](http://waffle.io/sdball/dotfiles)
+These are my dotfiles, but not are absolutely not all mine because I steal from the best.
 
-These dotfiles are my home directory.
+- https://github.com/chorn/dotfiles
+- https://github.com/garybernhardt/dotfiles
+- https://github.com/erichs/dotfiles
+
+These dotfiles are also my home directory.
 
 Seriously. Check out the .gitignore file. Anything look familiar?
 
