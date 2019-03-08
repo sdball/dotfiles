@@ -1,0 +1,91 @@
+# --------------------------------------------------------------------------
+_safe_add_to_path() {
+  local _dir="$1"
+  PATH="${PATH#$_dir:}"
+  PATH="${PATH/:$_dir/}"
+  [[ -d "$_dir" ]] && PATH="${_dir}:$PATH"
+  export PATH
+}
+# --------------------------------------------------------------------------
+_clean_path() {
+  local -a _found=()
+
+  while read -d: -r _dir ; do
+    if [[ -d "$_dir" ]] ; then
+      local _dupe=0
+
+      for _check in ${_found[@]} ; do
+        [[ "$_check" == "$_dir" ]] && _dupe=1
+      done
+
+      [[ "$_dupe" -eq 1 ]] && continue
+
+      _found+=("$_dir")
+    fi
+  done < <(echo "$PATH")
+
+
+  echo "$(IFS=:; echo "${_found[*]}")"
+}
+# --------------------------------------------------------------------------
+# This adds systems paths, my list of sane paths, private/work paths in my preferred order.
+
+# find /etc/paths /etc/paths.d "$HOME/.shell-paths" "$HOME/.shell-prv-path" -type f -print0 2>/dev/null | xargs -0 cat | while read dir ; do
+find /etc/paths /etc/paths.d -type f -print0 2>/dev/null | xargs -0 cat | while read dir ; do
+  _safe_add_to_path "${dir}"
+done
+
+for dir in \
+  /Applications/VMware\ Fusion.app/Contents/Library \
+  /Applications/VirtualBox.app/Contents/MacOS \
+  /Applications/Postgres.app/Contents/Versions/latest/bin \
+  /usr/local/opt/openssl/bin \
+  /usr/local/opt/sqlite/bin \
+  /{bin,sbin} \
+  /{usr,opt}/{bin,sbin} \
+  /{usr,opt,Apps}/{local,X11,opt}/{bin,sbin} \
+  /{usr,opt}/local/heroku/bin \
+  /usr/local/opt/ncurses/bin \
+  $HOME/.asdf/{bin,shims} \
+  $HOME/.go/bin \
+  $HOME/.cargo/bin \
+  $HOME/bin \
+  $HOME/local_bin
+do
+  _safe_add_to_path "$dir"
+done
+
+# --------------------------------------------------------------------------
+for _version_manager in rbenv nodenv ; do
+  _safe_add_to_path "$HOME/.${_version_manager}/bin"
+  _safe_add_to_path "$HOME/.${_version_manager}/shims"
+
+  if declare -f "${_version_manager}" >& /dev/null ; then
+    continue
+  fi
+
+  _cmd="$(command -v "${_version_manager}")"
+
+  if [[ -z "$_cmd" ]] ; then
+    continue
+  fi
+
+  eval "export __${_version_manager}=${_cmd}"
+done
+
+# --------------------------------------------------------------------------
+#if command -v pyenv >&/dev/null; then
+#  eval "$(pyenv virtualenv-init -)"
+#fi
+# --------------------------------------------------------------------------
+if command -v fnm >&/dev/null ; then
+  eval "$(fnm env --multi)"
+elif [[ -s "$HOME/.nvm" ]] ; then
+  export NVM_DIR="$HOME/.nvm"
+  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+fi
+# --------------------------------------------------------------------------
+# This will clean up any duplicate path entries created by sloppy dependencies
+export PATH=$(_clean_path)
+# --------------------------------------------------------------------------
+# vim: set syntax=sh ft=sh sw=2 ts=2 expandtab:

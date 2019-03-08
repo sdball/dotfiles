@@ -1,9 +1,17 @@
 export GOPATH="$HOME/.gopath"
-export PATH="$HOME/local_bin:$HOME/bin:$PATH:$HOME/.gopath/bin:$HOME/.cargo/bin"
+
+# jif
+export JIF_DIR=$HOME/Pictures/jifs
 
 # homebrew
 HOMEBREW_INSTALL_CLEANUP=1
 HOMEBREW_UPGRADE_CLEANUP=1
+
+# base16 shell
+if [[ -s "$HOME/.config/base16-shell" ]]; then
+  BASE16_SHELL=$HOME/.config/base16-shell/
+  [[ -n "$PS1" ]] && [[ -s $BASE16_SHELL/profile_helper.sh ]] && eval "$($BASE16_SHELL/profile_helper.sh)"
+fi
 
 # actual history
 export HISTSIZE=100000
@@ -14,4 +22,7 @@ export EDITOR=vim
 export WORDCHARS='*?[]~&;!$%^<>'
 export ACK_COLOR_MATCH='red'
 
+# e.g.
+# curl $CURL_TIMING http://www.rakeroutes.com -so /dev/null
+# dnslookup: 0.004624 | connect: 0.027739 | appconnect: 0.000000 | pretransfer: 0.027786 | starttransfer: 0.199989 | total: 0.200177 | size: 15063
 export CURL_TIMING="-wdnslookup: %{time_namelookup} | connect: %{time_connect} | appconnect: %{time_appconnect} | pretransfer: %{time_pretransfer} | starttransfer: %{time_starttransfer} | total: %{time_total} | size: %{size_download}"

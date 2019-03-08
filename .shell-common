@@ -1,10 +1,43 @@
+alias jsonpp="python -m json.tool"
+alias be="bundle exec"
+alias current-branch="git symbolic-ref HEAD | cut -d '/' -f 3"
+alias anniversaries="ack -a -h `date +"%m/%d"` /usr/share/calendar | sort"
+alias gnp="git --no-pager"
+alias wifi-ip="ipconfig getifaddr en1"
+alias gbg="git branch -a | ack"
+alias newrelic-check='curl -0v -H "Cache-Control: no-cache, max-age=0" -H "User-Agent: NewRelicPinger/1.0 (1)" -H "X-Newrelic-Ignore: true"'
+alias nrcheck=newrelic-check
+alias cmon='sudo $(fc -ln -1)'
+alias ack="sl"
+alias trl=trans
+alias lookup=define
+alias mux=tmuxinator
+alias serve="ruby -run -ehttpd . -p8000"
+alias b="git b"
+alias d="git di"
+alias F="git fetch --prune"
+alias r="recent"
+alias s="git status"
+
+# fasd and fzf
+alias D='cd `fasd -dl "$1" | fzf --tac +m`'
+
+if command -v exa >/dev/null; then
+  alias ls=exa
+  alias ll="exa --long -bhm --time-style=long-iso"
+  alias lg="exa -lah --git --time-style=long-iso"
+  alias tree="exa --tree"
+fi
+
+if command -v rg >/dev/null; then
+  alias rg="rg -i"
+fi
 # https://github.com/mathiasbynens/dotfiles/blob/master/.functions
 
 # create and open a new directory
 function mkd() {
     mkdir -p "$@" && cd "$@"
 }
-
 # size a file for a directory
 function fs() {
     if du -b /dev/null > /dev/null 2>&1; then
@@ -418,47 +451,6 @@ current-git-checkout() {
   git --no-optional-locks status | head -1 | sed -e 's/On branch //'
 }
 
-terse() {
-  precmd() {
-    PS1="`prompt-tags`$ "
-  }
-}
-
-tterse() {
-  precmd() {
-    PS1="$ "
-  }
-}
-
-verbose() {
-  precmd() {
-    PS1="`pwd` `prompt-tags`$ "
-  }
-}
-
-vverbose() {
-  precmd() {
-    PS1="`pwd` (`current-git-checkout`) `prompt-tags`$ "
-  }
-}
-
-vvverbose() {
-  precmd() {
-    echo '---'
-    if type lww &>/dev/null; then
-      lww
-    fi
-    if git branch -r | rg `git current-branch` -q; then
-      echo "( `git divc | tr '\n' ' '`)"
-    else
-      echo "( local branch only )"
-    fi
-    git --no-optional-locks status --short
-    git branch --list -vv
-    PS1="`pwd` (`current-git-checkout`) `prompt-tags`$ "
-  }
-}
-
 cf() {
   rg -i '\bf(it|describe)\b.*\{' -t js
 }
@@ -514,3 +506,45 @@ set-keychain-environment-variable() {
   security add-generic-password -U -a "${USER}" -D ENV -s "${1}" -w "${secret}"
 }
 
+ps_owners() {
+  [[ -n "${BASH_VERSINFO[0]}" && "${BASH_VERSINFO[0]}" -lt 4 ]] && return 1
+  [[ -n "${BASH_VERSINFO[1]}" && "${BASH_VERSINFO[1]}" -lt 4 ]] && return 1
+
+  local _pid="${1:-$$}"
+
+  [[ $_pid -eq 0 ]] && return
+
+  read -r _uid _user _ppid _command < <(ps -o uid=,user=,ppid=,command= -p "$_pid")
+
+  echo "$_pid $_user $_uid $_ppid \"$_command\""
+
+  ps_owners "$_ppid"
+}
+
+am_i_someone_else() {
+  [[ -n "${BASH_VERSINFO[0]}" && "${BASH_VERSINFO[0]}" -lt 4 ]] && return 1
+  [[ -n "${BASH_VERSINFO[1]}" && "${BASH_VERSINFO[1]}" -lt 4 ]] && return 1
+
+  pgrep -u 0 >&/dev/null || return 1
+  [[ $EUID -eq 0 ]] && return 1
+
+  local -a _owners
+  local -A _counts
+
+  while read -r _pid _user _uid _ppid _command ; do
+    if [[ -z "${_counts[$_user]}" ]] ; then
+      _owners+=("$_user")
+      _counts[$_user]=1
+    else
+      (( _counts[$_user]++ ))
+    fi
+  done < <(ps_owners)
+
+  if [[ "${#_owners[@]}" -le 2 && "${_owners[-1]}" == "root" ]] ; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+# vim: set syntax=sh ft=sh sw=2 ts=2 expandtab:
