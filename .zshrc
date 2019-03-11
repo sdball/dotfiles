@@ -14,7 +14,8 @@ done
 for s in \
     ~/.fzf.zsh \
     ~/.config/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh \
-    ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+    ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh \
+    ~/.config/zsh/forgit/forgit.plugin.zsh
 do
   [[ -f "$s" ]] && source "$s"
 done
