@@ -69,12 +69,12 @@ setopt \
   hist_no_store \
   hist_reduce_blanks \
   hist_verify \
-  inc_append_history
+  share_history
 
 unsetopt \
   hist_ignore_all_dups \
-  inc_append_history_time \
-  share_history
+  inc_append_history \
+  inc_append_history_time
 #-----------------------------------------------------------------------------
 # typeset -g _debug_times
 # typeset -F SECONDS
