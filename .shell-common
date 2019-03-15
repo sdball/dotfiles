@@ -1,18 +1,7 @@
-alias jsonpp="python -m json.tool"
-alias be="bundle exec"
-alias current-branch="git symbolic-ref HEAD | cut -d '/' -f 3"
-alias anniversaries="ack -a -h `date +"%m/%d"` /usr/share/calendar | sort"
-alias gnp="git --no-pager"
-alias wifi-ip="ipconfig getifaddr en1"
-alias gbg="git branch -a | ack"
-alias newrelic-check='curl -0v -H "Cache-Control: no-cache, max-age=0" -H "User-Agent: NewRelicPinger/1.0 (1)" -H "X-Newrelic-Ignore: true"'
-alias nrcheck=newrelic-check
-alias cmon='sudo $(fc -ln -1)'
-alias ack="sl"
-alias trl=trans
-alias lookup=define
-alias mux=tmuxinator
-alias serve="ruby -run -ehttpd . -p8000"
+# --
+# aliases, functions, and shell tool setup that isn't shell specific
+# --
+
 alias b="git b"
 alias d="git di"
 alias F="git fetch --prune"
@@ -21,6 +10,9 @@ alias s="git status"
 
 # fasd and fzf
 alias D='cd `fasd -dl "$1" | fzf --tac +m`'
+
+# direnv
+command -v direnv >& /dev/null && eval "$(direnv hook zsh)"
 
 if command -v exa >/dev/null; then
   alias ls=exa
@@ -32,12 +24,12 @@ fi
 if command -v rg >/dev/null; then
   alias rg="rg -i"
 fi
-# https://github.com/mathiasbynens/dotfiles/blob/master/.functions
 
 # create and open a new directory
 function mkd() {
     mkdir -p "$@" && cd "$@"
 }
+
 # size a file for a directory
 function fs() {
     if du -b /dev/null > /dev/null 2>&1; then
@@ -67,29 +59,9 @@ function httpcompression() {
     encoding="$(curl -LIs -H 'User-Agent: Mozilla/5 Gecko' -H 'Accept-Encoding: gzip,deflate,compress,sdch' "$1" | grep '^Content-Encoding:')" && echo "$1 is encoded using ${encoding#* }" || echo "$1 is not using any encoding"
 }
 
-# Syntax-highlight JSON strings or files
-# Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
-function json() {
-    if [ -t 0 ]; then # argument
-        python -mjson.tool <<< "$*" | pygmentize -l javascript
-    else # pipe
-        python -mjson.tool | pygmentize -l javascript
-    fi
-}
-
 # all the info that dig can find
 function digdug() {
     dig +nocmd "$1" any +multiline +noall +answer
-}
-
-# open model spec and code
-om () {
-  vim `ack -g "app/models/$*.rb$"` -c ":vsplit" -c ":call OpenTestAlternate()"
-}
-
-# open controller spec and code
-oc () {
-  vim `ack -g "app/controllers/$*_controller.rb$"` -c ":vsplit" -c ":call OpenTestAlternate()"
 }
 
 # empty a file and tail it
@@ -97,48 +69,6 @@ cleartail() {
   echo "" > "$1"
   clear
   tail -f "$1"
-}
-
-# look for a domain's IP defined in /etc/hosts
-dighosts() {
-  ack `dig +short $1` /etc/hosts
-}
-
-etchosts() {
-  ack $1 /etc/hosts
-}
-
-pout() {
-  tail -f ~/Library/Logs/Pow/apps/$1.log
-}
-
-pouts() {
-  tail -f ~/Library/Logs/Pow/apps/*.log
-}
-
-search-activemerchant-gateways-for() {
-  ag $1 $HOME/github/sdball/active_merchant/lib/active_merchant/billing/gateways ${@:2}
-}
-
-define() {
-  trans -d en: $1 | less -niSFX
-}
-
-github-clone() {
-  _github_url=$1
-  _user=`echo $_github_url | cut -d '/' -f 1 | cut -d ':' -f 2`
-  _repo=`echo $_github_url | cut -d '/' -f 2 | cut -d '.' -f 1`
-  mkd $HOME/github/$_user
-  git clone $_github_url 2> /dev/null
-  cd $_repo
-}
-
-stargazers() {
-  curl -s https://api.github.com/repos/$1 | jq ".stargazers_count"
-}
-
-github-repo-stats() {
-  curl -s https://api.github.com/repos/$1 | jq ". | {repo: .full_name, stars: .stargazers_count, watchers: .watchers_count, forks: .forks_count, subscribers: .subscribers_count, open_issues: .open_issues_count}"
 }
 
 weather() {
@@ -165,16 +95,6 @@ man() {
     command man "$@"
 }
 
-docker-for-mac() {
-  env | ag "^DOCKER_" | cut -d '=' -f 1 | while read variable; do unset $variable; done
-  echo "docker will now use docker for mac"
-}
-
-docker-toolbox() {
-  eval $(docker-machine env default)
-  echo "docker will now use the docker-machine vm"
-}
-
 marked() {
   if [ $1 ]; then
     open -a "Marked 2" $1;
@@ -189,60 +109,6 @@ readme() {
   else
     less "README.md" || less "README.markdown" || echo "Markdown README not found";
   fi
-}
-
-stretch-time() {
-  terminal-notifier -title 'Stretch Time' -message 'Time to get up and stretch!' -group 'works' -sound 'Glass'
-}
-
-# -- cool fzf things --
-vb(){
-  #List all vagrant boxes available in the system including its status
-  cd $(cat ~/.vagrant.d/data/machine-index/index | jq '.machines[] | {name, vagrantfile_path, state}' | jq '.name + "," + .state  + "," + .vagrantfile_path'| sed 's/^"\(.*\)"$/\1/'| column -s, -t | sort -rk 2 | fzf | awk '{print $3}')
-}
-
-# browse chrome history
-chrome-history() {
-  local cols sep
-  cols=$(( COLUMNS / 3 ))
-  sep='{{::}}'
-
-  # Copy History DB to circumvent the lock
-  # - See http://stackoverflow.com/questions/8936878 for the file path
-  cp -f ~/Library/Application\ Support/Google/Chrome/Default/History /tmp/h
-
-  sqlite3 -separator $sep /tmp/h \
-    "select substr(title, 1, $cols), url
-     from urls order by last_visit_time desc" |
-  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\n", $1, $2}' |
-  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
-}
-
-opera-history() {
-  local cols sep
-  cols=$(( COLUMNS / 3 ))
-  sep='{{::}}'
-
-  # Copy History DB to circumvent the lock
-  # - See http://stackoverflow.com/questions/8936878 for the file path
-  cp -f ~/Library/Application\ Support/com.operasoftware.Opera/History /tmp/h
-
-  sqlite3 -separator $sep /tmp/h \
-    "select substr(title, 1, $cols), url
-     from urls order by last_visit_time desc" |
-  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\n", $1, $2}' |
-  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
-}
-
-# fshow - git commit browser
-fshow() {
-  git l |
-  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-      --bind "ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
-                {}
-FZF-EOF"
 }
 
 recent() {
@@ -304,55 +170,6 @@ pbvim() {
   rm $_pbfile
 }
 
-# -- from https://github.com/erichs
-wut () {
-  local needle="$*"
-  local out file key OIFS
-  OIFS=$IFS
-  IFS=$'\n' out=($(rg -l $needle | fzf --reverse \
-                   --preview="rg --color -C 5 $needle {}" \
-                   --prompt '(ctrl-{l,o,e,g} to link, open, edit, or browse in github)> ' \
-                   --expect=ctrl-l,ctrl-o,ctrl-e,ctrl-g))
-  IFS=$OIFS
-  if [ -z "$out" ]; then
-    return
-  fi
-  key=$(echo "$out" | cut -d ' ' -f 1)
-  file=$(echo "$out" | sed -e 's/[^ ]* //')
-  echo $out
-  case $key in
-    (ctrl-l) linkto $file
-      return ;;
-    (ctrl-o) open $file ;;
-    (ctrl-e) ${EDITOR:-vim} "$file" ;;
-    (ctrl-g) gh $file ;;
-    (*)  ;;
-  esac
-  echo $file
-  echo -n $file | pbcopy
-}
-
-# -- from https://github.com/erichs
-linkto () {
-# given relative filepath, find corresponding github URL
-# copy this to pastebuffer, and emit to stdout
-  local origin=$(git ls-remote --get-url | sed -Ee 's#https?://##')
-  local user=$(echo $origin | sed -Ee 's#^.*[/:]+(.*)/.*$#\1#')
-  local project=$(echo $origin | sed -Ee 's#^.*[/:]+.*/(.*).git$#\1#')
-  (
-    cd $(dirname $*)
-    local urlpath=$(find $(pwd) -name $(basename $*) -maxdepth 1 | sed -n -e "s/^.*${project}//p")
-    local url="https://github.com/${user}/${project}/blob/master${urlpath}"
-    echo -n $url | pb | cat -
-  )
-}
-
-# -- from https://github.com/erichs
-gh () {
-# open relative filepath in github
-  open `linkto $*`
-}
-
 b16() {
   theme=$(ls $HOME/.config/base16-shell/scripts/base16*.sh | while read file; do basename $file | cut -d '.' -f 1 | sed -e 's/-/_/'; done | fzf --tac)
   eval $theme
@@ -392,10 +209,6 @@ npm-dev-dependencies() {
   jq -r '.devDependencies | keys[]' package.json | while read package; do echo $package}`npm-package $package description | cut -c1-100`}`npm-package $package homepage`; done | column -s '}' -t | less -niSFX
 }
 
-rga() {
-  rg "$*"
-}
-
 external-ip-address() {
   curl -s https://api.duckduckgo.com/\?q=ip+address\&format=json | jq -r .Answer
 }
@@ -428,11 +241,11 @@ ww() {
 }
 
 check-for-fit-fdescribe() {
-  rg -i '\bf(it|describe)\(.*\{' -t js -q &> /dev/null && echo "(f) "
+  rg '\bf(it|describe)\(.*\{' -t js -q &> /dev/null && echo "(f) "
 }
 
 f() {
-  rg -i '\bf(it|describe)\(.*\{' -t js
+  rg '\bf(it|describe)\(.*\{' -t js
 }
 
 c() {
