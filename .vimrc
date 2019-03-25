@@ -99,8 +99,8 @@ augroup vimrcEx
   autocmd FileType javascript set ai sw=2 sts=2 et
   autocmd FileType javascript let t:command="npm test"
 
-  if filereadable(expand("~/.vim/work/autocmds.vim"))
-    source ~/.vim/work/autocmds.vim
+  if filereadable(expand("~/work/autocmds.vim"))
+    source ~/work/autocmds.vim
   endif
 augroup END
 
