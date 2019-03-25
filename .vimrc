@@ -168,6 +168,9 @@ map <leader>T :call RunNearestTest()<cr>
 map <leader>a :call RunAllTests()<cr>
 map <leader>s :call RunStyleChecks()<cr>
 
+" Execute the current file (e.g. shell script)
+map <leader>r :!%<cr>
+
 " when nested too deep
 nnoremap <leader>x :set cursorcolumn!<cr>
 
