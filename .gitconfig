@@ -24,6 +24,7 @@
     st = status
     unadd = reset HEAD
     e = experiment
+    root = rev-parse --show-toplevel
 
     ; custom commands and workflows
     uncommit = !git reset --soft HEAD~ && git reset HEAD .
