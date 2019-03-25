@@ -59,6 +59,7 @@
     snapshot = !git stash save --include-untracked "snapshot: $(date)" && git stash apply "stash@{0}"
     ss = local-to-remote-status
     wip = "!f() { git add --all && git commit -m \"✏ $*\"; }; f"
+    cdroot = !cd `git root`
 
     ; data analysis
     authors = !git log --format="%aN"
@@ -107,3 +108,5 @@
 	process = git-lfs filter-process
 [commit]
 	gpgsign = false
+[hub]
+	host = git.corp.tanium.com
