@@ -171,10 +171,6 @@ map <leader>s :call RunStyleChecks()<cr>
 " when nested too deep
 nnoremap <leader>x :set cursorcolumn!<cr>
 
-" remove trailing whitespace
-nnoremap <Leader>rtw :%s/\s\+$//e<CR>
-nnoremap <Leader>raw :%s/\s\+$//e<CR>
-
 " toggle numbers
 map <leader># :set number!<cr>
 
