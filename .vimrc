@@ -98,7 +98,7 @@ augroup vimrcEx
   autocmd FileType python let t:command="pytest"
   autocmd FileType javascript set ai sw=2 sts=2 et
   autocmd FileType javascript let t:command="npm test"
-  autocmd FileType sh let t:style_command="shellcheck --shell=bash --exclude=SC2001,SC1090,SC2164,SC2068,SC2155 %"
+  autocmd FileType sh let t:style_command="shellcheck --shell=bash --exclude=SC2164,SC2001 %"
 
   if filereadable(expand("~/work/autocmds.vim"))
     source ~/work/autocmds.vim
