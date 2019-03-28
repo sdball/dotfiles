@@ -360,4 +360,7 @@ am_i_someone_else() {
   fi
 }
 
-# vim: set syntax=sh ft=sh sw=2 ts=2 expandtab:
+ball() {
+  clear; while true; do sleep $((RANDOM%10 + 1)); echo "`date; curl 'wttr.in/?T' -s | head -7`" | nms; echo; echo; echo; done
+}
+
