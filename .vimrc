@@ -11,9 +11,9 @@ Plug 'AndrewRadev/switch.vim' " plugin to switch segments of text with predefine
 Plug 'chriskempson/base16-vim' " Base16 for Vim, obviously
 Plug 'conormcd/matchindent.vim' " try to match indent style with the current file
 Plug 'ervandew/supertab' " insert mode tab completions against open buffers
+Plug 'jiangmiao/auto-pairs' " nice autoinserting matching pairs
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy finder
 Plug 'junegunn/fzf.vim' " fuzzy finder
-Plug 'kana/vim-smartinput' " awesome paired input matching
 Plug 'rhysd/clever-f.vim' " smarter f,F,t,T commands
 Plug 'sheerun/vim-polyglot' " async language packs
 Plug 'terryma/vim-multiple-cursors' " multiple cursor selections
