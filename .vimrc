@@ -146,8 +146,9 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" Insert a hash rocket with <c-l>
+" some frequent code inserts
 imap <c-l> <space>=><space>
+imap <c-e> {}
 
 " insert current datetime
 imap <c-d> # <c-R>=strftime("%Y-%m-%d %A")<cr>
