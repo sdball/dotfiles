@@ -9,7 +9,7 @@ alias r="recent"
 alias s="git status"
 
 # fasd and fzf
-alias D='cd `fasd -dl "$1" | fzf --tac +m`'
+alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
 
 # direnv
 command -v direnv >& /dev/null && eval "$(direnv hook zsh)"
