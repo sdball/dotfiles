@@ -100,6 +100,7 @@ augroup vimrcEx
   autocmd FileType javascript set ai sw=2 sts=2 et
   autocmd FileType javascript let t:command="npm test"
   autocmd FileType sh let t:style_command="shellcheck --shell=bash --exclude=SC2164,SC2001 %"
+  autocmd FileType sh map <leader>r :wall\|:!./%<cr>
 
   if filereadable(expand("~/work/autocmds.vim"))
     source ~/work/autocmds.vim
@@ -168,9 +169,6 @@ map <leader>t :call RunTestFile()<cr>
 map <leader>T :call RunNearestTest()<cr>
 map <leader>a :call RunAllTests()<cr>
 map <leader>s :call RunStyleChecks()<cr>
-
-" Execute the current file (e.g. shell script)
-map <leader>r :!./%<cr>
 
 " when nested too deep
 nnoremap <leader>x :set cursorcolumn!<cr>
