@@ -101,6 +101,11 @@ augroup vimrcEx
   autocmd FileType javascript let t:command="npm test"
   autocmd FileType sh let t:style_command="shellcheck --shell=bash --exclude=SC2164,SC2001 %"
   autocmd FileType sh map <leader>r :wall\|:!./%<cr>
+  if filereadable("Cargo.toml")
+    autocmd FileType rust map <leader>r :wall\|:!cargo run<cr>
+  else
+    autocmd FileType rust map <leader>r :wall\|:!rustc % && ./%:r<cr>
+  endif
 
   if filereadable(expand("~/work/autocmds.vim"))
     source ~/work/autocmds.vim
