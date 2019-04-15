@@ -94,13 +94,28 @@ augroup vimrcEx
     \   exe "normal g`\"" |
     \ endif
 
-  autocmd FileType ruby,haml,eruby,yaml,html,sass,cucumber set ai sw=2 sts=2 et
+  " spaces
+  autocmd FileType ruby,haml,eruby,yaml,toml,html,sh set ai sw=2 sts=2 et
+
+  " python autocmds
   autocmd FileType python set sw=4 sts=4 et
   autocmd FileType python let t:command="pytest"
+
+  " javascript autocmds
   autocmd FileType javascript set ai sw=2 sts=2 et
   autocmd FileType javascript let t:command="npm test"
+
+  " shell autocmds
   autocmd FileType sh let t:style_command="shellcheck --shell=bash --exclude=SC2164,SC2001 %"
   autocmd FileType sh map <leader>r :wall\|:!./%<cr>
+
+  " rust autocmds
+  autocmd FileType rust set ai sw=4 sts=4 et
+  autocmd BufWritePre *.rs :RustFmt
+  autocmd FileType rust imap <c-d> #[derive()]<ESC>hi
+  autocmd FileType rust imap <c-a> #![allow()]<ESC>hi
+  autocmd FileType rust imap <c-f> fn ()<ESC>hha
+  autocmd FileType rust imap <c-p> println!("");<ESC>hhi
   if filereadable("Cargo.toml")
     autocmd FileType rust map <leader>r :wall\|:!cargo run<cr>
   else
