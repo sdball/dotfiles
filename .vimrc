@@ -121,6 +121,7 @@ augroup vimrcEx
   else
     autocmd FileType rust map <leader>r :wall\|:!rustc % && ./%:r<cr>
   endif
+  autocmd FileType ruby map <leader>r :wall\|:!ruby %<cr>
 
   if filereadable(expand("~/work/autocmds.vim"))
     source ~/work/autocmds.vim
