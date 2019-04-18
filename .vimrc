@@ -251,7 +251,7 @@ function! RunTestFile(...)
     endif
 
 " Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_test.exs\|spec.js\|_test.py\)$') != -1
+    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|-spec.rb\|_test.rb\|_test.exs\|spec.js\|_test.py\)$') != -1
     if in_test_file
         echo "IN TEST FILE"
         call SetTestFile()
