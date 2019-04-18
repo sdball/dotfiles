@@ -21,10 +21,6 @@ if command -v exa >/dev/null; then
   alias tree="exa --tree"
 fi
 
-if command -v bat >/dev/null; then
-  alias cat=bat
-fi
-
 if command -v rg >/dev/null; then
   alias rg="rg -i"
 fi
