@@ -8,7 +8,12 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 Plug 'AndrewRadev/switch.vim' " plugin to switch segments of text with predefined replacements
-Plug 'chriskempson/base16-vim' " Base16 for Vim, obviously
+" dirty hack for base16
+" https://github.com/chriskempson/base16-vim/issues/197
+function FixupBase16(info)
+  !gsed -i '/Base16hi/\! s/a:\(attr\|guisp\)/l:\1/g' ~/.vim/plugged/base16-vim/colors/*.vim
+endfunction
+Plug 'chriskempson/base16-vim', { 'do': function('FixupBase16') } " Base16 for Vim with hack
 Plug 'conormcd/matchindent.vim' " try to match indent style with the current file
 Plug 'ervandew/supertab' " insert mode tab completions against open buffers
 Plug 'jiangmiao/auto-pairs' " nice autoinserting matching pairs
