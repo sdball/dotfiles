@@ -25,6 +25,7 @@
     unadd = reset HEAD
     e = experiment
     root = rev-parse --show-toplevel
+    untracked = ls-files --others --exclude-standard *
 
     ; custom commands and workflows
     uncommit = !git reset --soft HEAD~ && git reset HEAD .
