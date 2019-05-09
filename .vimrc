@@ -337,8 +337,12 @@ function! RunTests(filename, line_number)
         normal x
         :silent w
       else
-        let basename=system("echo -n `basename " . a:filename . "`")
-        exec ':!' . t:command . ' --filter="' . basename . '"'
+        if t:use_dirname
+          let filter=system("echo -n $(dirname " . a:filename . " | sed -e 's|" . t:strip_from_dirname . "||')")
+        else
+          let filter=system("echo -n `basename " . a:filename . "`")
+        end
+        exec ':!' . t:command . ' --filter="' . filter . '"'
       end
     else
       exec ':!' . t:command . ' ' . a:filename
