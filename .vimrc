@@ -121,6 +121,8 @@ augroup vimrcEx
   autocmd FileType rust imap <c-a> #![allow()]<ESC>hi
   autocmd FileType rust imap <c-f> fn ()<ESC>hha
   autocmd FileType rust imap <c-p> println!("");<ESC>hhi
+  autocmd FileType rust imap <c-e> {}
+  autocmd FileType rust imap <c-r> {:?}
   if filereadable("Cargo.toml")
     autocmd FileType rust map <leader>r :wall\|:!cargo run<cr>
   else
@@ -169,7 +171,6 @@ nnoremap <c-l> <c-w>l
 
 " some frequent code inserts
 imap <c-l> <space>=><space>
-imap <c-e> {}
 
 " insert current datetime
 imap <c-d> # <c-R>=strftime("%Y-%m-%d %A")<cr>
