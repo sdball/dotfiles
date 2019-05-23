@@ -339,9 +339,9 @@ function! RunTests(filename, line_number)
         :silent w
       else
         if t:use_dirname
-          let filter=system("echo -n $(dirname " . a:filename . " | sed -e 's|" . t:strip_from_dirname . "||')")
+          let filter=system("echo -n $(dirname \"" . a:filename . "\" | sed -e 's|" . t:strip_from_dirname . "||')")
         else
-          let filter=system("echo -n `basename " . a:filename . "`")
+          let filter=system("echo -n `basename \"" . a:filename . "\"`")
         end
         exec ':!' . t:command . ' --filter="' . filter . '"'
       end
