@@ -16,7 +16,7 @@ endfunction
 Plug 'chriskempson/base16-vim', { 'do': function('FixupBase16') } " Base16 for Vim with hack
 Plug 'conormcd/matchindent.vim' " try to match indent style with the current file
 Plug 'ervandew/supertab' " insert mode tab completions against open buffers
-Plug 'jiangmiao/auto-pairs' " nice autoinserting matching pairs
+Plug 'jiangmiao/auto-pairs', { 'for': 'rust' } " nice autoinserting matching pairs
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy finder
 Plug 'junegunn/fzf.vim' " fuzzy finder
 Plug 'rhysd/clever-f.vim' " smarter f,F,t,T commands
