@@ -11,6 +11,11 @@ alias s="git status"
 # fasd and fzf
 alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
 
+# terminal title
+T() {
+  print -Pn "\e]1;$1:q\a"
+}
+
 # direnv
 command -v direnv >& /dev/null && eval "$(direnv hook zsh)"
 
