@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+call_api() {
+  curl "https://api.duckduckgo.com/?q=$1&format=json" -s >/tmp/ddg
+}
+
+parse_results() {
+  jq -cr '"\(.AbstractText)\n  \(.AbstractURL)\n"' /tmp/ddg
+  gron /tmp/ddg | rg -s 'Text|FirstURL' | gron --ungron | jq -cr '.. | {Text, FirstURL}?' | rg -v null | jq -cr '"\(.Text)\n  \(.FirstURL)\n"'
+}
+
+main() {
+  call_api "$1"
+  parse_results | bat -p
+}
+
+main "$@"
