@@ -286,7 +286,7 @@ function! RunTests(filename, line_number)
             if filereadable("Gemfile")
                 let command="bundle exec rspec"
             else
-                let command="rspec"
+                let command="ruby"
             end
 
             if a:line_number
