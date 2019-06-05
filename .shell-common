@@ -7,6 +7,7 @@ alias d="git di"
 alias F="git fetch --prune"
 alias r="recent"
 alias s="git status"
+alias R='cd "$(git rev-parse --show-toplevel)"'
 
 # fasd and fzf
 alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
