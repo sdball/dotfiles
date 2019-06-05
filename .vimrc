@@ -334,7 +334,7 @@ function! RunTests(filename, line_number)
         normal If
         :silent w
         let basename=system("echo -n `basename " . a:filename . "`")
-        exec ':!' . t:command . ' --filter="' . basename . '"'
+        exec ':!' . t:command . ' --filter="\"' . basename . '\""'
         normal x
         :silent w
       else
