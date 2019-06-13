@@ -14,7 +14,9 @@ alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
 
 # terminal title
 T() {
-  print -Pn "\e]1;$1:q\a"
+  local _current_directory=$(basename $(pwd))
+  local _title=${1:-$_current_directory}
+  print -Pn "\e]1;$_title:q\a"
 }
 
 # direnv
