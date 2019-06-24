@@ -26,6 +26,7 @@
     e = experiment
     root = rev-parse --show-toplevel
     untracked = ls-files --others --exclude-standard *
+    un = untracked
 
     ; custom commands and workflows
     uncommit = !git reset --soft HEAD~ && git reset HEAD .
