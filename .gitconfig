@@ -113,3 +113,5 @@
 	gpgsign = false
 [hub]
 	host = git.corp.tanium.com
+[includeIf "gitdir:~/ghe/"]
+    path = ~/.gitconfig-ghe
