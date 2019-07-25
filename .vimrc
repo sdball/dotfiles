@@ -160,6 +160,9 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=","
 
+" Store a session
+map <leader>m :mksession! /tmp/vim-session<cr>
+
 " Yank a movement
 map <leader>y "*y
 
