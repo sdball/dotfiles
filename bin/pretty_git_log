@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HASH="%C(yellow)%h%Creset"
+HASH="%C(yellow)%h %G?%Creset"
 RELATIVE_TIME="%Cgreen%ar%Creset"
 ABSOLUTE_TIME="%Cgreen%ad%Creset"
 AUTHOR="%C(bold blue)%an%Creset"
