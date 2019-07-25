@@ -25,7 +25,7 @@ command -v direnv >& /dev/null && eval "$(direnv hook zsh)"
 
 if command -v exa >/dev/null; then
   alias ls=exa
-  alias ll="exa --long -bhm --time-style=long-iso"
+  alias la="exa --long -bhm --time-style=long-iso"
   alias lg="exa -lah --git --time-style=long-iso"
   alias tree="exa --tree"
 fi
