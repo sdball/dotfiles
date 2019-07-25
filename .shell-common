@@ -8,7 +8,6 @@ alias F="git fetch --prune"
 alias r="recent"
 alias s="git status"
 alias R='cd "$(git rev-parse --show-toplevel)"'
-alias begone='b | rg "\[.*: gone\]" | awk "{print $1}" | xargs git branch -D'
 
 # fasd and fzf
 alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
