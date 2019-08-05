@@ -9,6 +9,7 @@ alias r="recent"
 alias s="git status"
 alias R='cd "$(git rev-parse --show-toplevel)"'
 alias sub='cd "$(fd --type d | fzf)"'
+alias vs='vim -S /tmp/vim-session'
 
 # fasd and fzf
 alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
