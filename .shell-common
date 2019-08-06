@@ -199,6 +199,10 @@ git() {
   command git $*
 }
 
+regex() {
+  command rg --debug "$*" "" 2>&1 | sed -e '/DEBUG/d' -e '/No such file/d' -e '/No files were searched/d'
+}
+
 sleep-screen() {
   pmset displaysleepnow
 }
