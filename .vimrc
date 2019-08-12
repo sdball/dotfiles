@@ -123,7 +123,7 @@ augroup vimrcEx
   autocmd FileType rust imap <c-p> println!("");<ESC>hhi
   autocmd FileType rust imap <c-e> {}
   autocmd FileType rust imap <c-r> {:?}
-  autocmd FileType rust imap <c-i> fn main() {<CR>}<ESC>O
+  autocmd FileType rust imap <s-tab> fn main() {<CR>}<ESC>O
   if filereadable("Cargo.toml")
     autocmd FileType rust map <leader>r :wall\|:!cargo run<cr>
   else
