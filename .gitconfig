@@ -37,11 +37,11 @@
     div = divergence
     div-count = divergence-count
     divc = divergence-count
-    edit = !vim -O `git diff HEAD --name-only`
-    bedit = !vim -O `git branch-files`
+    files = diff HEAD --name-only
+    bfiles = branch-files
     branch-files = !git diff `git branched-from` --name-only
     branched-from = !git log --format="%d" | sed '/^$/d' | head -2 | tail -1 | cut -d ',' -f 1 | sed 's/^ (//'
-    cedit = !vim -O "$(git commit-files)"
+    cfiles = commit-files
     commit-files = diff HEAD~1 --name-only
     edit-branch-commits = !git rebase -i `git outgoing master | tail -1 | xargs git log --format="%P" -1`
     fb = create-feature-branch
