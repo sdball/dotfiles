@@ -99,3 +99,7 @@ fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+# very special zsh magic to allow vim to open a filelist with files that might have spaces
+vimmo() {
+  vim -O -- "${(f)$($*)}"
+}
