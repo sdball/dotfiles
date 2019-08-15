@@ -30,9 +30,16 @@ Plug 'tpope/vim-sensible' " sensible defaults
 Plug 'tpope/vim-surround' " match matching tags and syntax
 Plug 'tpope/vim-unimpaired' " handy bracket mappings
 Plug 'wellle/targets.vim' " give vim more targets to operate on
+Plug 'junegunn/vim-easy-align'
 
 call plug#end()
 " -- End Plugins -------------------------------------------------------------
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
