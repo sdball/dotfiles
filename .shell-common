@@ -378,3 +378,6 @@ ball() {
   clear; while true; do sleep $((RANDOM%10 + 1)); echo "`date; curl 'wttr.in/?T' -s | head -7`" | nms; echo; echo; echo; done
 }
 
+stdwhat() {
+  ($* | sed -e 's/^/STDOUT: /') 2>&1 | sed -e '/STDOUT/! s/^/STDERR: /'
+}
