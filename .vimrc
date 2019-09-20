@@ -123,7 +123,7 @@ augroup vimrcEx
 
   " rust autocmds
   autocmd FileType rust set ai sw=4 sts=4 et
-  autocmd BufWritePre *.rs :RustFmt
+  autocmd FileType rust map <leader>f :RustFmt<cr>
   autocmd FileType rust imap <c-d> #[derive()]<ESC>hi
   autocmd FileType rust imap <c-a> #![allow()]<ESC>hi
   autocmd FileType rust imap <c-f> fn ()<ESC>hha
