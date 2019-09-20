@@ -133,7 +133,7 @@ augroup vimrcEx
   autocmd FileType rust imap <s-tab> fn main() {<CR>}<ESC>O
   if filereadable("Cargo.toml")
     autocmd FileType rust map <leader>r :wall\|:!cargo run<cr>
-    autocmd FileType rust map <leader>t :wall\|:!cargo test<cr>
+    autocmd FileType rust map <leader>t :wall\|:!cargo test -- --color always --nocapture<cr>
   else
     autocmd FileType rust map <leader>r :wall\|:!rustc % && ./%:r<cr>
   endif
