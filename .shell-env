@@ -3,6 +3,8 @@ export GOPATH="$HOME/.gopath"
 # jif
 export JIF_DIR=$HOME/Pictures/jifs
 
+export BAT_THEME="Monokai Extended Origin"
+
 # homebrew
 HOMEBREW_INSTALL_CLEANUP=1
 HOMEBREW_UPGRADE_CLEANUP=1
