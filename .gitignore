@@ -240,3 +240,7 @@ iCloud Drive*/
 .gitconfig-ghe
 Virtual\ Machines.localized/
 .terminalizer/
+.pyenv/
+.pip/
+.python_history
+.tox/
