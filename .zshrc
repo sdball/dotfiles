@@ -57,7 +57,6 @@ prompt-vverbose() {
 
 autoload -U promptinit
 promptinit
-prompt chorn
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -103,3 +102,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 vimmo() {
   vim -O -- "${(f)$($*)}"
 }
+
+prompt chorn
+
