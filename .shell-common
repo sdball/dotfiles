@@ -2,6 +2,7 @@
 # aliases, functions, and shell tool setup that isn't shell specific
 # --
 
+alias be="bundle exec"
 alias b="git b"
 alias d="git di"
 alias F="git fetch --prune"
