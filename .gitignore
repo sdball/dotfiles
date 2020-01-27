@@ -244,3 +244,4 @@ Virtual\ Machines.localized/
 .pip/
 .python_history
 .tox/
+.conan/
