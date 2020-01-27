@@ -111,7 +111,10 @@ augroup vimrcEx
 
   " python autocmds
   autocmd FileType python set sw=4 sts=4 et
-  autocmd FileType python let t:command="pytest"
+  autocmd FileType python let t:command="python -m pytest -s"
+  autocmd FileType python map <leader>2 :wall\|:!python2 -m pytest -s %<cr>
+  autocmd FileType python map <leader>3 :wall\|:!python3 -m pytest -s %<cr>
+  autocmd FileType python map <leader>f :w\|:!black %<cr>
 
   " javascript autocmds
   autocmd FileType javascript set ai sw=2 sts=2 et
@@ -268,7 +271,7 @@ function! RunTestFile(...)
     endif
 
 " Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|-spec.rb\|_test.rb\|_test.exs\|spec.js\|_test.py\)$') != -1
+    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|-spec.rb\|_test.rb\|_test.exs\|spec.js\|_test.py\)$\|test_.*\.py$') != -1
     if in_test_file
         echo "IN TEST FILE"
         call SetTestFile()
