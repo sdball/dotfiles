@@ -365,6 +365,13 @@ function! RunTests(filename, line_number)
           exec ':!' . t:command . ' --filter="\"' . filter . '\""'
         end
       end
+    elseif a:filename =~ "\.py$"
+      if a:line_number
+        let test_name=system("head -n " . a:line_number . " " . a:filename . " | rg -o '(def test.*|class test.*)' | tail -1 | sed -e 's/^def //' -e 's/^class //' -e s'/[(:].*$//'")
+        exec ":!" . t:command . " -k " . test_name
+      else
+        exec ':!' . t:command . ' ' . a:filename
+      end
     else
       exec ':!' . t:command . ' ' . a:filename
     end
