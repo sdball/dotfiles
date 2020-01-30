@@ -114,7 +114,7 @@ augroup vimrcEx
   autocmd FileType python let t:command="python -m pytest -s"
   autocmd FileType python map <leader>2 :wall\|:!python2 -m pytest -s %<cr>
   autocmd FileType python map <leader>3 :wall\|:!python3 -m pytest -s %<cr>
-  autocmd FileType python map <leader>f :w\|:!black %<cr>
+  autocmd FileType python let t:style_command="black \"%\""
 
   " javascript autocmds
   autocmd FileType javascript set ai sw=2 sts=2 et
@@ -126,7 +126,7 @@ augroup vimrcEx
 
   " rust autocmds
   autocmd FileType rust set ai sw=4 sts=4 et
-  autocmd FileType rust map <leader>f :RustFmt<cr>
+  autocmd FileType rust map <leader>s :RustFmt<cr>
   autocmd FileType rust imap <c-d> #[derive()]<ESC>hi
   autocmd FileType rust imap <c-a> #![allow()]<ESC>hi
   autocmd FileType rust imap <c-f> fn ()<ESC>hha
