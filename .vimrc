@@ -112,6 +112,7 @@ augroup vimrcEx
   " python autocmds
   autocmd FileType python set sw=4 sts=4 et
   autocmd FileType python let t:command="python -m pytest -s"
+  autocmd FileType python let t:all_command="python -m pytest -s"
   autocmd FileType python map <leader>2 :wall\|:!python2 -m pytest -s %<cr>
   autocmd FileType python map <leader>3 :wall\|:!python3 -m pytest -s %<cr>
   autocmd FileType python let t:style_command="black \"%\""
@@ -257,10 +258,10 @@ function! RunStyleChecks()
   end
 endfunction
 function! RunAllTests()
-  if !exists("t:command")
+  if !exists("t:all_command")
     echo "Unknown global test suite command"
   else
-    exec ":!" . t:command
+    exec ":!" . t:all_command
   end
 endfunction
 function! RunTestFile(...)
