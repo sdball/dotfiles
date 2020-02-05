@@ -274,9 +274,13 @@ function! RunTestFile(...)
 " Run the tests for the previously-marked file.
     let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|-spec.rb\|_test.rb\|_test.exs\|spec.js\|_test.py\)$\|test_.*\.py$') != -1
     if in_test_file
+        if exists("t:sdb_marked_test")
+          unlet t:sdb_marked_test
+        end
         echo "IN TEST FILE"
         call SetTestFile()
     elseif !exists("t:sdb_test_file")
+        echo "Not in test file and no marked test file"
         return
     end
 
@@ -337,38 +341,64 @@ function! RunTests(filename, line_number)
             exec ":!" . command . " " . a:filename
         end
     elseif a:filename =~ "\.js$"
-      let current_file=expand('%')
-      if a:line_number && current_file == a:filename
-        " run the specific test containing the selected line by
-        " - finding the relevant it or describe declaration
-        " - changing it to fit or fdescribe
-        " - running the filtered test file
-        " - reverting the fit/fdescribe back to it/describe
-        normal j
-        ?\(\(^\|\s\)it\|\(^\|\s\)describe\)
-        normal If
-        :silent w
-        let basename=system("echo -n `basename " . a:filename . "`")
-        exec ':!' . t:command . ' --filter="\"' . basename . '\""'
-        normal x
-        :silent w
+      " Jest
+      :silent !command -v jest >/dev/null
+      if v:shell_error == 0
+        echo "JEST"
+        let command="jest --color"
+        exec ":!" . command . " " . a:filename . " | pv --timer --name \"jest run for " . a:filename . "\""
       else
-        if t:direct_command
-          let b:filename = substitute(a:filename, t:strip_from_testfile, '', '')
-          echo b:filename
-          exec ':!' . t:command . '"' . b:filename . '"' . t:post_command
-        else
-          if t:use_dirname
-            let filter=system("echo -n $(dirname \"" . a:filename . "\" | sed -e 's|" . t:strip_from_dirname . "||')")
+        :silent !command -v jasmine >/dev/null
+        if v:shell_error == 0
+          echo "JASMINE"
+          " Jasmine
+          let current_file=expand('%')
+          if a:line_number && current_file == a:filename
+            " run the specific test containing the selected line by
+            " - finding the relevant it or describe declaration
+            " - changing it to fit or fdescribe
+            " - running the filtered test file
+            " - reverting the fit/fdescribe back to it/describe
+            normal j
+            ?\(\(^\|\s\)it\|\(^\|\s\)describe\)
+            normal If
+            :silent w
+            let basename=system("echo -n `basename " . a:filename . "`")
+            exec ':!' . t:command . ' --filter="\"' . basename . '\""'
+            normal x
+            :silent w
           else
-            let filter=system("echo -n `basename \"" . a:filename . "\"`")
+            if exists("t:direct_command") && t:direct_command
+              if exists("t:strip_from_testfile")
+                let b:filename = substitute(a:filename, t:strip_from_testfile, '', '')
+              else
+                let b:filename = a:filename
+              end
+              echo b:filename
+              if exists("t:post_command")
+                exec ':!' . t:command . '"' . b:filename . '"' . t:post_command
+              else
+                exec ':!' . t:command . ' "' . b:filename . '"'
+              end
+            else
+              if exists("t:use_dirname") && t:use_dirname
+                let filter=system("echo -n $(dirname \"" . a:filename . "\" | sed -e 's|" . t:strip_from_dirname . "||')")
+              else
+                let filter=system("echo -n `basename \"" . a:filename . "\"`")
+              end
+              exec ':!' . t:command . ' --filter="\"' . filter . '\""'
+            end
           end
-          exec ':!' . t:command . ' --filter="\"' . filter . '\""'
+        else
+          echo "UNKNOWN"
         end
       end
     elseif a:filename =~ "\.py$"
-      if a:line_number
-        let test_name=system("head -n " . a:line_number . " " . a:filename . " | rg -o '(def test.*|class test.*)' | tail -1 | sed -e 's/^def //' -e 's/^class //' -e s'/[(:].*$//'")
+      if exists("t:sdb_marked_test")
+        exec ":!" . t:command . " -k " . t:sdb_marked_test
+      elseif a:line_number
+        let test_name=system("head -n " . a:line_number . " " . a:filename . " | rg -o '(def test.*|class Test.*)' | tail -1 | sed -e 's/^def //' -e 's/^class //' -e s'/[(:].*$//'")
+        let t:sdb_marked_test=test_name
         exec ":!" . t:command . " -k " . test_name
       else
         exec ':!' . t:command . ' ' . a:filename
