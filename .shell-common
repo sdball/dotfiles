@@ -377,7 +377,7 @@ am_i_someone_else() {
 }
 
 ball() {
-  clear; while true; do sleep $((RANDOM%10 + 1)); echo "`date; curl 'wttr.in/?T' -s | head -7`" | nms; echo; echo; echo; done
+  clear; while true; do sleep $((RANDOM%10 + 1)); echo "`date; curl 'wttr.in/?T' -s | head -7`" | nms -sc; echo; echo; echo; done
 }
 
 stdwhat() {
