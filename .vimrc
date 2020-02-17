@@ -15,6 +15,7 @@ function FixupBase16(info)
 endfunction
 Plug 'chriskempson/base16-vim', { 'do': function('FixupBase16') } " Base16 for Vim with hack
 Plug 'conormcd/matchindent.vim' " try to match indent style with the current file
+Plug 'dense-analysis/ale'
 Plug 'ervandew/supertab' " insert mode tab completions against open buffers
 Plug 'jiangmiao/auto-pairs', { 'for': 'rust' } " nice autoinserting matching pairs
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy finder
@@ -31,9 +32,12 @@ Plug 'tpope/vim-surround' " match matching tags and syntax
 Plug 'tpope/vim-unimpaired' " handy bracket mappings
 Plug 'wellle/targets.vim' " give vim more targets to operate on
 Plug 'junegunn/vim-easy-align'
-
 call plug#end()
 " -- End Plugins -------------------------------------------------------------
+
+" ALE
+let g:ale_fix_on_save = 1
+highlight ALEWarning ctermbg=NONE cterm=underline
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
