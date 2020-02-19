@@ -129,22 +129,6 @@ augroup vimrcEx
   autocmd FileType sh let t:style_command="shellcheck --shell=bash --exclude=SC2164,SC2001 \"%\""
   autocmd FileType sh map <leader>r :wall\|:!./%<cr>
 
-  " rust autocmds
-  autocmd FileType rust set ai sw=4 sts=4 et
-  autocmd FileType rust map <leader>s :RustFmt<cr>
-  autocmd FileType rust imap <c-d> #[derive()]<ESC>hi
-  autocmd FileType rust imap <c-a> #![allow()]<ESC>hi
-  autocmd FileType rust imap <c-f> fn ()<ESC>hha
-  autocmd FileType rust imap <c-p> println!("");<ESC>hhi
-  autocmd FileType rust imap <c-e> {}
-  autocmd FileType rust imap <c-r> {:?}
-  autocmd FileType rust imap <s-tab> fn main() {<CR>}<ESC>O
-  if filereadable("Cargo.toml")
-    autocmd FileType rust map <leader>r :wall\|:!cargo run<cr>
-    autocmd FileType rust map <leader>t :wall\|:!cargo test -- --color always --nocapture<cr>
-  else
-    autocmd FileType rust map <leader>r :wall\|:!rustc % && ./%:r<cr>
-  endif
   autocmd FileType ruby map <leader>r :wall\|:!ruby %<cr>
 
   if filereadable(expand("~/work/autocmds.vim"))
