@@ -183,8 +183,8 @@ pbvim() {
 }
 
 b16() {
-  theme=$(ls $HOME/.config/base16-shell/scripts/base16*.sh | while read file; do basename $file | cut -d '.' -f 1 | sed -e 's/-/_/'; done | fzf --tac)
-  eval $theme
+  theme=$(for file in $HOME/.config/base16-shell/scripts/base16*.sh; do basename $file | cut -d '.' -f 1 | sed -e 's/-/_/'; done | fzf --tac)
+  eval "$theme"
 }
 
 git() {
