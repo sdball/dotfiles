@@ -63,6 +63,10 @@ promptinit
 export FZF_DEFAULT_COMMAND='fd --type file'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+# history is important
+typeset -g SAVEHIST=99999999
+typeset -g HISTSIZE=99999999
+
 # bind up and down arrows to search through history
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
