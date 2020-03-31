@@ -23,6 +23,7 @@ Plug 'junegunn/fzf.vim' " fuzzy finder
 Plug 'rhysd/clever-f.vim' " smarter f,F,t,T commands
 Plug 'sheerun/vim-polyglot' " async language packs
 Plug 'terryma/vim-multiple-cursors' " multiple cursor selections
+Plug 'tpope/vim-abolish' " substitution with case preservation
 Plug 'tpope/vim-commentary' " comment stuff more easily
 Plug 'tpope/vim-dispatch' " async build dispatcher
 Plug 'tpope/vim-fugitive' " git integration
