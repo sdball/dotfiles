@@ -33,10 +33,6 @@ if command -v exa >/dev/null; then
   alias tree="exa --tree"
 fi
 
-if command -v rg >/dev/null; then
-  alias rg="rg -i"
-fi
-
 # create and open a new directory
 function mkd() {
     mkdir -p "$@" && cd "$@"

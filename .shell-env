@@ -22,3 +22,5 @@ export ACK_COLOR_MATCH='red'
 # curl $CURL_TIMING http://www.rakeroutes.com -so /dev/null
 # dnslookup: 0.004624 | connect: 0.027739 | appconnect: 0.000000 | pretransfer: 0.027786 | starttransfer: 0.199989 | total: 0.200177 | size: 15063
 export CURL_TIMING="-wdnslookup: %{time_namelookup} | connect: %{time_connect} | appconnect: %{time_appconnect} | pretransfer: %{time_pretransfer} | starttransfer: %{time_starttransfer} | total: %{time_total} | size: %{size_download}"
+
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"

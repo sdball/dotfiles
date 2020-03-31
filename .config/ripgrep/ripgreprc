@@ -1,0 +1,8 @@
+# Don't let ripgrep flood output with really long lines
+--max-columns=150
+
+# Show a preview
+--max-columns-preview
+
+# Smart case is Smart
+--smart-case
