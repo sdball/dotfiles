@@ -37,8 +37,9 @@ call plug#end()
 " -- End Plugins -------------------------------------------------------------
 
 " ALE
-let g:ale_fix_on_save = 1
-highlight ALEWarning ctermbg=NONE cterm=underline
+let g:ale_fix_on_save = 0
+highlight! ALEWarning ctermbg=NONE
+highlight! ALEError ctermbg=NONE
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -161,6 +162,9 @@ endif
 " just a bit of cartography
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=","
+
+" Fix linting errors
+map <leader>f :ALEFix<cr>
 
 " Store a session
 map <leader>m :mksession! /tmp/vim-session<cr>\|:wqall<cr>
