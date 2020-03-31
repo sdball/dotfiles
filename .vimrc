@@ -272,12 +272,12 @@ function! RunTestFile(...)
         end
         echo "IN TEST FILE"
         call SetTestFile()
-    elseif !exists("t:sdb_test_file")
+    elseif !exists("t:sdb_test_file_path")
         echo "Not in test file and no marked test file"
         return
     end
 
-    call RunTests(t:sdb_test_file, command_suffix)
+    call RunTests(t:sdb_test_file_path, command_suffix)
 endfunction
 
 function! RunNearestTest()
@@ -287,7 +287,8 @@ endfunction
 
 function! SetTestFile()
 " Set the spec file that tests will be run for.
-    let t:sdb_test_file=@%
+    let t:sdb_test_file_path=@%
+    let t:sdb_test_file_name=expand("%:t")
 endfunction
 
 function! RunTests(filename, line_number)
@@ -339,7 +340,7 @@ function! RunTests(filename, line_number)
       if v:shell_error == 0
         echo "JEST"
         let command="jest --color"
-        exec ":!" . command . " " . a:filename . " | pv --timer --name \"jest run for " . a:filename . "\""
+        exec ":!" . command . " " . t:sdb_test_file_name
       else
         :silent !command -v jasmine >/dev/null
         if v:shell_error == 0
