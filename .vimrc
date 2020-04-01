@@ -20,6 +20,7 @@ Plug 'ervandew/supertab' " insert mode tab completions against open buffers
 Plug 'jiangmiao/auto-pairs', { 'for': 'rust' } " nice autoinserting matching pairs
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy finder
 Plug 'junegunn/fzf.vim' " fuzzy finder
+Plug 'junegunn/vim-easy-align' " align text (search for EasyAlign in vimrc)
 Plug 'rhysd/clever-f.vim' " smarter f,F,t,T commands
 Plug 'sheerun/vim-polyglot' " async language packs
 Plug 'terryma/vim-multiple-cursors' " multiple cursor selections
@@ -32,7 +33,6 @@ Plug 'tpope/vim-sensible' " sensible defaults
 Plug 'tpope/vim-surround' " match matching tags and syntax
 Plug 'tpope/vim-unimpaired' " handy bracket mappings
 Plug 'wellle/targets.vim' " give vim more targets to operate on
-Plug 'junegunn/vim-easy-align'
 call plug#end()
 " -- End Plugins -------------------------------------------------------------
 
