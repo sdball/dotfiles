@@ -265,7 +265,7 @@ function! RunTestFile(...)
     endif
 
 " Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|-spec.rb\|_test.rb\|_test.exs\|spec.js\|_test.py\)$\|test_.*\.py$') != -1
+    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|-spec.rb\|_test.rb\|_test.exs\|spec.js\|spec.ts\|_test.py\)$\|test_.*\.py$') != -1
     if in_test_file
         if exists("t:sdb_marked_test")
           unlet t:sdb_marked_test
@@ -334,7 +334,7 @@ function! RunTests(filename, line_number)
             let command="elixir"
             exec ":!" . command . " " . a:filename
         end
-    elseif a:filename =~ "\.js$"
+    elseif a:filename =~ "\.[jt]s$"
       " Jest
       :silent !command -v jest >/dev/null
       if v:shell_error == 0
