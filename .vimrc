@@ -36,6 +36,9 @@ Plug 'wellle/targets.vim' " give vim more targets to operate on
 call plug#end()
 " -- End Plugins -------------------------------------------------------------
 
+" Use the system clipboard instead of internal
+set clipboard=unnamed
+
 " ALE
 let g:ale_fix_on_save = 0
 highlight! ALEWarning ctermbg=NONE
