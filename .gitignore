@@ -263,3 +263,4 @@ Virtual\ Machines.localized/
 .config/zsh/zsh-autosuggestions/
 .config/coc/
 .dropbox-dist/
+.histfile
