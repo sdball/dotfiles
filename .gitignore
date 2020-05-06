@@ -261,3 +261,4 @@ Virtual\ Machines.localized/
 .config/zsh/site-functions/prompt_spaceship_setup
 .config/zsh/zsh-async/
 .config/zsh/zsh-autosuggestions/
+.config/coc/
