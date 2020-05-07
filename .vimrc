@@ -18,7 +18,9 @@ Plug 'AndrewRadev/switch.vim' " plugin to switch segments of text with predefine
 function FixupBase16(info)
   !gsed -i '/Base16hi/\! s/a:\(attr\|guisp\)/l:\1/g' ~/.vim/plugged/base16-vim/colors/*.vim
 endfunction
-Plug 'chriskempson/base16-vim', { 'do': function('FixupBase16') } " Base16 for Vim with hack
+if !empty(glob('~/.config/base16-shell/*'))
+  Plug 'chriskempson/base16-vim', { 'do': function('FixupBase16') } " Base16 for Vim with hack
+endif
 Plug 'conormcd/matchindent.vim' " try to match indent style with the current file
 Plug 'dense-analysis/ale'
 Plug 'jiangmiao/auto-pairs', { 'for': 'rust' } " nice autoinserting matching pairs
@@ -291,7 +293,7 @@ if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
   map <F5> :source ~/.vimrc_background<CR>
 else
-  colorscheme base16-ashes
+  colorscheme default
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
