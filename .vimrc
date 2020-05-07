@@ -5,6 +5,11 @@ set nocompatible
 filetype off
 
 " -- Plugins: https://github.com/junegunn/vim-plug ---------------------------
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'AndrewRadev/switch.vim' " plugin to switch segments of text with predefined replacements
