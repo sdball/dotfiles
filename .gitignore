@@ -264,3 +264,4 @@ Virtual\ Machines.localized/
 .config/coc/
 .dropbox-dist/
 .histfile
+*.swp
