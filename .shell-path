@@ -80,6 +80,10 @@ done
 #fi
 # --------------------------------------------------------------------------
 
+if [[ -e "$HOME/.rvm/scripts/rvm" ]]; then
+  source "$HOME/.rvm/scripts/rvm"
+fi
+
 
 if [[ -e "$HOME/.fnm" ]]; then
   _safe_add_to_path "$HOME/.fnm"
