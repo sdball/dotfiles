@@ -79,6 +79,12 @@ done
 #  eval "$(pyenv virtualenv-init -)"
 #fi
 # --------------------------------------------------------------------------
+
+
+if [[ -e "$HOME/.fnm" ]]; then
+  _safe_add_to_path "$HOME/.fnm"
+fi
+
 if command -v fnm >&/dev/null ; then
   eval "$(fnm env --multi)"
 elif [[ -s "$HOME/.nvm" ]] ; then
