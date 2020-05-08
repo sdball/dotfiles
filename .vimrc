@@ -3,6 +3,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 filetype off
+let g:polyglot_disabled = ['jenkins']
 
 " -- Plugins: https://github.com/junegunn/vim-plug ---------------------------
 if empty(glob('~/.vim/autoload/plug.vim'))
