@@ -13,6 +13,10 @@ alias -g M='| $PAGER'
 bindkey -e
 bindkey -m 2>/dev/null
 
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+fi
+
 autoload -Uz compinit && compinit -C
 #-----------------------------------------------------------------------------
 autoload -Uz zcalc
