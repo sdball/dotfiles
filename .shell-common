@@ -257,7 +257,8 @@ check-for-fit-fdescribe() {
 }
 
 f() {
-  rg '\bf(it|describe)\(.*\{' -t js
+  to_read="$(fzf --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}')"
+  bat "$to_read"
 }
 
 c() {
