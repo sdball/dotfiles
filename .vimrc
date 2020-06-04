@@ -406,7 +406,7 @@ function! RunTestFile(...)
     endif
 
 " Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|-spec.rb\|_test.rb\|_test.exs\|spec.js\|spec.ts\|_test.py\)$\|test_.*\.py$') != -1
+    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|-spec.rb\|_test.rb\|_test.exs\|spec.js\|spec.ts\|test.ts\|_test.py\)$\|test_.*\.py$') != -1
     if in_test_file
         if exists("t:sdb_marked_test")
           unlet t:sdb_marked_test
@@ -430,6 +430,7 @@ function! SetTestFile()
 " Set the spec file that tests will be run for.
     let t:sdb_test_file_path=@%
     let t:sdb_test_file_name=expand("%:t")
+    let t:sdb_test_file_fullpath=expand("%:p")
 endfunction
 
 function! RunTests(filename, line_number)
@@ -476,12 +477,16 @@ function! RunTests(filename, line_number)
             exec ":!" . command . " " . a:filename
         end
     elseif a:filename =~ "\.[jt]s$"
+      if exists("t:direct_command") && t:direct_command
+        exec ":!" . t:command . " " . t:sdb_test_file_fullpath
+        return
+      end
       " Jest
-      :silent !command -v jest >/dev/null
+      :silent !command -v node_modules/.bin/jest >/dev/null
       if v:shell_error == 0
         echo "JEST"
-        let command="jest --color"
-        exec ":!" . command . " " . t:sdb_test_file_name
+        let command="node_modules/.bin/jest --color"
+        exec ":!" . command . " " . t:sdb_test_file_fullpath
       else
         :silent !command -v jasmine >/dev/null
         if v:shell_error == 0
