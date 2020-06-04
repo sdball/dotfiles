@@ -265,3 +265,4 @@ Virtual\ Machines.localized/
 .dropbox-dist/
 .histfile
 *.swp
+.tanium*
