@@ -266,3 +266,4 @@ Virtual\ Machines.localized/
 .histfile
 *.swp
 .tanium*
+.grip/
