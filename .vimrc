@@ -488,7 +488,7 @@ function! RunTests(filename, line_number)
       if v:shell_error == 0
         echo "JEST"
         let command="node_modules/.bin/jest --color"
-        exec ":!" . command . " " . t:sdb_test_file_fullpath
+        exec ":!" . command . " " . '"' . t:sdb_test_file_fullpath . '"'
       else
         :silent !command -v jasmine >/dev/null
         if v:shell_error == 0
