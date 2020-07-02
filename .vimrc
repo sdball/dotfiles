@@ -24,6 +24,7 @@ if !empty(glob('~/.config/base16-shell/*'))
 endif
 Plug 'conormcd/matchindent.vim' " try to match indent style with the current file
 Plug 'dense-analysis/ale'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jiangmiao/auto-pairs', { 'for': 'rust' } " nice autoinserting matching pairs
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy finder
 Plug 'junegunn/fzf.vim' " fuzzy finder
