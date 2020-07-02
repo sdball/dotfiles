@@ -44,6 +44,11 @@ Plug 'wellle/targets.vim' " give vim more targets to operate on
 call plug#end()
 " -- End Plugins -------------------------------------------------------------
 
+" Machine local setup
+if filereadable(expand("~/work/vimrc"))
+  source ~/work/vimrc
+endif
+
 " Use the system clipboard instead of internal
 set clipboard=unnamed
 
