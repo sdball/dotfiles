@@ -115,3 +115,7 @@
 	host = git.corp.tanium.com
 [includeIf "gitdir:~/ghe/"]
     path = ~/.gitconfig-ghe
+[url "git@git.corp.tanium.com:"]
+    insteadOf = https://git.corp.tanium.com/
+[url "git@github.com:"]
+    insteadOf = https://github.com/
