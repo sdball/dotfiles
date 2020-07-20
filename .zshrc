@@ -7,7 +7,7 @@ do
   [[ -f "$s" ]] && source "$s"
 done
 #-----------------------------------------------------------------------------
-typeset -g -a _preferred_languages=(ruby node python rust)
+typeset -g -a _preferred_languages=(ruby elixir)
 
 alias -g M='| $PAGER'
 bindkey -e
