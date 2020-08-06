@@ -262,10 +262,6 @@ check-for-fit-fdescribe() {
   rg '\bf(it|describe)\(.*\{' -t js -q &> /dev/null && echo "(f) "
 }
 
-c() {
-  git status
-}
-
 check-for-dirty-working-tree() {
   [[ -z $(git --no-optional-locks status -s) ]] || echo "(c) "
 }
