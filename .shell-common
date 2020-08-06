@@ -16,6 +16,11 @@ alias vs='vim -S /tmp/vim-session'
 alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
 alias ff="fzf --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 
+# like pgrep but more
+prg() {
+  pgrep -f "$1" | xargs ps
+}
+
 # terminal title
 T() {
   local _current_directory=$(basename $(pwd))
