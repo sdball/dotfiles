@@ -15,6 +15,7 @@ alias vs='vim -S /tmp/vim-session'
 # fasd and fzf
 alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
 alias ff="fzf --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
+alias ffbat='ff | read -r f && bat "$f"'
 
 # like pgrep but more
 prg() {
@@ -259,11 +260,6 @@ ww() {
 
 check-for-fit-fdescribe() {
   rg '\bf(it|describe)\(.*\{' -t js -q &> /dev/null && echo "(f) "
-}
-
-f() {
-  to_read="$(fzf --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}')"
-  bat "$to_read"
 }
 
 c() {
