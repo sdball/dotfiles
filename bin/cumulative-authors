@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+declare _months_ago=$1
+
+for n in {$_months_ago..0}; do
+  commit=$(git log --since="$n months ago" --reverse --format=%H | head -1)
+  git checkout $commit 2>/dev/null >/dev/null
+  echo $commit $(git log --format="%aN" | sort -u | wc -l | sed -e 's/^ *//')
+  git reset --hard master 2>/dev/null >/dev/null && git checkout master 2>/dev/null >/dev/null
+done
