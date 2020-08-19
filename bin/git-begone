@@ -26,7 +26,7 @@ local-git-branches() {
 }
 
 find-gone-branches() {
-  rg -v '^\*' | rg -v develop | rg -v master | rg "\[.*: gone\]" | sed -E -e 's/^[ ]+//' | awk '{ print $1 }'
+  grep "\[.*: gone\]" | sed -E -e 's/^[ ]+//' | awk '{ print $1 }'
 }
 
 maybe-delete() {
