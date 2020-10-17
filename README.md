@@ -43,27 +43,27 @@ If you'd like to try this out:
 1. `git init` the home directory
 2. `git remote add origin path/to/repo` OR `git remote add readonly path/to/readonly`
 3. `git fetch origin` (or `git fetch readonly`)
-4. `git reset --hard origin/master` (or `git reset --hard readonly/master`)
+4. `git reset --hard origin/main` (or `git reset --hard readonly/main`)
 
 I use "readonly" when I'm on a machine just I just want to configure.
 
 ### Second, etc. machines with dotfiles you DO care about
 
 Basically: setup the repo, create a branch for the machine, commit the
-dotfiles, pull down the "master" dotfiles, and merge them with the local
+dotfiles, pull down the "main" dotfiles, and merge them with the local
 dotfiles.
 
 1. `git init` the home directory.
 2. `git co -b machine-name`
 3. Do the `git st` and .gitignore loop.
 4. Commit!
-5. `git co master`
+5. `git co main`
 6. `git remote add origin path/to/repo`
 7. `git fetch origin`
-8. `git reset --hard origin/master`
+8. `git reset --hard origin/main`
 9. `git co machine-name`
-10. `git rebase master`
+10. `git rebase main`
 11. Fix any conflicts.
-12. `git co master`
+12. `git co main`
 13. `git merge --no-ff machine-name`
 
