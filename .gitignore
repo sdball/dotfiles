@@ -273,3 +273,5 @@ Virtual\ Machines.localized/
 .keychain/
 .config/configstore/bower-github.json
 .config/configstore/update-notifier-bower.json
+NEXT.md
+NOTES.md
