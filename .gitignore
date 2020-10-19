@@ -271,3 +271,5 @@ Virtual\ Machines.localized/
 .dlv/
 .gradle/
 .keychain/
+.config/configstore/bower-github.json
+.config/configstore/update-notifier-bower.json
