@@ -585,7 +585,7 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h | %
 
 map <C-t> :GFiles<cr>
 map <C-p> :Files<cr>
-map <C-g> :Ag<cr>
+map <C-g> :Rg<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
