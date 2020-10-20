@@ -30,7 +30,7 @@ Plug 'jiangmiao/auto-pairs', { 'for': 'rust' } " nice autoinserting matching pai
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy finder
 Plug 'junegunn/fzf.vim' " fuzzy finder
 Plug 'junegunn/vim-easy-align' " align text (search for EasyAlign in vimrc)
-if executable('node')
+if system('uname -m | grep -qv arm') " skip CoC if we're on ARM
   let g:coc_available = 1
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
