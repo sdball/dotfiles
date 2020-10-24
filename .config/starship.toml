@@ -1,0 +1,10 @@
+[git_branch]
+symbol = "branch "
+
+[character]
+error_symbol = "✗"
+use_symbol_for_status = true
+
+[rust]
+prefix = "rust "
+
