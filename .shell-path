@@ -46,6 +46,7 @@ for dir in \
   /{usr,opt,Apps}/{local,X11,opt}/{bin,sbin} \
   /{usr,opt}/local/heroku/bin \
   /usr/local/opt/ncurses/bin \
+  $HOME/.npm-global/bin \
   $HOME/.asdf/{bin,shims} \
   $HOME/.go/bin \
   $HOME/.gopath/bin \
