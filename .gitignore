@@ -278,3 +278,5 @@ NOTES.md
 .config/karabiner/automatic_backups/
 .npm-global/
 .yarn/
+.clojure*
+.m2/
