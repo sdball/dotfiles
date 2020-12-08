@@ -280,3 +280,4 @@ NOTES.md
 .yarn/
 .clojure*
 .m2/
+.compose-data/
