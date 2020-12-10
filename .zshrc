@@ -1,5 +1,6 @@
 #-----------------------------------------------------------------------------
-for s in ~/.shell-common \
+for s in ~/.shell-path \
+    ~/.shell-common \
     ~/.fzf.zsh \
     ~/.config/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh \
     ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh

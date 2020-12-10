@@ -99,6 +99,9 @@ elif [[ -s "$HOME/.nvm" ]] ; then
   export NVM_DIR="$HOME/.nvm"
   [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
 fi
+
+_safe_add_to_path "/usr/local/opt/openjdk/bin"
+
 # --------------------------------------------------------------------------
 # This will clean up any duplicate path entries created by sloppy dependencies
 export PATH=$(_clean_path)
