@@ -41,6 +41,7 @@ for dir in \
   /Applications/Postgres.app/Contents/Versions/latest/bin \
   /usr/local/opt/openssl/bin \
   /usr/local/opt/sqlite/bin \
+  /usr/local/sbin \
   /{bin,sbin} \
   /{usr,opt}/{bin,sbin} \
   /{usr,opt,Apps}/{local,X11,opt}/{bin,sbin} \
