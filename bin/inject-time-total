@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# vim: set ft=ruby:
+
+exec /usr/bin/env ruby --disable-gems -x "$0" $*
+#!ruby
+
+require 'json'
+require 'time'
+require 'English'
+
+last_time = nil
+total_seconds = 0.0
+
+class Object
+  def present?
+    !self.nil?
+  end
+end
+
+while STDIN.gets
+  parsed_line = JSON.parse($LAST_READ_LINE)
+  line_time = parsed_line["time"]
+
+  begin
+    parsed_line_time = Time.strptime(line_time, "%Y-%m-%dT%H:%M:%S.%N%Z")
+  rescue
+    parsed_line["total_runtime_seconds"] = total_seconds
+    puts parsed_line.to_json
+    next
+  end
+
+  if last_time.present?
+    total_seconds += (parsed_line_time - last_time)
+  end
+  parsed_line["total_runtime_seconds"] = total_seconds
+  puts parsed_line.to_json
+  last_time = parsed_line_time
+end
