@@ -13,7 +13,15 @@ last_time = nil
 while STDIN.gets
   parsed_line = JSON.parse($LAST_READ_LINE)
   line_time = parsed_line["time"]
-  parsed_line_time = Time.strptime(line_time, "%Y-%m-%dT%H:%M:%S.%N%Z")
+
+  begin
+    parsed_line_time = Time.strptime(line_time, "%Y-%m-%dT%H:%M:%S.%N%Z")
+  rescue
+    parsed_line["seconds_since_previous_line"] = nil
+    puts parsed_line.to_json
+    next
+  end
+
   if last_time.nil?
     parsed_line["seconds_since_previous_line"] = nil
   else
