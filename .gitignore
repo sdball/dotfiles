@@ -281,3 +281,5 @@ NOTES.md
 .clojure*
 .m2/
 .compose-data/
+.zsh_sessions/
+.gnupg_pre_2.1/
