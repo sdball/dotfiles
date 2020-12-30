@@ -8,7 +8,7 @@ do
   [[ -f "$s" ]] && source "$s"
 done
 #-----------------------------------------------------------------------------
-typeset -g -a _preferred_languages=(ruby elixir)
+typeset -g -a _preferred_languages=(ruby clojure)
 
 alias -g M='| $PAGER'
 bindkey -e
