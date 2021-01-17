@@ -1,55 +1,4 @@
 # vi: ft=ruby
-# hirb: some nice stuff for Rails
-begin
-  require 'hirb'
-  HIRB_LOADED = true
-rescue LoadError
-  HIRB_LOADED = false
-end
-
-require 'logger'
-
-def loud_logger
-  enable_hirb
-  set_logger_to Logger.new(STDOUT)
-end
-
-def quiet_logger
-  disable_hirb
-  set_logger_to nil
-end
-
-def set_logger_to(logger)
-  begin
-    ActiveRecord::Base.logger = logger
-    ActiveRecord::Base.clear_reloadable_connections!
-  rescue
-    puts "Error setting ActiveRecord logger"
-  end
-end
-
-def enable_hirb
-  if HIRB_LOADED
-    if ActiveRecord
-      Hirb::Formatter.dynamic_config['ActiveRecord::Base']
-    end
-    Hirb.enable
-  else
-    puts "hirb is not loaded"
-  end
-end
-
-def disable_hirb
-  if HIRB_LOADED
-    Hirb.disable
-  else
-    puts "hirb is not loaded"
-  end
-end
-
-def efind(email)
-  User.find_by_email email
-end
 
 # set a nice prompt
 rails_root = File.basename(Dir.pwd)
@@ -62,5 +11,3 @@ IRB.conf[:PROMPT][:RAILS] = {
 }
 IRB.conf[:PROMPT_MODE] = :RAILS
 
-# turn on the loud logging by default
-IRB.conf[:IRB_RC] = Proc.new { loud_logger }

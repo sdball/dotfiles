@@ -1,14 +1,3 @@
-# ruby 1.8.7 compatible
-require 'rubygems'
-require 'irb/completion'
-
-# interactive editor: use vim from within irb
-begin
-  require 'interactive_editor'
-rescue LoadError => err
-  warn "Couldn't load interactive_editor: #{err}"
-end
-
 IRB.conf[:PROMPT][:CUSTOM] = {
   :PROMPT_I => "irb> ",
   :PROMPT_S => "%l>> ",
@@ -44,12 +33,6 @@ class Object
     else
       self.public_methods.sort - Object.new.public_methods
     end
-  end
-end
-
-module Kernel
-  def guid(s)
-    s.scan(/[a-f0-9-]{36}/).first
   end
 end
 
