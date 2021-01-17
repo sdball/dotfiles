@@ -46,6 +46,8 @@ for dir in \
   /{usr,opt}/{bin,sbin} \
   /{usr,opt,Apps}/{local,X11,opt}/{bin,sbin} \
   /opt/homebrew/bin \
+  /opt/homebrew/opt/ruby/bin \
+  /opt/homebrew/lib/ruby/gems/3.0.0/bin \
   /{usr,opt}/local/heroku/bin \
   /usr/local/opt/ncurses/bin \
   $HOME/.npm-global/bin \
