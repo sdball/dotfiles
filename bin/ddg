@@ -1,17 +1,29 @@
 #!/usr/bin/env bash
 
-call_api() {
+api-to-tmp() {
   curl "https://api.duckduckgo.com/?q=$1&format=json" -s >/tmp/ddg
 }
 
-parse_results() {
+parse-results() {
   jq -cr '"\(.AbstractText)\n  \(.AbstractURL)\n"' /tmp/ddg
   gron /tmp/ddg | rg -s 'Text|FirstURL' | gron --ungron | jq -cr '.. | {Text, FirstURL}?' | rg -v null | jq -cr '"\(.Text)\n  \(.FirstURL)\n"'
 }
 
+word-wrap() {
+  fold -w 80 -s | sed -e 's/^/  /'
+}
+
+decorate() {
+  bat --style grid
+}
+
+format() {
+  word-wrap | decorate
+}
+
 main() {
-  call_api "$1"
-  parse_results | bat -p
+  api-to-tmp "$*"
+  parse-results | format
 }
 
 main "$@"
