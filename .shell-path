@@ -97,7 +97,7 @@ if [[ -e "$HOME/.fnm" ]]; then
 fi
 
 if command -v fnm >&/dev/null ; then
-  eval "$(fnm env --multi)"
+  eval "$(fnm env --use-on-cd)"
 elif [[ -s "$HOME/.nvm" ]] ; then
   export NVM_DIR="$HOME/.nvm"
   [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
