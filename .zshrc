@@ -1,3 +1,4 @@
+_start=$(ruby --disable-gems -e "puts Float(Time.now) * 1000")
 #-----------------------------------------------------------------------------
 for s in ~/.shell-path \
     ~/.shell-common \
@@ -117,3 +118,6 @@ if command -v rbenv >/dev/null; then
 fi
 
 prompt chorn
+_end=$(ruby --disable-gems -e "puts Float(Time.now) * 1000")
+echo "Time to prompt: " $((_end - _start)) " ms"
+
