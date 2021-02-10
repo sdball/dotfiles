@@ -3,6 +3,7 @@
 [alias]
     ; simple aliases
     aa = add --all
+    all = !git add --all --verbose | sed -e 's/^add \\(.*\\)$/\\1: taken/'
     amend = commit --amend
     b = branch --list -vv
     changed-files = diff --name-only
