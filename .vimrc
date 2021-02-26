@@ -3,7 +3,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 filetype off
-let g:polyglot_disabled = ['jenkins']
+let g:polyglot_disabled = ['jenkins', 'markdown']
 let g:coc_available = 0
 
 " -- Plugins: https://github.com/junegunn/vim-plug ---------------------------
