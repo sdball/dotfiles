@@ -52,10 +52,14 @@
     head = !git l -1
     hp = "!show_git_head"
     l = "!pretty_git_log"
+    le = !git l --format='%n%n%Cgreen%s%Creset%n%n%n%b%n%CblueAUTHOR%x20%aN%x20<%aE>%n%H%n'
     la = !git l --all
+    lae = !git l --all --format='%n%n%Cgreen%s%Creset%n%n%n%b%n%CblueAUTHOR%x20%aN%x20<%aE>%n%H%n'
     lms = !git local-master-sync-check
     r = !git l -30
+    re = !git r --format='%n%n%Cgreen%s%Creset%n%n%n%b%n%CblueAUTHOR%x20%aN%x20<%aE>%n%H%n'
     ra = !git r --all
+    rae = !git r --all --format='%n%n%Cgreen%s%Creset%n%n%n%b%n%CblueAUTHOR%x20%aN%x20<%aE>%n%H%n'
     recent-branches = !git reflog --since '2 weeks ago' | grep checkout | grep -o 'moving from .*' | sed -e 's/moving from //' -e 's/.* to //' | sort | uniq
     s = !git fetch && git status
     show-stash = "!f() { git stash show stash@{/$*} -p; }; f"
