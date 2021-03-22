@@ -279,7 +279,7 @@ augroup vimrcEx
   autocmd FileType javascript let t:command="npm test"
 
   " shell autocmds
-  autocmd FileType sh let t:style_command="shellcheck --shell=bash --exclude=SC2164,SC2001 \"%\""
+  autocmd FileType sh let t:style_command="shellcheck --shell=bash --exclude=SC2164,SC2001,SC2006 \"%\""
   autocmd FileType sh map <leader>r :wall\|:!./%<cr>
   autocmd FileType zsh map <leader>r :wall\|:!./%<cr>
 
