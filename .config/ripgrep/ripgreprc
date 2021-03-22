@@ -1,2 +1,6 @@
 # Smart case is Smart
 --smart-case
+
+# spec is spec.js is spec
+--type-add
+spec:*.spec.js
