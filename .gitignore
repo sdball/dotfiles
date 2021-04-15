@@ -286,3 +286,4 @@ NOTES.md
 .contest/
 .config/iterm2/
 .kube/
+.minikube/
