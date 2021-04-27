@@ -577,7 +577,6 @@ command! -bang -nargs=* Rg
 
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h | %<(20,trunc)%an | %s"'
 
-map <C-t> :GFiles<cr>
 map <C-p> :Files<cr>
 map <C-g> :Rg<space>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -598,3 +597,17 @@ function! Reveal()
     :normal gg
     :normal dd
 endfunction
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TIME STAMPS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+inoremap <expr> <C-t> "\<ESC>:call TimeStamp()\<CR>a"
+map <C-t> a<C-t><ESC>
+function! TimeStamp()
+     let l:current_time = strftime("%H:%M:%S")
+     execute "normal! 0i\<SPACE>\<ESC>0dwi\
+          \<C-R>=l:current_time\<CR>\
+          \<SPACE>\<SPACE>—\<SPACE>\<SPACE>"
+endfunction
+
