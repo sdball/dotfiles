@@ -364,6 +364,9 @@ nnoremap <leader>x :set cursorcolumn!<cr>
 " toggle numbers
 map <leader># :set number!<cr>
 
+" find undone markdown TODO items
+map <leader>2 /- \[ \]/<cr>
+
 " :W should really be :w because I never want :W and always mean :w
 " :Q should really be :q because Q doesn't even do anything
 " put them together and magic
