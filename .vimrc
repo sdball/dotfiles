@@ -335,12 +335,6 @@ nnoremap <c-l> <c-w>l
 " some frequent code inserts
 imap <c-l> <space>=><space>
 
-" insert current datetime
-imap <c-d> # <c-R>=strftime("%Y-%m-%d %A")<cr>
-
-" insert datetime for blog posts
-imap <c-e> <c-R>=strftime("%Y-%m-%d %H:%M:%S%Z")<cr>
-
 " Can't be bothered to understand ESC vs <c-c> in insert mode
 imap <c-c> <esc>
 
