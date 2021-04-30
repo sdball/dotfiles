@@ -366,6 +366,8 @@ map <leader># :set number!<cr>
 
 " find undone markdown TODO items
 map <leader>2 /- \[ \]/<cr>
+" find worklist meetings
+map <leader>3 /^.*\n-\{78\}/<cr>
 
 " :W should really be :w because I never want :W and always mean :w
 " :Q should really be :q because Q doesn't even do anything
