@@ -9,7 +9,7 @@ do
   [[ -f "$s" ]] && source "$s"
 done
 #-----------------------------------------------------------------------------
-typeset -g -a _preferred_languages=(ruby clojure)
+typeset -g -a _preferred_languages=(ruby clojure node)
 
 alias -g M='| $PAGER'
 bindkey -e
