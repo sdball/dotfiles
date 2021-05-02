@@ -1,5 +1,8 @@
 {
   "javascript.suggestionActions.enabled": false,
+  "cSpell.enabledLanguageIds": [
+      "markdown"
+  ],
   "cSpell.userWords": [
     "Ackbar",
     "Arko",
