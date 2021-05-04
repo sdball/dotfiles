@@ -290,6 +290,14 @@ augroup vimrcEx
   if filereadable(expand("~/work/autocmds.vim"))
     source ~/work/autocmds.vim
   endif
+
+  " markdown autocmds
+  " find urgent markdown TODO items
+  autocmd FileType markdown map <leader>1 /@@\\|URGENT\\|TODAY/<cr>
+  " find undone markdown TODO items
+  autocmd FileType markdown map <leader>2 /- \[ \]/<cr>
+  " find worklist meetings
+  autocmd FileType markdown map <leader>3 /^.*\n-\{78\}/<cr>
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -363,11 +371,6 @@ nnoremap <leader>x :set cursorcolumn!<cr>
 
 " toggle numbers
 map <leader># :set number!<cr>
-
-" find undone markdown TODO items
-map <leader>2 /- \[ \]/<cr>
-" find worklist meetings
-map <leader>3 /^.*\n-\{78\}/<cr>
 
 " :W should really be :w because I never want :W and always mean :w
 " :Q should really be :q because Q doesn't even do anything
