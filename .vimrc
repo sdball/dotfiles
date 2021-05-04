@@ -292,12 +292,14 @@ augroup vimrcEx
   endif
 
   " markdown autocmds
-  " find urgent markdown TODO items
+  " urgent markdown TODO items
   autocmd FileType markdown map <leader>1 /@@\\|URGENT\\|TODAY/<cr>
-  " find undone markdown TODO items
+  " incomplete markdown TODO items
   autocmd FileType markdown map <leader>2 /- \[ \]/<cr>
-  " find worklist meetings
+  " worklist meetings
   autocmd FileType markdown map <leader>3 /^.*\n-\{78\}/<cr>
+  " worklist sections
+  autocmd FileType markdown map <leader>4 /^.*\n=\{78\}/<cr>
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
