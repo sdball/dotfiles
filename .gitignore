@@ -287,3 +287,4 @@ NOTES.md
 .config/iterm2/
 .kube/
 .minikube/
+.config/gcloud/
