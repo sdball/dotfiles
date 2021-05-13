@@ -288,3 +288,4 @@ NOTES.md
 .kube/
 .minikube/
 .config/gcloud/
+.tan-aws/
