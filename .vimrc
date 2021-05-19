@@ -36,6 +36,7 @@ Plug 'tpope/vim-abolish' " substitution with case preservation
 Plug 'tpope/vim-commentary' " comment stuff more easily
 Plug 'tpope/vim-dispatch' " async build dispatcher
 Plug 'tpope/vim-fugitive' " git integration
+Plug 'tpope/vim-markdown' " development version of Vim's plugin for Markdown
 Plug 'tpope/vim-rhubarb' " GitHub integration
 Plug 'tpope/vim-sensible' " sensible defaults
 Plug 'tpope/vim-surround' " match matching tags and syntax
