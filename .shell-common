@@ -189,20 +189,6 @@ b16() {
   eval "$theme"
 }
 
-git() {
-  if [[ "$*" =~ "pull" ]]; then
-    echo "Don't git pull."
-    return 0
-  fi
-
-  if [[ "$*" =~ "push --all" ]]; then
-    echo "Don't git push --all."
-    return 0
-  fi
-
-  command git $*
-}
-
 regex() {
   command rg --debug "$*" "" 2>&1 | sed -e '/DEBUG/d' -e '/No such file/d' -e '/No files were searched/d'
 }
