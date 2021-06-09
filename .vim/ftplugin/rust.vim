@@ -14,3 +14,4 @@ if filereadable("Cargo.toml")
 else
   map <leader>r :wall\|:!rustc % && ./%:r<cr>
 endif
+let b:ale_fixers = ['rustfmt']
