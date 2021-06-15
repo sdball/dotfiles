@@ -616,9 +616,9 @@ endfunction
 inoremap <expr> <C-t> "\<ESC>:call TimeStamp()\<CR>a"
 map <C-t> a<C-t><ESC>
 function! TimeStamp()
-     let l:current_time = strftime("%H:%M:%S")
+     let l:current_time = strftime("%H:%M")
      execute "normal! 0i\<SPACE>\<ESC>0dwi\
           \<C-R>=l:current_time\<CR>\
-          \<SPACE>\<SPACE>—\<SPACE>\<SPACE>"
+          \<SPACE>--\<SPACE>"
 endfunction
 
