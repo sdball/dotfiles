@@ -121,3 +121,5 @@ prompt chorn
 _end=$(ruby --disable-gems -e "puts Float(Time.now) * 1000")
 echo "Time to prompt: " $((_end - _start)) " ms"
 
+unset 'FAST_HIGHLIGHT[chroma-whatis]' 'FAST_HIGHLIGHT[chroma-man]'
+
