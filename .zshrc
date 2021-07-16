@@ -123,3 +123,4 @@ echo "Time to prompt: " $((_end - _start)) " ms"
 
 unset 'FAST_HIGHLIGHT[chroma-whatis]' 'FAST_HIGHLIGHT[chroma-man]'
 
+precmd() { print "" }
