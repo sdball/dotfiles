@@ -91,25 +91,4 @@ endfunction
 nnoremap <F7> :call NextColor(-1)<CR>
 nnoremap <F8> :call NextColor(1)<CR>
 nnoremap <F9> :call NextColor(0)<CR>
-nnoremap <F10> :call HourColor()<CR>
-
-" Set color scheme according to current time of day.
-function! HourColor()
-  let hr = str2nr(strftime('%H'))
-  if hr <= 7       " to 7AM
-    let i = 0
-  elseif hr <= 12  " to 12PM
-    let i = 1
-  elseif hr <= 14  " to 2PM
-    let i = 2
-  elseif hr <= 18  " to 6PM
-    let i = 3
-  else
-    let i = 4      " to 12AM
-  endif
-  let nowcolors = 'elflord base16-mexico-light desert evening pablo'
-  execute 'colorscheme '.split(nowcolors)[i]
-  redraw
-  echo g:colors_name
-endfunction
 
