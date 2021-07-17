@@ -5,6 +5,7 @@ set nocompatible
 filetype off
 let g:polyglot_disabled = ['jenkins', 'markdown']
 let g:coc_available = 0
+let mapleader=","
 
 " -- Plugins: https://github.com/junegunn/vim-plug ---------------------------
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -30,6 +31,7 @@ if v:shell_error == 0
   let g:coc_available = 1
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
+Plug 'preservim/tagbar' " browse the tags of the current file and get an overview of its structure
 Plug 'rhysd/clever-f.vim' " smarter f,F,t,T commands
 Plug 'sheerun/vim-polyglot' " async language packs
 Plug 'tpope/vim-abolish' " substitution with case preservation
@@ -63,6 +65,10 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" Tagbar
+nmap <F10> :TagbarToggle<cr>
+nmap <leader>c :TagbarToggle<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
@@ -326,7 +332,6 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " just a bit of cartography
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader=","
 
 " Fix linting errors
 map <leader>f :ALEFix<cr>
