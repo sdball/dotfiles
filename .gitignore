@@ -289,3 +289,4 @@ NOTES.md
 .minikube/
 .config/gcloud/
 .tan-aws/
+.terraform.d/
