@@ -1,7 +1,22 @@
 {
+  "coc.preferences.hoverTarget": "float",
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": [
+        "go.mod"
+      ],
+      "filetypes": [
+        "go"
+      ]
+    }
+  },
+  "go.goplsOptions": {
+    "staticcheck": true
+  },
   "javascript.suggestionActions.enabled": false,
   "cSpell.enabledLanguageIds": [
-      "markdown"
+    "markdown"
   ],
   "cSpell.userWords": [
     "Ackbar",
