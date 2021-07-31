@@ -8,6 +8,17 @@
       "filetypes": [
         "go"
       ]
+    },
+    "terraform": {
+      "command": "terraform-ls",
+      "args": [
+        "serve"
+      ],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "initializationOptions": {}
     }
   },
   "go.goplsOptions": {
