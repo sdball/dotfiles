@@ -30,6 +30,7 @@
     un = untracked
 
     ; custom commands and workflows
+    absorb = "!f() { git ff $1 && git branch -d $f }; f"
     uncommit = !git reset --soft HEAD~ && git reset HEAD .
     apply-stash = "!f() { git stash apply stash@{/$*}; }; f"
     current-branch=rev-parse --abbrev-ref HEAD
