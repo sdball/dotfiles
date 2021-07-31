@@ -80,7 +80,7 @@
     unique-email-domains = !git email-domains | sort -u
 [merge]
     tool = vimdiff
-
+    conflictstyle = diff3
 [core]
 	pager = less -r
 	excludesfile = ~/.gitignore_global
