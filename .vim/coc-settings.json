@@ -19,6 +19,11 @@
         "tf"
       ],
       "initializationOptions": {}
+    },
+    "nginx-language-server": {
+      "command": "nginx-language-server",
+      "filetypes": ["nginx"],
+      "rootPatterns": ["nginx.conf", ".git"]
     }
   },
   "go.goplsOptions": {
