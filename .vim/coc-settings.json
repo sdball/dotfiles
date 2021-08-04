@@ -1,4 +1,5 @@
 {
+  "hover.target": "preview",
   "languageserver": {
     "golang": {
       "command": "gopls",
@@ -22,17 +23,24 @@
     },
     "nginx-language-server": {
       "command": "nginx-language-server",
-      "filetypes": ["nginx"],
-      "rootPatterns": ["nginx.conf", ".git"]
+      "filetypes": [
+        "nginx"
+      ],
+      "rootPatterns": [
+        "nginx.conf",
+        ".git"
+      ]
     }
   },
   "go.goplsOptions": {
     "staticcheck": true
   },
-  "coc.preferences.formatOnSaveFiletypes": ["rust"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "rust"
+  ],
   "javascript.suggestionActions.enabled": false,
   "rust.wait_to_build": 200,
-  "rust.clippy_preference":"on",
+  "rust.clippy_preference": "on",
   "cSpell.enabledLanguageIds": [
     "markdown"
   ]
