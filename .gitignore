@@ -290,3 +290,4 @@ NOTES.md
 .config/gcloud/
 .tan-aws/
 .terraform.d/
+.solargraph/
