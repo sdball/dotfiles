@@ -1,5 +1,5 @@
 {
-  "hover.target": "preview",
+  "hover.target": "float",
   "languageserver": {
     "golang": {
       "command": "gopls",
