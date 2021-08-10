@@ -42,6 +42,7 @@
   "rust.wait_to_build": 200,
   "rust.clippy_preference": "on",
   "cSpell.enabledLanguageIds": [
-    "markdown"
+    "markdown",
+    "gitcommit"
   ]
 }
