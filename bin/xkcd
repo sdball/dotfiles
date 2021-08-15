@@ -1,4 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-xkcd=`curl -s https://xkcd.com/$1/ | rg -o "https://imgs.xkcd.com/comics/.*"`
-curl -s $xkcd | imgcat
+contents=$(curl -L -s "https://xkcd.com/$1/")
+xkcd=$(echo "$contents" | rg -o "https://imgs.xkcd.com/comics/.+.(jpg|png)\"" | tr -d '"' | head -1)
+if [[ -n $xkcd ]]; then
+  echo >&2 "$xkcd"
+  curl -s "$xkcd" | timg -IUW -
+else
+  echo >&2 "No image URL found"
+fi
