@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+filename="$(date +"%F")-$(slug "$@").md"
+touch "$filename"
+
+cat <<END > "$filename"
+Tags: <tags go here>
+
+# $@
+END
+
