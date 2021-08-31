@@ -31,6 +31,7 @@ if v:shell_error == 0
   let g:coc_available = 1
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
+Plug 'pedrohdz/vim-yaml-folds'
 Plug 'preservim/tagbar' " browse the tags of the current file and get an overview of its structure
 Plug 'rhysd/clever-f.vim' " smarter f,F,t,T commands
 Plug 'sheerun/vim-polyglot' " async language packs
