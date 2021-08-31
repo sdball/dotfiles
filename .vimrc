@@ -307,15 +307,8 @@ augroup vimrcEx
     source ~/work/autocmds.vim
   endif
 
-  " markdown autocmds
-  " urgent markdown TODO items
-  autocmd FileType markdown map <leader>1 /@@\\|URGENT\\|TODAY/<cr>
-  " incomplete markdown TODO items
-  autocmd FileType markdown map <leader>2 /- \[ \]/<cr>
-  " worklist meetings
-  autocmd FileType markdown map <leader>3 /^.*\n-\{78\}/<cr>
-  " worklist sections
-  autocmd FileType markdown map <leader>4 /^.*\n=\{78\}/<cr>
+  " open yaml files with all folds open
+  autocmd FileType yaml normal zR
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
