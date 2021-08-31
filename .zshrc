@@ -37,28 +37,13 @@ unset fasd_cache
 #-----------------------------------------------------------------------------
 alias a=prompt-async
 alias t=prompt-terse
-alias tt=prompt-tterse
-alias v=prompt-verbose
-alias vv=prompt-vverbose
 
 prompt-async() {
   prompt chorn
 }
 
 prompt-terse() {
-  PROMPT="`prompt-tags`$ "
-}
-
-prompt-tterse() {
   PROMPT="$ "
-}
-
-prompt-verbose() {
-  PROMPT="`pwd` `prompt-tags`$ "
-}
-
-prompt-vverbose() {
-  PROMPT="`pwd` (`current-git-checkout`) `prompt-tags`$ "
 }
 
 autoload -U promptinit
