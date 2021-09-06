@@ -9,23 +9,11 @@ do
   [[ -f "$s" ]] && source "$s"
 done
 #-----------------------------------------------------------------------------
-typeset -g -a _preferred_languages=(ruby clojure node rust)
-
-alias -g M='| $PAGER'
-bindkey -e
-bindkey -m 2>/dev/null
-
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
 
 autoload -Uz compinit && compinit -C
-#-----------------------------------------------------------------------------
-autoload -Uz zcalc
-__calc() {
-  zcalc -e "$*"
-}
-aliases[=]='noglob __calc'
 #-----------------------------------------------------------------------------
 fasd_cache="$HOME/.fasd-init-zsh"
 if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
@@ -35,19 +23,6 @@ fi
 source "$fasd_cache"
 unset fasd_cache
 #-----------------------------------------------------------------------------
-alias a=prompt-async
-alias t=prompt-terse
-
-prompt-async() {
-  prompt chorn
-}
-
-prompt-terse() {
-  PROMPT="$ "
-}
-
-autoload -U promptinit
-promptinit
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -75,16 +50,6 @@ if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
   source ~/.config/exercism/exercism_completion.zsh
 fi
 
-# neovim if possible
-# NOT YET
-# if command -v nvim > /dev/null; then
-#   export EDITOR=nvim
-#   alias vim=nvim
-#   alias vi=nvim
-# else
-#   export EDITOR=vim
-# fi
-
 if (( $+commands[direnv] )) ; then
   eval "$(direnv hook zsh)"
 fi
@@ -93,18 +58,9 @@ fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-# very special zsh magic to allow vim to open a filelist with files that might have spaces
-vimmo() {
-  vim -O -- "${(f)$($*)}"
-}
-
 if command -v rbenv >/dev/null; then
   eval "$(rbenv init -)"
 fi
 
-prompt chorn
 _end=$(ruby --disable-gems -e "puts Float(Time.now) * 1000")
 echo "Time to prompt: " $((_end - _start)) " ms"
-
-unset 'FAST_HIGHLIGHT[chroma-whatis]' 'FAST_HIGHLIGHT[chroma-man]'
-
