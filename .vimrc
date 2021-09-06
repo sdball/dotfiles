@@ -30,6 +30,7 @@ let uname_check = system('uname -m | grep -qv armv7l') " skip CoC if we're on Ra
 if v:shell_error == 0
   let g:coc_available = 1
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 endif
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'preservim/tagbar' " browse the tags of the current file and get an overview of its structure
