@@ -1,7 +1,7 @@
 [[ -s $HOME/.local_zshrc ]] && source $HOME/.local_zshrc
 [[ -s $HOME/.shell-common ]] && source $HOME/.shell-common
 
-export ZSH="/Users/sdball/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="crunch"
 
 # Set list of themes to pick from when loading at random
