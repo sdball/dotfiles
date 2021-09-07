@@ -2,23 +2,40 @@
 # aliases, functions, and shell tool setup that isn't shell specific
 # --
 
-alias be="bundle exec"
+# lots lifted/transformed from https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/singlechar
+
+alias y='rg -i'   # Find case-insensitive string
+alias n='rg -iv'  # Inverse of y
+alias f='rg -il'  # List files with case-insensitive string
+
+alias w='echo >'  # Write args to file
+alias a='echo >>' # Append args to file
+alias w:='cat >'  # Write STDIN to file
+alias a:='cat >>' # Append STDIN to file
+
+# cd to interactively fuzzy searched frequent directory
+alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
+
+# cd to interactively fuzzy searched subdirectory
+alias D.='cd "$(fd --type d | fzf)"'
+
+alias F="git fetch --prune"
+alias R='cd "$(git rev-parse --show-toplevel)"'
 alias b="git b"
 alias d="git di"
-alias F="git fetch --prune"
-alias r="recent"
 alias s="git status"
-alias R='cd "$(git rev-parse --show-toplevel)"'
-alias sub='cd "$(fd --type d | fzf)"'
+
+alias be="bundle exec"
+
+# preview files
+alias f.="fzf --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
+alias f.b='f. | read -r f && bat "$f"'
+
 alias vs='vim -S /tmp/vim-session'
 
-# fasd and fzf
-alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
-alias ff="fzf --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
-alias ffbat='ff | read -r f && bat "$f"'
-
 # like pgrep but more
-prg() {
+pg() {
+  [[ $# -ne 1 ]] && echo "p PATTERN" && return
   pgrep -f "$1" | xargs ps
 }
 
