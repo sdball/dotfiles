@@ -84,42 +84,43 @@
     tool = vimdiff
     conflictstyle = diff3
 [core]
-	pager = less -r
-	excludesfile = ~/.gitignore_global
+    pager = less -r
+    excludesfile = ~/.gitignore_global
 [push]
-	default = simple
+    default = simple
 [advice]
-	statusHints = false
+    statusHints = false
 [diff]
-	mnemonicprefix = true
-	algorithm = patience
+    mnemonicprefix = true
+    algorithm = patience
 [format]
     subjectprefix = git
 
 [rerere]
-	enabled = 1
+    enabled = 1
 [status]
     showUntrackedFiles = all
 [user]
-	email = sdball@gmail.com
-	name = Stephen Ball
-	signingkey = 05F89257
-	useConfigOnly = true
+    email = sdball@gmail.com
+    name = Stephen Ball
+    signingkey = 05F89257
+    useConfigOnly = true
 [pager]
-	diff = diff-so-fancy | less --tabs=2 -RFX
-	show = diff-so-fancy | less --tabs=2 -RFX
-[diff-so-fancy]
-	stripLeadingSymbols = false
-	markEmptyLines = false
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[delta]
+    navigate = true
 [filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
 [commit]
-	gpgsign = false
+    gpgsign = false
 [hub]
-	host = git.corp.tanium.com
+    host = git.corp.tanium.com
 [includeIf "gitdir:~/ghe/"]
     path = ~/.gitconfig-ghe
 [url "git@git.corp.tanium.com:"]
@@ -127,4 +128,4 @@
 [url "git@github.com:"]
     insteadOf = https://github.com/
 [init]
-	defaultBranch = main
+    defaultBranch = main
