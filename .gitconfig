@@ -112,6 +112,8 @@
     show = delta
 [delta]
     navigate = true
+    diff-so-fancy = true
+    line-numbers = true
 [filter "lfs"]
     required = true
     clean = git-lfs clean -- %f
