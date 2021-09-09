@@ -3,7 +3,8 @@
 [[ -s $HOME/.shell-path ]] && source $HOME/.shell-path
 
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="crunch"
+export ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
+ZSH_THEME="gitup"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
