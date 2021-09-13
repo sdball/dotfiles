@@ -62,6 +62,7 @@ let g:ale_fix_on_save = 0
 highlight! ALEWarning ctermbg=NONE
 highlight! ALEError ctermbg=NONE
 
+" tag: easy-align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
