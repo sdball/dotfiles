@@ -600,6 +600,7 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h | %
 
 map <C-p> :Files<cr>
 map <C-g> :Rg<space>
+map <C-b> :Buffers<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
