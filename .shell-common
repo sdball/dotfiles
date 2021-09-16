@@ -301,7 +301,7 @@ monitor-memory() {
   local _name=`echo $1 | tr ' ' '-'`
   echo "TIME VSZ RSS"
   while true; do
-    pgrep $1 | while read _pid; do
+    pgrep -f $1 | while read _pid; do
       if [[ ! -z $_pid ]]; then
         echo "`date +%s` `ps -o vsz,rss $_pid | rg -v 'VSZ'`" | tee -a ~/.memory_logs/"memory-$_name-$_pid.log"
       else
