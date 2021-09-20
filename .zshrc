@@ -68,6 +68,7 @@ ZSH_THEME="chorn"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   fancy-ctrl-z
+  fasd
   fzf
   git
   history-substring-search
