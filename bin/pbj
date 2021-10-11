@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-pbpaste | vipe | pbcopy
+if [[ $# -eq 1 ]]; then
+  cat "$1" | vipe | pbcopy
+else
+  pbpaste | vipe | pbcopy
+fi
