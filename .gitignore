@@ -291,3 +291,4 @@ NOTES.md
 .tan-aws/
 .terraform.d/
 .solargraph/
+.config/gh/
