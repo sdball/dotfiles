@@ -6,7 +6,8 @@
 
 alias y='rg -i'   # Find case-insensitive string
 alias n='rg -iv'  # Inverse of y
-alias ff='rg -il'  # List files with case-insensitive string
+alias yf='rg -il'  # List files with case-insensitive string
+alias nf='rg -il'  # List files without case-insensitive string
 
 alias w='echo >'  # Write args to file
 alias a='echo >>' # Append args to file
