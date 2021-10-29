@@ -5,6 +5,7 @@ set nocompatible
 filetype off
 let g:polyglot_disabled = ['jenkins', 'markdown']
 let g:coc_available = 0
+let g:ale_disable_lsp = 1 " let coc handle LSP
 let mapleader=","
 
 " -- Plugins: https://github.com/junegunn/vim-plug ---------------------------

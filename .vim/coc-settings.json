@@ -1,5 +1,9 @@
 {
+  "diagnostic.displayByAle": true,
   "hover.target": "float",
+  "hover.floatConfig": {
+    "border": true
+  },
   "languageserver": {
     "golang": {
       "command": "gopls",
