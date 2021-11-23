@@ -80,6 +80,7 @@
     ranked-email-domains = !git email-domains | sort | uniq -c | sort -n
     unique-authors = !git authors | sort -u
     unique-email-domains = !git email-domains | sort -u
+    praise = blame
 [merge]
     tool = vimdiff
     conflictstyle = diff3
