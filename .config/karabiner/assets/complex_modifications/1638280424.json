@@ -1,0 +1,1 @@
+{"title":"Change right_control key (rev 5)","rules":[{"description":"Change right_control key to command+control+option+shift if pressed with other keys","manipulators":[{"type":"basic","from":{"key_code":"right_control","modifiers":{"optional":["any"]}},"to":[{"key_code":"left_shift","modifiers":["left_command","left_control","left_option"]}]}]}]}
