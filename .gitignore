@@ -292,3 +292,4 @@ NOTES.md
 .terraform.d/
 .solargraph/
 .config/gh/
+experiments/
