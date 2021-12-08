@@ -31,6 +31,7 @@ alias be="bundle exec"
 # preview files
 alias f.="fzf --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 alias f.b='f. | read -r f && bat "$f"'
+alias f.v='f. | read -r f && vim "$f"'
 
 alias vs='vim -S /tmp/vim-session'
 
