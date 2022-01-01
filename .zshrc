@@ -72,6 +72,7 @@ plugins=(
   fzf
   git
   history-substring-search
+  ripgrep
   themes
 )
 case "$_PURPOSE" in
