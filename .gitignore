@@ -294,3 +294,4 @@ NOTES.md
 .config/gh/
 experiments/
 gitlab/
+.lint-prepush/
