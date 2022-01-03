@@ -22,7 +22,7 @@ alias D.='cd "$(fd --type d | fzf)"'
 
 alias F="git fetch --prune"
 alias R='cd "$(git rev-parse --show-toplevel)"'
-alias b="git b"
+alias b="git b --color | bat --plain"
 alias d="git di"
 alias s="git status"
 
