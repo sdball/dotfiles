@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+main() {
+  local _main
+  _main=$(gh pr view --json baseRefName | jq -r '.baseRefName')
+  gh pr merge --rebase --admin
+  git checkout "$_main"
+  git fetch
+  git reset --hard "origin/$_main"
+  git r
+}
+
+main "$@"

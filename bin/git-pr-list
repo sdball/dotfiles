@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+main() {
+  gh pr list --json number,title,author,reviews,url | jq -r 'reverse | .[] | "\(.number) - \(.title) - \(.author.login) - \(.url) - (REVIEWS: \(.reviews))"'
+}
+
+main "$@"
+

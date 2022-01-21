@@ -72,6 +72,14 @@
     cdroot = !cd `git root`
     gomain = !git checkout main && git fetch && git reset --hard origin/main && git r
 
+    ; gh commands
+    pr-approve = !gh pr review --approve
+    pr-checkout = "!f() { gh pr checkout \"$*\" && git r; }; f"
+    pra = pr-approve
+    prc = pr-checkout
+    prl = pr-list
+    prr = pr-rebase
+
     ; data analysis
     authors = !git log --format="%aN"
     email-domains = !git log --format="%aE" | awk -F'@' '{print $2}'
