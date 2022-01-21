@@ -48,5 +48,12 @@
   "cSpell.enabledLanguageIds": [
     "markdown",
     "gitcommit"
+  ],
+  "cSpell.userWords": [
+    "CORECON",
+    "codegen",
+    "gqlgen",
+    "struct",
+    "structs"
   ]
 }
