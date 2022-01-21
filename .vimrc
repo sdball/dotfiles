@@ -380,7 +380,7 @@ cnoremap $$ <C-R>=expand('%')<cr>
 nnoremap <leader>. :call OpenTestAlternate()<cr>
 map <leader>t :call RunTestFile()<cr>
 map <leader>T :call RunNearestTest()<cr>
-map <leader>a :call RunAllTests()<cr>
+" map <leader>a :call RunAllTests()<cr>
 map <leader>s :call RunStyleChecks()<cr>
 
 " when nested too deep
