@@ -3,7 +3,7 @@
 set -Eeuo pipefail
 
 main() {
-  gh pr list --json number,author,title,createdAt,url,labels,reviewDecision,reviews |
+  gh pr list --json number,author,title,createdAt,url,labels,reviewDecision,reviews,baseRefName |
     jq -r 'reverse | .[] | "\nPR \(.number)\n- author: \(.author.login)\n- title: \(.title)\n- baseRef: \(.baseRefName)\n- opened: \(.createdAt) - \(((now - (.createdAt | fromdate)) / 60 / 60 | round | tostring + " hours ago"))\n- url: \(.url)\n- labels: \(.labels | map(.name) | join(","))\n- review: \(.reviewDecision)\n- reviews: \(if (.reviews | length) > 0 then .reviews | map("\(.author.login) \(.state)") else "-" end)"'
 }
 
