@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+main() {
+  local title
+  local slugged
+  local file
+  local date
+  date=$1
+  shift
+  title=( "$@" )
+  slugged=$(slug "${title[@]}")
+  file="${date}_${slugged}.md"
+  printf "# %s\n" "${title[*]}" > "$file"
+  vim "$file"
+}
+
+main "$@"
