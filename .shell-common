@@ -2,6 +2,9 @@
 # aliases, functions, and shell tool setup that isn't shell specific
 # --
 
+alias ibrew="arch -x86_64 /usr/local/bin/brew"
+alias mbrew="arch -arm64 /opt/homebrew/bin/brew"
+
 # lots lifted/transformed from https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/singlechar
 
 alias y='rg -i'   # Find case-insensitive string
