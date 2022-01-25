@@ -438,7 +438,7 @@ function! RunTestFile(...)
     endif
 
 " Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|-spec.rb\|_test.rb\|_test.exs\|spec.js\|spec.ts\|test.ts\|_test.py\)$\|test_.*\.py$') != -1
+    let in_test_file = match(expand("%"), '\(.feature$\|_spec.rb$\|-spec.rb$\|_test.rb$\|_test.exs$\|spec.js$\|spec.ts$\|test.ts$\|_test.py$\|test_.*\.py$\|_test.go$\)') != -1
     if in_test_file
         if exists("t:sdb_marked_test")
           unlet t:sdb_marked_test
@@ -575,6 +575,8 @@ function! RunTests(filename, line_number)
       else
         exec ':!' . t:command . ' ' . a:filename
       end
+    elseif a:filename =~ "\.go$"
+      exec ':!go test'
     else
       exec ':!' . t:command . ' ' . a:filename
     end
