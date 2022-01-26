@@ -1,3 +1,4 @@
+export PATH=/bin:$PATH
 [[ -s $HOME/.local_zshrc ]] && source $HOME/.local_zshrc
 [[ -s $HOME/.shell-common ]] && source $HOME/.shell-common
 [[ -s $HOME/.shell-path ]] && source $HOME/.shell-path
