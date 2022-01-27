@@ -66,6 +66,7 @@
     show-stash = "!f() { git stash show stash@{/$*} -p; }; f"
     snapshot = !git stash save --include-untracked "snapshot: $(date)" && git stash apply "stash@{0}"
     ss = local-to-remote-status
+    dip = "!f() { git add --all && git commit -m \"$(date)\"; }; f"
     wip = "!f() { git add --all && git commit -m \"✏ $*\"; }; f"
     qip = "!f() { git add --all && git commit -m \"$*\"; }; f"
     wipp = "!f() { git commit -m \"✏ $*\"; }; f"
