@@ -38,6 +38,7 @@ alias f.b='f. | read -r f && bat "$f"'
 # vim files
 alias f.v='f. | read -r f && vim "$f"'
 alias vs='vim -S /tmp/vim-session'
+alias rgv=ripgrep-to-vim
 
 # cd directories
 alias f.c='f. | read -r f && cd "$(dirname "$f")"'
