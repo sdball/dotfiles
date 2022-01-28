@@ -3,8 +3,7 @@ export PATH=/bin:$PATH
 [[ -s $HOME/.shell-common ]] && source $HOME/.shell-common
 [[ -s $HOME/.shell-path ]] && source $HOME/.shell-path
 
-export ZSH="$HOME/.oh-my-zsh"
-export ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
+export ZSH="$HOME/.oh-my-zsh" export ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
 ZSH_THEME="chorn"
 
 # Set list of themes to pick from when loading at random
@@ -113,3 +112,20 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# https://gist.github.com/junegunn/8b572b8d4b5eddd8b85e5f4d40f17236
+join-lines() {
+  local item
+  while read item; do
+    echo -n "${(q)item} "
+  done
+}
+
+() {
+  local c
+  for c in $@; do
+    eval "fzf-g$c-widget() { local result=\$(_g$c | join-lines); zle reset-prompt; LBUFFER+=\$result }"
+    eval "zle -N fzf-g$c-widget"
+    eval "bindkey '^g^$c' fzf-g$c-widget"
+  done
+} f b t r h s
