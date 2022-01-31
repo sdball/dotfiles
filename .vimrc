@@ -308,8 +308,6 @@ augroup vimrcEx
 
   autocmd FileType ruby map <leader>r :wall\|:!ruby %<cr>
 
-  autocmd FileType go set sw=2 ts=2 sts=2 noet
-
   if filereadable(expand("~/work/autocmds.vim"))
     source ~/work/autocmds.vim
   endif
