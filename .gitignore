@@ -297,3 +297,4 @@ gitlab/
 .lint-prepush/
 Backups/
 notes/
+.gore/
