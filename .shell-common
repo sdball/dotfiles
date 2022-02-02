@@ -7,10 +7,8 @@ alias mbrew="arch -arm64 /opt/homebrew/bin/brew"
 
 # lots lifted/transformed from https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/singlechar
 
-alias y='rg -i'   # Find case-insensitive string
-alias n='rg -iv'  # Inverse of y
-alias yf='rg -il'  # List files with case-insensitive string
-alias nf='rg -il'  # List files without case-insensitive string
+alias y='rg -l'   # List files matching ripgrep search
+alias n='rg -ilv' # Inverse of y
 
 alias w='echo >'  # Write args to file
 alias a='echo >>' # Append args to file
