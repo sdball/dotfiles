@@ -32,6 +32,7 @@ alias be="bundle exec"
 # preview files
 alias f.="fzf --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 alias f.b='f. | read -r f && bat "$f"'
+alias f.g='f. | read -r f && glow "$f"'
 
 # vim files
 alias f.v='f. | read -r f && vim "$f"'
