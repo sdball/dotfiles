@@ -31,13 +31,16 @@ alias be="bundle exec"
 
 # preview files
 alias f.="fzf --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
-alias f.b='f. | read -r f && bat "$f"'
-alias f.g='f. | read -r f && glow "$f"'
+
+# read files
+alias b.='f. | read -r f && bat "$f"'
+alias g.='f. | read -r f && glow "$f"'
 
 # vim files
-alias f.v='f. | read -r f && vim "$f"'
+alias v.='f. | read -r f && vim "$f"'
 alias vs='vim -S /tmp/vim-session'
 alias rgv=ripgrep-to-vim
+alias rtv=ripgrep-to-vim
 
 # cd directories
 alias f.c='f. | read -r f && cd "$(dirname "$f")"'
