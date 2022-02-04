@@ -61,6 +61,7 @@ T() {
 # direnv
 command -v direnv >& /dev/null && eval "$(direnv hook zsh)"
 
+# exa
 if command -v exa >/dev/null; then
   alias ls=exa
   alias la="exa --long -bhm --time-style=long-iso"
