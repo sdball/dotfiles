@@ -177,7 +177,7 @@ bin/rebar
 .local/share/heroku
 .puma-dev
 .cargo
-.gopath
+gopath/
 .plexht
 .aws
 .rediscli_history

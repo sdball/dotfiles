@@ -1,4 +1,4 @@
-export GOPATH="$HOME/.gopath"
+export GOPATH="$HOME/gopath"
 
 # jif
 export JIF_DIR=$HOME/Pictures/jifs
