@@ -122,6 +122,9 @@ join-lines() {
   done
 }
 
+# human git diffs (ignore commonly checked in generated files)
+alias -g .human="-- ':(exclude)*gqlgen*' ':(exclude)go.sum' ':(exclude)*.bzl' ':(exclude)**/testdata/**' ':(exclude)*.gen.go'"
+
 () {
   local c
   for c in $@; do
