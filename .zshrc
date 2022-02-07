@@ -71,6 +71,7 @@ plugins=(
   fasd
   fzf
   git
+  golang
   history-substring-search
   ripgrep
   themes
