@@ -300,3 +300,4 @@ Backups/
 notes/
 .gore/
 .vim/coc-settings.json
+.swiftpm/
