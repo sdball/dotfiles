@@ -69,6 +69,7 @@ ZSH_THEME="chorn"
 plugins=(
   fancy-ctrl-z
   fasd
+  fd
   fzf
   git
   golang
