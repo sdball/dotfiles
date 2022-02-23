@@ -301,3 +301,4 @@ notes/
 .gore/
 .vim/coc-settings.json
 .swiftpm/
+.jira.d/
