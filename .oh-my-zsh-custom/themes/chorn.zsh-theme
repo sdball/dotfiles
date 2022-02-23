@@ -265,8 +265,8 @@ prompt_chorn_setup() {
 
   if ! typeset -p _prompt_git_theme >&/dev/null ; then
     typeset -g -A _prompt_git_theme=(
-      prefix '('
-      suffix ')'
+      prefix '%F{3}('
+      suffix '%F{3})'
       separator '|'
       branch '%{$fg_bold[magenta]%}'
       clean '%{$fg_bold[green]%}%{✔%G%}'
