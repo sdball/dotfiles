@@ -82,7 +82,7 @@ case "$_PURPOSE" in
     plugins+=(mix)
     ;;
   work)
-    plugins+=(jira)
+    plugins+=()
 esac
 
 source $ZSH/oh-my-zsh.sh
