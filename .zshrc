@@ -74,6 +74,7 @@ plugins=(
   git
   golang
   history-substring-search
+  rbenv
   ripgrep
   themes
 )
