@@ -187,6 +187,14 @@ _async_prompt_language() {
   echo "_prompt_languages[${_language}]=\"%F{6}${_language}-$(_language_version "$_language")\""
 }
 #-----------------------------------------------------------------------------
+_prompt_vpn() {
+  vpn-state
+}
+
+_async_prompt_vpn() {
+  echo "_prompt[vpn]=\"$(_prompt_vpn)\""
+}
+#-----------------------------------------------------------------------------
 _async_prompt_git() {
   cd -q "$1"
   echo "_prompt[git]=\"$(_prompt_git)\""
@@ -209,6 +217,7 @@ _async_prompt_callback() {
 _chorn_prompt_precmd() {
   async_job 'prompt_worker' _async_prompt_git "$PWD"
   async_job 'prompt_worker' _async_prompt_gitconfigs "$PWD"
+  async_job 'prompt_worker' _async_prompt_vpn
 
   for _language in ${_preferred_languages[@]} ; do
     async_job 'prompt_worker' _async_prompt_language "$PWD" "$_language"
@@ -218,6 +227,7 @@ _chorn_prompt_precmd() {
 _chorn_left_prompt() {
   local -a _line1=()
   local -a _line2=()
+  local -a _line3=()
 
   _prompt[time]="$(_prompt_time)"
   _prompt[user]="$(_prompt_user)"
@@ -232,10 +242,13 @@ _chorn_left_prompt() {
     [[ -n "${_prompt[$piece]}" ]] && _line1+=("${_prompt[$piece]}")
   done
 
-  [[ -n "${_prompt[vpn]}" ]] && _line1+=("${_prompt[vpn]}")
+  if [[ "$_PURPOSE" == "work" ]]; then
+    _line2+="› vpn:"
+    [[ -n "${_prompt[vpn]}" ]] && _line2+=("${_prompt[vpn]}")
+  fi
 
   for piece in time user host path ; do
-    [[ -n "${_prompt[$piece]}" ]] && _line2+=("${_prompt[$piece]}")
+    [[ -n "${_prompt[$piece]}" ]] && _line3+=("${_prompt[$piece]}")
   done
 
   if (( ${#_line1[@]} > 0 )) ; then
@@ -244,8 +257,13 @@ _chorn_left_prompt() {
     _prompt_reset
   fi
 
+  if (( ${#_line2[@]} > 0 )) ; then
+    _prompt_reset
+    print "${_line2[@]}"
+  fi
+
   _prompt_reset
-  print -n "${_line2[@]}"
+  print -n "${_line3[@]}"
   _prompt_lastexit # Like this or $? is wrong
   _prompt_reset
   print -n ' '
