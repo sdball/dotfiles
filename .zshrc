@@ -75,6 +75,7 @@ plugins=(
   golang
   history-substring-search
   rbenv
+  minikube
   ripgrep
   themes
 )
