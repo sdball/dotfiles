@@ -8,6 +8,9 @@ IRB.conf[:PROMPT][:CUSTOM] = {
 IRB.conf[:PROMPT_MODE] = :CUSTOM
 IRB.conf[:AUTO_INDENT] = true
 
+# sadly the new autocomplete is not good
+IRB.conf[:USE_AUTOCOMPLETE] = false
+
 # irb history
 IRB.conf[:EVAL_HISTORY] = 1000
 IRB.conf[:SAVE_HISTORY] = 1000
