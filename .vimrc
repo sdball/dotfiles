@@ -574,8 +574,8 @@ function! RunTests(filename, line_number)
         exec ':!' . t:command . ' ' . a:filename
       end
     elseif a:filename =~ "\.go$"
-      let t:sdball_go_test_path=system("dirname " . t:sdb_test_file_fullpath . " | rg '^.*src/' -r '' | tr -d '\n'")
-      exec ':!(go test -v --json ' . t:sdball_go_test_path . " | gotestfmt --hide all)"
+      let t:sdball_go_test_path=system("dirname " . t:sdb_test_file_fullpath . ' | tr -d "\n"')
+      exec ':!(go test -v --json "' . t:sdball_go_test_path . '" | gotestfmt)'
     else
       exec ':!' . t:command . ' ' . a:filename
     end
