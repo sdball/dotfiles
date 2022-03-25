@@ -7,7 +7,7 @@ alias mbrew="arch -arm64 /opt/homebrew/bin/brew"
 
 # lots lifted/transformed from https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/singlechar
 
-alias y='rg -l'   # List files matching ripgrep search
+alias y='rg -il'   # List files matching ripgrep search
 alias n='rg -ilv' # Inverse of y
 
 alias w='echo >'  # Write args to file
