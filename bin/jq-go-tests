@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-jq -r '.Output // ""' | rg -v "=== RUN" | sed -e '/^$/d' -e "s/--- PASS/✅/" -e "s/--- FAIL/❌/"
+jq -r '.Output // ""' | rg -v "=== RUN" | sed -e '/^$/d' -e "s/--- PASS:/✅/" -e "s/--- FAIL/❌/"
