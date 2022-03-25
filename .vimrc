@@ -20,7 +20,7 @@ Plug 'AndrewRadev/switch.vim' " plugin to switch segments of text with predefine
 if !empty(glob('~/.config/base16-shell/*'))
   Plug 'chriskempson/base16-vim'
 endif
-Plug 'conormcd/matchindent.vim' " try to match indent style with the current file
+Plug 'ciaranm/detectindent'
 Plug 'dense-analysis/ale'
 Plug 'elixir-editors/vim-elixir'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
