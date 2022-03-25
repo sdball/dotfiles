@@ -48,6 +48,8 @@ Plug 'tpope/vim-sensible' " sensible defaults
 Plug 'tpope/vim-surround' " match matching tags and syntax
 Plug 'tpope/vim-unimpaired' " handy bracket mappings
 Plug 'wellle/targets.vim' " give vim more targets to operate on
+
+Plug 'honza/vim-snippets'
 call plug#end()
 " -- End Plugins -------------------------------------------------------------
 
