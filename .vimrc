@@ -24,6 +24,7 @@ Plug 'ciaranm/detectindent'
 Plug 'dense-analysis/ale'
 Plug 'elixir-editors/vim-elixir'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'honza/vim-snippets' " vim snippets to use from coc-snippets
 Plug 'jiangmiao/auto-pairs' " nice autoinserting matching pairs
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy finder
 Plug 'junegunn/fzf.vim' " fuzzy finder
@@ -48,10 +49,11 @@ Plug 'tpope/vim-sensible' " sensible defaults
 Plug 'tpope/vim-surround' " match matching tags and syntax
 Plug 'tpope/vim-unimpaired' " handy bracket mappings
 Plug 'wellle/targets.vim' " give vim more targets to operate on
-
-Plug 'honza/vim-snippets'
+Plug 'z0mbix/vim-shfmt', { 'for': 'sh' } " format sh with shfmt
 call plug#end()
 " -- End Plugins -------------------------------------------------------------
+
+let g:shfmt_fmt_on_save = 1
 
 " Machine local setup
 if filereadable(expand("~/work/vimrc"))
