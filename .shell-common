@@ -151,10 +151,11 @@ marked() {
 }
 
 readme() {
-  if [[ -e /Applications/Marked\ 2.app ]]; then
-    marked "README.md" || marked "README.markdown" || echo "Markdown README not found";
+  _readme=$(fd readme -d 1)
+  if command -v glow 2>/dev/null 1>/dev/null; then
+    glow "$_readme"
   else
-    less "README.md" || less "README.markdown" || echo "Markdown README not found";
+    less "$_readme"
   fi
 }
 
