@@ -579,7 +579,11 @@ function! RunTests(filename, line_number)
       end
     elseif a:filename =~ "\.go$"
       let t:sdball_go_test_path=system("dirname " . t:sdb_test_file_fullpath . ' | tr -d "\n"')
-      exec ':!(cd "' . t:sdball_go_test_path . '" && go test -v --json | jq-go-tests)'
+      if exists("g:run_all_tests")
+        exec ':!(cd "' . t:sdball_go_test_path . '" && go test -v --json | jq-go-tests)'
+      else
+        exec ':!(cd "' . t:sdball_go_test_path . '" && go test -v --json "' . a:filename . '" | jq-go-tests)'
+      end
     else
       exec ':!' . t:command . ' ' . a:filename
     end
