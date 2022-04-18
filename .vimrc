@@ -53,8 +53,6 @@ Plug 'z0mbix/vim-shfmt', { 'for': 'sh' } " format sh with shfmt
 call plug#end()
 " -- End Plugins -------------------------------------------------------------
 
-let g:shfmt_fmt_on_save = 1
-
 " Machine local setup
 if filereadable(expand("~/work/vimrc"))
   source ~/work/vimrc
