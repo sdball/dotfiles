@@ -73,9 +73,16 @@ if command -v exa >/dev/null; then
 fi
 
 # create and open a new directory
+# with special handling of github clones
 function mkd() {
-	mkdir -p "$@" && cd "$@"
+  if [[ $# -eq 1 ]] && [[ $1 == "git@github.com"* ]] && [[ $1 == *".git" ]]; then
+    dir=$(echo "$1" | awk -F: '{print $2}' | awk -F/ '{print $1}')
+  else
+    dir=$*
+  fi
+  mkdir -p "$dir" && cd "$dir" || exit 1
 }
+
 
 # size a file for a directory
 function fs() {
