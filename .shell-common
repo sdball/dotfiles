@@ -2,6 +2,8 @@
 # aliases, functions, and shell tool setup that isn't shell specific
 # --
 
+# -- aliases -------------------------------------------------------
+
 alias ibrew="arch -x86_64 /usr/local/bin/brew"
 alias mbrew="arch -arm64 /opt/homebrew/bin/brew"
 
@@ -47,6 +49,10 @@ alias rtv=ripgrep-to-vim
 
 # cd directories
 alias f.c='f. | read -r f && cd "$(dirname "$f")"'
+
+alias fde='fd --extension'
+
+# -- functions -----------------------------------------------------
 
 # like pgrep but more
 pg() {
