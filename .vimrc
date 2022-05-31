@@ -580,7 +580,7 @@ function! RunTests(filename, line_number)
         exec ':!(cd "' . t:sdball_go_test_path . '" && go test -v --json | jq-go-tests)'
       else
         let basename=system("echo -n `basename " . a:filename . "`")
-        exec ':!(cd "' . t:sdball_go_test_path . '" && go test -v --json "' . basename . '" | jq-go-tests)'
+        exec ':!(cd "' . t:sdball_go_test_path . '" && go test -v --json | jq-go-tests)'
       end
     else
       exec ':!' . t:command . ' ' . a:filename
