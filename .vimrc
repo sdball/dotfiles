@@ -25,7 +25,6 @@ Plug 'dense-analysis/ale'
 Plug 'elixir-editors/vim-elixir'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'honza/vim-snippets' " vim snippets to use from coc-snippets
-Plug 'jiangmiao/auto-pairs' " nice autoinserting matching pairs
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy finder
 Plug 'junegunn/fzf.vim' " fuzzy finder
 Plug 'junegunn/vim-easy-align' " align text (search for EasyAlign in vimrc)
