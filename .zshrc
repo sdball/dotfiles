@@ -1,8 +1,4 @@
-export PATH=/bin:$PATH
 [[ -s $HOME/.local_zshrc ]] && source $HOME/.local_zshrc
-[[ -s $HOME/.shell-common ]] && source $HOME/.shell-common
-[[ -s $HOME/.shell-path ]] && source $HOME/.shell-path
-
 export ZSH="$HOME/.oh-my-zsh" export ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
 ZSH_THEME="chorn"
 
@@ -115,6 +111,11 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+export PATH=/bin:$PATH
+[[ -s $HOME/.local_zshrc ]] && source $HOME/.local_zshrc
+[[ -s $HOME/.shell-path ]] && source $HOME/.shell-path
+[[ -s $HOME/.shell-common ]] && source $HOME/.shell-common
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
