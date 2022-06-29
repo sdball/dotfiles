@@ -71,9 +71,10 @@ plugins=(
   git
   golang
   history-substring-search
-  rbenv
   minikube
+  rbenv
   ripgrep
+  safe-paste
   themes
 )
 case "$_PURPOSE" in
