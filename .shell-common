@@ -21,7 +21,7 @@ alias a:='cat >>' # Append STDIN to file
 alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
 
 # cd to interactively fuzzy searched subdirectory
-alias D.='cd "$(fd --type d | fzf)"'
+alias Ds='cd "$(fd --type d | fzf)"'
 
 # cd to GOPATH
 alias gopath="cd "$GOPATH""
