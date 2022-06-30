@@ -59,10 +59,16 @@ paths() {
 main() {
   local pointer=$1
   local find_this=$2
+  local command_path
+
+  if ! command_path=$(command -v "$find_this"); then
+    die "$find_this not found in PATHs"
+  fi
+
   if [[ "$pointer" -eq 1 ]]; then
-    paths | rg --passthru "($(dirname "$(command -v "$find_this")"))" --replace "\$1 <--------- $find_this found here"
+    paths | rg --passthru "($(dirname "$command_path"))" --replace "\$1 <--------- $find_this found here"
   else
-    paths | rg --passthru "($(dirname "$(command -v "$find_this")"))"
+    paths | rg --passthru "($(dirname "$command_path"))"
   fi
 }
 
