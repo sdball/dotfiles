@@ -17,10 +17,10 @@ alias a='echo >>' # Append args to file
 alias w:='cat >'  # Write STDIN to file
 alias a:='cat >>' # Append STDIN to file
 
-# cd to interactively fuzzy searched frequent directory
-alias D='cd "$(fasd -dl "$1" | fzf --tac +m)"'
+# cd to interactively fuzzy search frequent directory
+alias D='cd "$(fasd -dl | fzf --tac +m)"'
 
-# cd to interactively fuzzy searched subdirectory
+# cd to interactively fuzzy search subdirectory
 alias Ds='cd "$(fd --type d | fzf)"'
 
 # cd to GOPATH
