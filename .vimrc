@@ -509,8 +509,13 @@ function! RunTests(filename, line_number)
         end
     elseif a:filename =~ "\.[jt]s$"
       if exists("t:direct_command") && t:direct_command
-        exec ":!" . t:command . " " . t:sdb_test_file_fullpath
-        return
+        if exists("t:nopath") && t:nopath
+          exec ":!" . t:command
+          return
+        else
+          exec ":!" . t:command . " " . t:sdb_test_file_fullpath
+          return
+        end
       end
       " Jest
       :silent !command -v node_modules/.bin/jest >/dev/null
