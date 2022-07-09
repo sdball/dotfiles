@@ -1,109 +1,75 @@
 # --------------------------------------------------------------------------
-_safe_add_to_path() {
+_is_in_path() {
   local _dir="$1"
-  PATH="${PATH#$_dir:}"
-  PATH="${PATH/:$_dir/}"
-  [[ -d "$_dir" ]] && PATH="${_dir}:$PATH"
-  export PATH
+  local _path="$2"
+
+  [[ -z "${_path}" ]] && return 1
+  [[ -z "${_dir}" ]] && return 0
+  [[ -d "${_dir}" ]] || return 0
+  [[ "^${_dir}$" =~ ${_path} ]] && return 0
+  [[ "^${_dir}:" =~ ${_path} ]] && return 0
+  [[ ":${_dir}$" =~ ${_path} ]] && return 0
+  [[ ":${_dir}:" =~ ${_path} ]] && return 0
+
+  return 1
 }
 # --------------------------------------------------------------------------
-_clean_path() {
-  local -a _found=()
+_add_to_path() {
+  local _dir="$1"
+  local _path="$2"
 
-  while read -d: -r _dir ; do
-    if [[ -d "$_dir" ]] ; then
-      local _dupe=0
+  if _is_in_path "${_dir}" "${_path}"; then
+    echo "${_path}"
+    return
+  fi
 
-      for _check in ${_found[@]} ; do
-        [[ "$_check" == "$_dir" ]] && _dupe=1
-      done
+  _path="${_path}:${_dir}"
+  _path="${_path%%:}"
+  _path="${_path##:}"
 
-      [[ "$_dupe" -eq 1 ]] && continue
-
-      _found+=("$_dir")
-    fi
-  done < <(echo "$PATH")
-
-
-  echo "$(IFS=:; echo "${_found[*]}")"
+  echo "${_path}"
 }
 # --------------------------------------------------------------------------
-# This adds systems paths, my list of sane paths, private/work paths in my preferred order.
-
-# find /etc/paths /etc/paths.d "$HOME/.shell-paths" "$HOME/.shell-prv-path" -type f -print0 2>/dev/null | xargs -0 cat | while read dir ; do
-find /etc/paths /etc/paths.d -type f -print0 2>/dev/null | xargs -0 cat | while read dir ; do
-  _safe_add_to_path "${dir}"
-done
-
-for dir in \
+declare _newpath=""
+# --------------------------------------------------------------------------
+for _dir in \
+  $HOME/tbin \
+  $HOME/bin \
+  $HOME/{.cargo,.goenv,.rbenv,.pyenv}/{bin,shims} \
+  $HOME/.go/bin \
+  /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin \
   /Applications/VMware\ Fusion.app/Contents/Library \
+  /Applications/VMware\ Fusion.app/Contents/Public \
   /Applications/VirtualBox.app/Contents/MacOS \
   /Applications/Postgres.app/Contents/Versions/latest/bin \
+  /usr/local/MacGPG2/bin \
+  /Applications/Wireshark.app/Contents/MacOS \
+  /usr/local/vfuse/bin \
+  $HOME/.dotnet/tools/Library/Apple/usr/bin \
+  /{usr,opt,Apps}/{local,X11,opt,homebrew}/{bin,sbin} \
   /usr/local/opt/openssl/bin \
-  /usr/local/opt/sqlite/bin \
-  /usr/local/sbin \
+  /{opt,usr}/{bin,sbin,libexec} \
   /{bin,sbin} \
-  /{usr,opt}/{bin,sbin} \
-  /{usr,opt,Apps}/{local,X11,opt}/{bin,sbin} \
-  /{usr,opt}/local/heroku/bin \
-  /usr/local/opt/ncurses/bin \
-  $HOME/.npm-global/bin \
-  $HOME/.yarn/bin \
-  $HOME/.config/yarn/global/node_modules/.bin \
-  $HOME/.asdf/{bin,shims} \
-  $HOME/.go/bin \
-  $HOME/.gopath/bin \
-  $HOME/.cargo/bin \
-  $HOME/bin \
-  $HOME/local_bin
-do
-  _safe_add_to_path "$dir"
+  /Library/Frameworks/Mono.framework/Versions/Current/Commands; do
+  _newpath="$(_add_to_path "${_dir}" "${_newpath}")"
 done
 
+while read -r _dir; do
+  _newpath="$(_add_to_path "${_dir}" "${_newpath}")"
+done < <(find /etc/paths /etc/paths.d -type f -print0 2> /dev/null | xargs -0 cat 2> /dev/null)
+
+export PATH="${_newpath}"
 # --------------------------------------------------------------------------
-for _version_manager in rbenv nodenv ; do
-  _safe_add_to_path "$HOME/.${_version_manager}/bin"
-  _safe_add_to_path "$HOME/.${_version_manager}/shims"
-
-  if declare -f "${_version_manager}" >& /dev/null ; then
-    continue
-  fi
-
-  _cmd="$(command -v "${_version_manager}")"
-
-  if [[ -z "$_cmd" ]] ; then
-    continue
-  fi
-
-  eval "export __${_version_manager}=${_cmd}"
+for _version_manager in rbenv pyenv goenv; do
+  command -v "${_version_manager}" >&/dev/null && eval "$("${_version_manager}" init -)"
 done
-
 # --------------------------------------------------------------------------
-#if command -v pyenv >&/dev/null; then
-#  eval "$(pyenv virtualenv-init -)"
-#fi
+if command -v fnm >&/dev/null; then
+  eval "$(fnm env --use-on-cd)"
+fi
 # --------------------------------------------------------------------------
-
-if [[ -e "$HOME/.rvm/scripts/rvm" ]]; then
-  source "$HOME/.rvm/scripts/rvm"
-fi
-
-
-if [[ -e "$HOME/.fnm" ]]; then
-  _safe_add_to_path "$HOME/.fnm"
-fi
-
-if command -v fnm >&/dev/null ; then
-  eval "$(fnm env --multi)"
-elif [[ -s "$HOME/.nvm" ]] ; then
-  export NVM_DIR="$HOME/.nvm"
-  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
-fi
-
-_safe_add_to_path "/usr/local/opt/openjdk/bin"
-
-# --------------------------------------------------------------------------
-# This will clean up any duplicate path entries created by sloppy dependencies
-export PATH=$(_clean_path)
+# if [[ -s "$HOME/.asdf/asdf.sh" ]]; then
+#   source "$HOME/.asdf/asdf.sh"
+# fi
 # --------------------------------------------------------------------------
 # vim: set syntax=sh ft=sh sw=2 ts=2 expandtab:
