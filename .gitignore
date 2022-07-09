@@ -178,6 +178,7 @@ bin/rebar
 .puma-dev
 .cargo
 .gopath
+gopath/
 .plexht
 .aws
 .rediscli_history
@@ -281,3 +282,15 @@ NOTES.md
 .clojure*
 .m2/
 .compose-data/
+experiments/
+.config/gh/
+.config/iterm2/
+.gist
+.gnupg_pre_2.1/
+.gore/
+.kube/
+.minikube/
+.solargraph/
+.terraform.d/
+.zsh_sessions/
+
