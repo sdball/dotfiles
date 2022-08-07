@@ -1,3 +1,7 @@
+# Elixir Livebook
+export LIVEBOOK_HOME=$HOME/Documents/learning/livebook/
+
+# go
 export GOPATH="$HOME/gopath"
 
 # jif
