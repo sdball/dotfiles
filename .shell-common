@@ -257,7 +257,7 @@ npm-dev-dependencies() {
 }
 
 external-ip-address() {
-	curl -s https://api.duckduckgo.com/\?q=ip+address\&format=json | jq -r .Answer
+	curl -s https://duckduckgo.com/\?q\=ip+address\&format\=json | jq -r .Answer | rg -o "\d+\.\d+\.\d+\.\d+" | tr -d "\n"
 }
 
 random-md5() {
