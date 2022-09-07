@@ -106,6 +106,12 @@ _language_version() {
       ruby --version | awk '{print $2}'
       ;;
     node)
+      if command -v fnm >&/dev/null ; then
+        eval "$(fnm env --use-on-cd)"
+      elif [[ -s "$HOME/.nvm" ]] ; then
+        export NVM_DIR="$HOME/.nvm"
+        [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+      fi
       node --version | sed -e 's/^v//'
       ;;
     python)

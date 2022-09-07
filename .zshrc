@@ -1,10 +1,3 @@
-if command -v fnm >&/dev/null ; then
-  eval "$(fnm env --use-on-cd)"
-elif [[ -s "$HOME/.nvm" ]] ; then
-  export NVM_DIR="$HOME/.nvm"
-  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
-fi
-
 [[ -s $HOME/.local_zshrc ]] && source $HOME/.local_zshrc
 export ZSH="$HOME/.oh-my-zsh" export ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
 ZSH_THEME="chorn"
