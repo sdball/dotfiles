@@ -50,6 +50,7 @@ for dir in \
   /opt/homebrew/{bin,sbin} \
   /opt/homebrew/opt/ruby/bin \
   /opt/homebrew/lib/ruby/gems/3.0.0/bin \
+  /usr/local/opt/python@3.10/libexec/bin \
   $HOME/.npm-global/bin \
   $HOME/.yarn/bin \
   $HOME/.config/yarn/global/node_modules/.bin \
