@@ -304,3 +304,10 @@ notes/
 .jira.d/
 .lima/
 bitbucket/
+.nuget/
+.azure/
+.azure-functions-core-tools/
+.aspnet/
+.azurefunctions/
+.dotnet/
+.templateengine/
