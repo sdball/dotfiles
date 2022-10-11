@@ -41,6 +41,12 @@ alias f.="fzf --cycle --ansi --preview-window 'right:60%' --preview 'bat --color
 alias b.='f. | read -r f && bat "$f"'
 alias g.='f. | read -r f && glow "$f"'
 
+if [[ "$SHELL" =~ "zsh" ]]; then
+	alias -g f.bat='f. | read -r f && bat "$f"' 2>/dev/null || echo >&2 -e "BASH cannot support f.bat global alias"
+	alias -g f.glow='f. | read -r f && glow "$f"' 2>/dev/null || echo >&2 -e "BASH cannot support f.glow global alias"
+	alias -g f.vim='f. | read -r f && vim "$f"' 2>/dev/null || echo >&2 -e "BASH cannot support f.vim global alias"
+fi
+
 # vim files
 alias v.='f. | read -r f && vim "$f"'
 alias vs='vim -S /tmp/vim-session'
