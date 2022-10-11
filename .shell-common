@@ -35,7 +35,7 @@ alias s="git status"
 alias be="bundle exec"
 
 # preview files
-alias f.="fzf --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
+alias f.="fzf --cycle --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 
 # read files
 alias b.='f. | read -r f && bat "$f"'
