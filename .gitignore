@@ -311,3 +311,4 @@ bitbucket/
 .azurefunctions/
 .dotnet/
 .templateengine/
+.elixir-ls/
