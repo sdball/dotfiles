@@ -1,4 +1,4 @@
-elixir 1.14
+elixir 1.14.1
 erlang 25.0.4
 golang 1.19.1
 ruby 3.1.2
