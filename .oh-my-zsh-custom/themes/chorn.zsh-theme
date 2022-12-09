@@ -107,7 +107,11 @@ _language_version() {
       ;;
     node)
       if command -v fnm >&/dev/null ; then
-        eval "$(fnm env --use-on-cd)"
+        fnm_result=$(fnm use)
+        if [[ -n "$fnm_result" ]]; then
+          echo "$fnm_result" | sed -e 's/Using Node v//'
+          return 0
+        fi
       elif [[ -s "$HOME/.nvm" ]] ; then
         export NVM_DIR="$HOME/.nvm"
         [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
