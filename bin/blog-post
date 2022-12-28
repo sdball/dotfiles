@@ -3,11 +3,11 @@
 function usage() {
   echo "Usage: blog-post blog post title goes here"
   echo
-  echo "blog-post will create a dated slug for the title in the same directory"
+  echo "blog-post will create a draft slug for the title in the same directory"
   echo
   echo "e.g."
   echo
-  echo "blog-post title goes here -> 2022-01-01-title-goes-here.md"
+  echo "blog-post title goes here -- creates --> title-goes-here.md"
   echo
   exit 0
 }
@@ -18,10 +18,9 @@ case "$@" in
   -h|help) usage ;;
 esac
 
-filename="$(date +"%F")-$(slug "$@").md"
-touch "$filename"
-
+filename="$(slug "$@").md"
 cat <<END > "$filename"
+Draft: Yes
 Tags: <tags go here>
 
 # $@
