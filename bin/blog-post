@@ -18,7 +18,7 @@ case "$@" in
   -h|help) usage ;;
 esac
 
-filename="$(slug "$@").md"
+filename="$(date +"%F")-$(slug "$@").md"
 cat <<END > "$filename"
 Draft: Yes
 Tags: <tags go here>
