@@ -39,6 +39,7 @@ for dir in \
   /Applications/VMware\ Fusion.app/Contents/Library \
   /Applications/VirtualBox.app/Contents/MacOS \
   /Applications/Postgres.app/Contents/Versions/latest/bin \
+  /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin \
   /usr/local/opt/openssl/bin \
   /usr/local/opt/sqlite/bin \
   /usr/local/sbin \
