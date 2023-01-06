@@ -1,0 +1,20 @@
+theme="monokai_pro_ristretto"
+
+[editor]
+mouse = false
+bufferline = "never"
+line-number = "absolute"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[keys.normal]
+C-p = "file_picker"
+g = { a = "code_action" }
+C-h = "jump_view_left"
+C-j = "jump_view_down"
+C-k = "jump_view_up"
+C-l = "jump_view_right"
+"," = { f = ":format" }
