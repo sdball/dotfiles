@@ -507,3 +507,4 @@ function br {
     fi
 }
 
+alias vim="echo use helix"
