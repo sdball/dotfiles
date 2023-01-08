@@ -507,4 +507,5 @@ function br {
     fi
 }
 
-alias vim="echo use helix"
+alias vim="echo use hx"
+alias x="hx"
