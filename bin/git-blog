@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+usage() {
+  cat <<EOF
+Usage: $(basename "${BASH_SOURCE[0]}") COMMIT_HASH
+
+Transforms the given COMMIT_HASH into a blog post.
+
+Available options:
+
+-h, --help      Print this help and exit
+EOF
+  exit
+}
+
+
+msg() {
+  echo >&2 -e "${1-}"
+}
+
+die() {
+  local msg=$1
+  local code=${2-1} # default exit status 1
+  msg "$msg"
+  exit "$code"
+}
+
+parse_params() {
+  while :; do
+    case "${1-}" in
+    -h | --help) usage ;;
+    -?*) die "Unknown option: $1" ;;
+    *) break ;;
+    esac
+    shift
+  done
+
+  args=("$@")
+  if [[ ${#args[@]} -eq 0 ]]; then
+    commit=$(latest-commit)
+  else
+    commit=$(git show "${args[0]}" --no-patch --format=%H)
+  fi
+
+  return 0
+}
+
+latest-commit() {
+  git show --no-patch --format=%H
+}
+
+blog-commit() {
+  commit=$1
+  git show "$commit" --format="Draft: yes%nDate: %ai%n%n# %s - $(repo)%n%n%b%n%x60%x60%x60diff%nZZZZZ" --patch | rg -v "No newline at end of file" | rg -v -U "ZZZZZ\n\n"
+  echo '```'
+  echo
+  commit-link "$1"
+}
+
+commit-link() {
+  commit=$1
+  echo "[$commit on $(repo)]($(repo-link)/commit/$commit)"
+}
+
+blog-file() {
+  commit=$1
+  git show "$commit" --no-patch --format="%f.md"
+}
+
+repo() {
+  git remote -v | rg fetch | awk -F: '{print $2}' | awk -F. '{print $1}'
+}
+
+repo-link() {
+  git remote -v | rg fetch | awk -F: '{print $2}' | awk -F. '{print "https://github.com/" $1}'
+}
+
+main() {
+  year=$(date +%Y)
+  parse_params "$@"
+  contents=$(blog-commit "$commit")
+  filename=$(blog-file "$commit" | tr "[:upper:]" "[:lower:]")
+  mkdir -p "$BLOG_DIR$year"
+  msg "Writing to $BLOG_DIR$year/$filename"
+  echo "$contents" > "$BLOG_DIR$year/$filename"
+}
+
+main "$@"
