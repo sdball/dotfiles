@@ -16,3 +16,4 @@ C-e = "file_picker_in_current_directory"
 
 [keys.insert]
 C-d = ["normal_mode", ":insert-output date +'%Y-%m-%d %H:%M:%S %Z'", "collapse_selection", "insert_mode"]
+C-c = ["normal_mode", ":insert-output echo '```'", "collapse_selection", "insert_mode"]
