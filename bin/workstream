@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+BRAIN_DIR="$HOME/Documents/brain"
+
+today() {
+  date +%Y-%m-%d
+}
+
+ensure_directory() {
+  mkdir -p "$1"
+}
+
+ensure_file() {
+  if [[ ! -s "$1" ]]; then
+    printf "%s\n\n" "# $(today) -- workstream -- $topic" > "$1"
+  fi
+}
+
+edit_worklog() {
+  hx "$1"
+}
+
+main() {
+  cd "$BRAIN_DIR" || exit 1
+  existing_topics=$(fd . workstreams | ruby -ne 'puts $_.split(/\d{4}-\d{2}-\d{2}-/).last.sub(".md", "").chomp.gsub("-", " ")' | sort -u)
+  topic=$(printf "%s\nNEW TOPIC" "$existing_topics" | gum filter)
+  if [[ "$topic" == "NEW TOPIC" ]]; then
+    topic=$(gum input --placeholder "topic")
+  fi
+  slug=$(echo "$topic" | tr " " "-")
+  day=$(today)
+  ensure_directory "$BRAIN_DIR/workstreams"
+  ensure_file "$BRAIN_DIR/workstreams/$day-$slug.md"
+  edit_file "$BRAIN_DIR/workstreams/$day-$slug.md"
+}
+
+main "$@"
