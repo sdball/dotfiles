@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+(
+  cd "$BLOG_DIR" || exit 123
+  to_publish=$(rg -l "Draft: yes" | fzf)
+  sed -i '' -e '/Draft: yes/d' "$to_publish"
+)
