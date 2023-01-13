@@ -28,9 +28,11 @@ die() {
 }
 
 parse_params() {
+  draft="Draft: yes%n"
   while :; do
     case "${1-}" in
     -h | --help) usage ;;
+    -p | --publish) draft="" ;;
     -?*) die "Unknown option: $1" ;;
     *) break ;;
     esac
@@ -51,12 +53,45 @@ latest-commit() {
   git show --no-patch --format=%H
 }
 
+added-files() {
+  commit=$1
+  new_files=$(git show "$commit" --format="" --name-status | rg "^A" | awk '{print $2}')
+
+  if [[ -n "$new_files" ]]; then
+    echo
+    echo "## added files"
+    echo "$new_files" | while read -r f; do
+      echo
+      echo "### $f"
+      echo
+      echo '```'
+      cat "$f"
+      echo '```'
+    done
+  fi  
+}
+
+modified-files() {
+  commit=$1
+  modified_files=$(git show "$commit" --format="" --name-status | rg "^M" | awk '{print $2}')
+
+  if [[ -n "$modified_files" ]]; then
+    echo
+    echo "## modified files"
+    echo "$modified_files" | while read -r f; do
+      echo
+      echo "### $f"
+      echo
+      echo '```diff'
+      git show "$commit" --format="" --patch "$f"
+      echo '```'
+    done
+  fi  
+}
+
 blog-commit() {
   commit=$1
-  git show "$commit" --format="Draft: yes%nDate: %ai%n%n# %s - $(repo)%n%n%b%n%x60%x60%x60diff%nZZZZZ" --patch | rg -v "No newline at end of file" | rg -v -U "ZZZZZ\n\n"
-  echo '```'
-  echo
-  commit-link "$1"
+  git show "$commit" --format="${draft}Date: %ai%n%n# %s - $(repo)%n%n%b%n$(commit-link "$commit")%n$(added-files "$commit")%n$(modified-files "$commit")" --no-patch | rg -v "No newline at end of file"
 }
 
 commit-link() {
