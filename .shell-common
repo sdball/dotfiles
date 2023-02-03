@@ -9,9 +9,6 @@ alias mbrew="arch -arm64 /opt/homebrew/bin/brew"
 
 # lots lifted/transformed from https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/singlechar
 
-alias y='rg -il'  # List files matching ripgrep search
-alias n='rg -ilv' # Inverse of y
-
 alias w='echo >'  # Write args to file
 alias a='echo >>' # Append args to file
 alias w:='cat >'  # Write STDIN to file
@@ -60,6 +57,22 @@ alias f.c='f. | read -r f && cd "$(dirname "$f")"'
 alias fde='fd --extension'
 
 # -- functions -----------------------------------------------------
+
+# List files matching ripgrep search
+y() {
+  rg -il "$*" | f.
+}
+
+# List files that don't match
+n() {
+  rg -ilv "$*" | f.
+}
+
+# List files matching ripgrep search and open selected file in hx
+hy() {
+  selected=$(y "$*")
+  [[ -n "$selected" ]] && hx "$selected"
+}
 
 # like pgrep but more
 pg() {
