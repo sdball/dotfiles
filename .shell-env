@@ -28,3 +28,5 @@ export ACK_COLOR_MATCH='red'
 export CURL_TIMING="-wdnslookup: %{time_namelookup} | connect: %{time_connect} | appconnect: %{time_appconnect} | pretransfer: %{time_pretransfer} | starttransfer: %{time_starttransfer} | total: %{time_total} | size: %{size_download}"
 
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
+
+export ERL_AFLAGS="-kernel shell_history enabled"
