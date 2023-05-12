@@ -315,3 +315,11 @@ bitbucket/
 .fly/
 .pack/
 .config/SmartSetMasterErgo (Mac)/
+.IdentityService/
+.config/configstore/
+.config/wireshark/
+.config/Microsoft\\VisualStudio Services/
+.logseq/
+.microsoft/
+.mitmproxy/
+.mono/
