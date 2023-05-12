@@ -12,7 +12,7 @@ C-k = "jump_view_up"
 C-l = "jump_view_right"
 C-f = ":format"
 C-r = ":reflow 80"
-C-e = "file_picker_in_current_directory"
+C-e = "file_picker_in_current_buffer_directory"
 
 [keys.insert]
 C-d = ["normal_mode", ":insert-output date +'%Y-%m-%d'", "collapse_selection", "insert_mode"]
