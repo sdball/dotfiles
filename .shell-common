@@ -53,17 +53,17 @@ alias fde='fd --extension'
 
 # List files matching ripgrep search
 y() {
-  rg -il "$*" | f.
+  rg -il "$*"
 }
 
 # List files that don't match
 n() {
-  rg -ilv "$*" | f.
+  rg -ilv "$*"
 }
 
 # List files matching ripgrep search and open selected file in hx
 hy() {
-  selected=$(y "$*")
+  selected=$(y | f. | "$*")
   [[ -n "$selected" ]] && hx "$selected"
 }
 
