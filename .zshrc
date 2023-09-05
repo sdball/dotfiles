@@ -141,3 +141,5 @@ alias -g .human="-- ':(exclude)*gqlgen*' ':(exclude)go.sum' ':(exclude)*.bzl' ':
     eval "bindkey '^g^$c' fzf-g$c-widget"
   done
 } f b t r h s
+
+eval "$(atuin init zsh)"
