@@ -63,7 +63,6 @@ ZSH_THEME="chorn"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  asdf
   copypath
   fancy-ctrl-z
   fasd
@@ -143,3 +142,36 @@ alias -g .human="-- ':(exclude)*gqlgen*' ':(exclude)go.sum' ':(exclude)*.bzl' ':
 } f b t r h s
 
 eval "$(atuin init zsh)"
+
+export RTX_SHELL=zsh
+
+rtx() {
+  local command
+  command="${1:-}"
+  if [ "$#" = 0 ]; then
+    command rtx
+    return
+  fi
+  shift
+
+  case "$command" in
+  deactivate|shell)
+    eval "$(command rtx "$command" "$@")"
+    ;;
+  *)
+    command rtx "$command" "$@"
+    ;;
+  esac
+}
+
+_rtx_hook() {
+  eval "$(rtx hook-env -s zsh)";
+}
+typeset -ag precmd_functions;
+if [[ -z "${precmd_functions[(r)_rtx_hook]+1}" ]]; then
+  precmd_functions=( _rtx_hook ${precmd_functions[@]} )
+fi
+typeset -ag chpwd_functions;
+if [[ -z "${chpwd_functions[(r)_rtx_hook]+1}" ]]; then
+  chpwd_functions=( _rtx_hook ${chpwd_functions[@]} )
+fi
