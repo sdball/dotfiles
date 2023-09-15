@@ -55,7 +55,6 @@ for dir in \
   $HOME/.npm-global/bin \
   $HOME/.yarn/bin \
   $HOME/.config/yarn/global/node_modules/.bin \
-  $HOME/.asdf/{bin,shims} \
   $HOME/gopath/bin \
   $HOME/.cargo/bin \
   $HOME/bin \
