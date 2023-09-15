@@ -326,3 +326,5 @@ bitbucket/
 .config/powershell/
 .net/bicep
 .config/StardewValley
+.bun/
+.degit/
