@@ -112,10 +112,13 @@ _language_version() {
           echo "$fnm_result" | sed -e 's/Using Node v//'
           return 0
         fi
-      elif [[ -s "$HOME/.nvm" ]] ; then
-        export NVM_DIR="$HOME/.nvm"
-        [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
       fi
+
+      if command -v rtx >&/dev/null; then
+        $(rtx which node) --version
+        return 0
+      fi
+
       node --version | sed -e 's/^v//'
       ;;
     python)
