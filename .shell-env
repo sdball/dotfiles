@@ -29,4 +29,4 @@ export CURL_TIMING="-wdnslookup: %{time_namelookup} | connect: %{time_connect} |
 
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
 export ERL_AFLAGS="-kernel shell_history enabled"
-export HOMEBREW_GITHUB_API_TOKEN=$(security find-generic-password -w -a "${USER}" -D ENV -s "HOMEBREW_GITHUB_API_TOKEN")
+# export HOMEBREW_GITHUB_API_TOKEN=$(security find-generic-password -w -a "${USER}" -D ENV -s "HOMEBREW_GITHUB_API_TOKEN")
