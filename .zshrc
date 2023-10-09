@@ -65,7 +65,6 @@ ZSH_THEME="chorn"
 plugins=(
   copypath
   fancy-ctrl-z
-  fasd
   fd
   fnm
   fzf
