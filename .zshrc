@@ -77,6 +77,7 @@ plugins=(
   ripgrep
   safe-paste
   themes
+  zoxide
 )
 case "$_PURPOSE" in
   personal)
