@@ -49,6 +49,9 @@ alias f.c='f. | read -r f && cd "$(dirname "$f")"'
 
 alias fde='fd --extension'
 
+alias gt='go test -v -json | gotestfmt'
+alias gta='go test ./... -v -json | gotestfmt'
+
 # -- functions -----------------------------------------------------
 
 # List files matching ripgrep search
