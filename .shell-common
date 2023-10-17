@@ -15,7 +15,7 @@ alias w:='cat >'  # Write STDIN to file
 alias a:='cat >>' # Append STDIN to file
 
 # cd to interactively fuzzy search frequent directory
-alias D='cd "$(fasd -dl | fzf --tac +m)"'
+alias D=zi
 
 # cd to interactively fuzzy search subdirectory
 alias Ds='cd "$(fd --type d | fzf)"'
