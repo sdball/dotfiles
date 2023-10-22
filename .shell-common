@@ -94,6 +94,13 @@ if command -v exa >/dev/null; then
 	alias tree="exa --tree"
 fi
 
+# lsd
+if command -v lsd >/dev/null; then
+	alias ls=lsd
+	alias la="lsd -lah"
+	alias tree="lsd --tree"
+fi
+
 # create and open a new directory
 # with special handling of github clones
 function mkd() {
