@@ -51,6 +51,9 @@ alias fde='fd --extension'
 
 alias gt='go test -v -json | gotestfmt'
 alias gta='go test ./... -v -json | gotestfmt'
+alias gtc='gt | rg "\x1B\[[0-9;]*m"'
+alias gtac='gta | rg "\x1B\[[0-9;]*m"'
+
 
 # -- functions -----------------------------------------------------
 
