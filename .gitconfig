@@ -134,10 +134,8 @@
     gpgsign = false
 [hub]
     host = git.corp.tanium.com
-[includeIf "gitdir:~/ghe/"]
-    path = ~/.gitconfig-ghe
-[url "git@git.corp.tanium.com:"]
-    insteadOf = https://git.corp.tanium.com/
+[includeIf "gitdir:~/shift5/"]
+    path = ~/.gitconfig-shift5
 [url "git@github.com:"]
     insteadOf = https://github.com/
 [init]
