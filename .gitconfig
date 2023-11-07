@@ -116,15 +116,6 @@
     name = Stephen Ball
     signingkey = 05F89257
     useConfigOnly = true
-[pager]
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
-[delta]
-    navigate = true
-    diff-so-fancy = true
-    line-numbers = true
 [filter "lfs"]
     required = true
     clean = git-lfs clean -- %f
