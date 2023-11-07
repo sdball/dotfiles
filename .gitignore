@@ -330,3 +330,4 @@ bitbucket/
 .degit/
 .config/1Password/
 .gitconfig-shift5
+.conan2/
