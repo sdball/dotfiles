@@ -1,5 +1,5 @@
 # --
-# aliases, functions, and shell tool setup that isn't shell specific
+# aliases, functions, etc that aren't shell specific
 # --
 
 # -- aliases -------------------------------------------------------
@@ -21,7 +21,7 @@ alias D=zi
 alias Ds='cd "$(fd --type d | fzf)"'
 
 # cd to GOPATH
-alias gopath="cd "$GOPATH""
+alias gopath="cd \$GOPATH"
 
 alias F="git fetch --prune"
 alias R='cd "$(git rev-parse --show-toplevel)"'
@@ -35,17 +35,17 @@ alias be="bundle exec"
 alias f.="fzf --cycle --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 
 # read files
-alias b.='f. | read -r f && bat "$f"'
-alias g.='f. | read -r f && glow "$f"'
+alias b.='f. | xargs bat'
+alias g.='f. | xargs glow'
 
 if [[ "$SHELL" =~ "zsh" ]]; then
-	alias -g f.bat='f. | read -r f && bat "$f"' 2>/dev/null || echo >&2 -e "BASH cannot support f.bat global alias"
-	alias -g f.glow='f. | read -r f && glow "$f"' 2>/dev/null || echo >&2 -e "BASH cannot support f.glow global alias"
-	alias -g f.vim='f. | read -r f && vim "$f"' 2>/dev/null || echo >&2 -e "BASH cannot support f.vim global alias"
+	alias -g f.bat='f. | xargs bat' 2>/dev/null || echo >&2 -e "BASH cannot support f.bat global alias"
+	alias -g f.glow='f. | xargs glow' 2>/dev/null || echo >&2 -e "BASH cannot support f.glow global alias"
+	alias -g f.hx='f. | xargs hx' 2>/dev/null || echo >&2 -e "BASH cannot support f.hx global alias"
 fi
 
 # cd directories
-alias f.c='f. | read -r f && cd "$(dirname "$f")"'
+alias f.cd='cd "$(f. | xargs dirname)"'
 
 alias fde='fd --extension'
 
@@ -59,18 +59,12 @@ alias gtac='gta | rg "\x1B\[[0-9;]*m"'
 
 # List files matching ripgrep search
 y() {
-  rg -il "$*"
+	rg -il "$@"
 }
 
 # List files that don't match
 n() {
-  rg -ilv "$*"
-}
-
-# List files matching ripgrep search and open selected file in hx
-hy() {
-  selected=$(y | f. | "$*")
-  [[ -n "$selected" ]] && hx "$selected"
+  rg -ilv "$@"
 }
 
 # like pgrep but more
@@ -81,7 +75,8 @@ pg() {
 
 # terminal title
 T() {
-	local _current_directory=$(basename $(pwd))
+	local _current_directory
+	_current_directory=$(basename $(pwd))
 	local _title=${1:-$_current_directory}
 	print -Pn "\e]1;$_title:q\a"
 }
@@ -123,7 +118,7 @@ function fs() {
 	else
 		local arg=-sh
 	fi
-	if [[ -n "$@" ]]; then
+	if [[ -n "$*" ]]; then
 		du $arg -- "$@"
 	else
 		du $arg .[^.]* *
