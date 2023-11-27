@@ -85,7 +85,7 @@ parse_params "$@"
 
 # script logic here
 
-msg "${RED}Read parameters:${NOFORMAT}"
+msg "${ORANGE}Read parameters:${NOFORMAT}"
 msg "- flag: ${flag}"
 msg "- param: ${param}"
 msg "- arguments: ${args[*]-}"
