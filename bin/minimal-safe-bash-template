@@ -45,7 +45,7 @@ msg() {
 die() {
   local msg=$1
   local code=${2-1} # default exit status 1
-  msg "$msg"
+  msg "$RED$msg$NOFORMAT"
   exit "$code"
 }
 
@@ -71,6 +71,8 @@ parse_params() {
   done
 
   args=("$@")
+  
+  setup_colors
 
   # check required params and arguments
   [[ -z "${param-}" ]] && die "Missing required parameter: param"
@@ -80,7 +82,6 @@ parse_params() {
 }
 
 parse_params "$@"
-setup_colors
 
 # script logic here
 
