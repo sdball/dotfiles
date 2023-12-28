@@ -332,3 +332,4 @@ bitbucket/
 .gitconfig-shift5
 .conan2/
 shift5/
+.babel*
