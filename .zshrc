@@ -76,7 +76,7 @@ plugins=(
   safe-paste
   themes
   zoxide
-  rtx
+  mise
   starship
 )
 case "$_PURPOSE" in
