@@ -70,7 +70,6 @@ plugins=(
   git
   golang
   history-substring-search
-  minikube
   rbenv
   ripgrep
   safe-paste
