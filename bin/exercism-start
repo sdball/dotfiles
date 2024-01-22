@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# expected to be called with an exercism download command
+# e.g. ./exercism-start exercism download --exercise=interest-is-interesting --track=go
+
+# -- start in the workspace
+
+cd "$(exercism workspace)" || exit 1
+
+# -- run the given command
+
+"$@"
+
+# -- run any setup required then cd into the exercise directory
+
+lang=$(echo "$@" | rg -o "\-\-track=\S+" | awk -F '=' '{print $2}')
+dir=$(echo "$@" | rg -o "\-\-exercise=\S+" | awk -F '=' '{print $2}')
+
+case "$lang" in
+  go)
+    cd go || exit 2
+    go work use "$dir"
+    cd "$dir" || exit 3
+    ;;
+  *)
+    cd "$lang/$dir" || exit 4
+    ;;
+esac
+
+
+# -- open the exercise in an editor
+
+file="$(fd "_test" | sed -e 's/_test//')"
+
+if [[ -f "$file" ]]; then
+  code --new-window . README.md "$file"
+else
+  code --new-window . README.md
+fi
