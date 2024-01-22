@@ -334,3 +334,4 @@ bitbucket/
 shift5/
 babel*
 .psqlrc
+.pnpm-state/*
