@@ -106,23 +106,17 @@
     algorithm = patience
 [format]
     subjectprefix = git
-
 [rerere]
     enabled = 1
 [status]
     showUntrackedFiles = all
-[user]
-    email = sdball@gmail.com
-    name = Stephen Ball
-    signingkey = 05F89257
-    useConfigOnly = true
 [filter "lfs"]
     required = true
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
-[commit]
-    gpgsign = false
+[include]
+    path = ~/.gitconfig-user
 [includeIf "gitdir:~/work/"]
     path = ~/.gitconfig-work
 [url "git@github.com:"]

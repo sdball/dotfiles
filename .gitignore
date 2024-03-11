@@ -336,3 +336,4 @@ babel*
 .psqlrc
 .pnpm-state/*
 .gitconfig-work
+.gitconfig-user
