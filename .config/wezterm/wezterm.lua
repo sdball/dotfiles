@@ -4,9 +4,10 @@ return {
   -- option	= value	, [default] comment
 
   -- Fonts
-  font     	= wezterm.font("JetBrains Mono")                             	, -- [JetBrains Mono]
+  font     	= wezterm.font("UbuntuMono Nerd Font")                             	, -- [JetBrains Mono]
+
   -- font  	= wezterm.font("JetBrains Mono", {weight="Bold",italic=true})	, -- [JetBrains Mono] Name with parameters
-  font_size	= 20.0                                                       	, -- [12.0]
+  font_size	= 26.0                                                       	, -- [12.0]
 
   -- Colors
   color_scheme     	= "nord"   	, -- full list @ wezfurlong.org/wezterm/colorschemes/index.html
