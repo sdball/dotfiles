@@ -521,5 +521,3 @@ function br {
     fi
 }
 
-alias vim="echo use hx"
-alias x="hx"
