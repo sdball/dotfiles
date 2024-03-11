@@ -123,10 +123,8 @@
     process = git-lfs filter-process
 [commit]
     gpgsign = false
-[hub]
-    host = git.corp.tanium.com
-[includeIf "gitdir:~/shift5/"]
-    path = ~/.gitconfig-shift5
+[includeIf "gitdir:~/work/"]
+    path = ~/.gitconfig-work
 [url "git@github.com:"]
     insteadOf = https://github.com/
 [init]
