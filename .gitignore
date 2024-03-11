@@ -335,3 +335,4 @@ shift5/
 babel*
 .psqlrc
 .pnpm-state/*
+.gitconfig-work
