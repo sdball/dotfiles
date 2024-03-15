@@ -337,3 +337,5 @@ babel*
 .pnpm-state/*
 .gitconfig-work
 .gitconfig-user
+.cspell/
+.cmake/
