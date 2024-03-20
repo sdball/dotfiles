@@ -637,7 +637,7 @@ add_newline = true
   symbol = "📦 "
   style = "208 bold"
   display_private = false
-  disabled = false
+  disabled = true
   version_format = "v${raw}"
 
 [perl]
