@@ -339,3 +339,4 @@ babel*
 .gitconfig-user
 .cspell/
 .cmake/
+.bleat/
