@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+filter=$1
+
+if [[ -z "$filter" ]]; then
+    jq -r '.scripts | to_entries | sort_by(.key)' package.json
+else
+    jq -r '.scripts | to_entries | sort_by(.key)' package.json |
+    jq ".[] | select(.key | strings | test(\"$filter\"))"
+fi
