@@ -10,3 +10,5 @@
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 eval "$(atuin init bash)"
+
+source /Users/sdball/.config/broot/launcher/bash/br

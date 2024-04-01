@@ -142,3 +142,5 @@ alias -g .human="-- ':(exclude)*gqlgen*' ':(exclude)go.sum' ':(exclude)*.bzl' ':
 } f b t r h s
 
 eval "$(atuin init zsh)"
+
+source /Users/sdball/.config/broot/launcher/bash/br
