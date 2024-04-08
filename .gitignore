@@ -340,3 +340,4 @@ babel*
 .cspell/
 .cmake/
 .bleat/
+.quokka/
