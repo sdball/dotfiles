@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+URLS=(
+    https://raw.githubusercontent.com/llimllib/personal_code/master/homedir/.local/bin/worktree
+)
+
+cd "$HOME/bin" || echo -n >&2 "failed to cd to \$HOME/bin"
+
+for url in "${URLS[@]}"; do
+  echo -n "Downloading $url: "
+  if curl --remote-name --silent "$url"; then
+    echo "OK"
+  else
+    echo "FAILED"
+  fi
+done
