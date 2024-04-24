@@ -348,11 +348,11 @@ h() {
 monitor-memory() {
 	mkdir -p ~/.memory_logs
 	local _name=$(echo $1 | tr ' ' '-')
-	echo "TIME VSZ RSS"
+	echo "TIME PID PARENTPID VSZ RSS COMMAND"
 	while true; do
 		pgrep -f $1 | while read _pid; do
 			if [[ ! -z $_pid ]]; then
-				echo "$(date +%s) $(ps -o vsz,rss $_pid | rg -v 'VSZ')" | tee -a ~/.memory_logs/"memory-$_name-$_pid.log"
+				echo "$(date +%s) $(ps -o pid,ppid,vsz,rss,command $_pid | rg -v 'VSZ')" | tee -a ~/.memory_logs/"memory-$_name-$_pid.log"
 			else
 				(echo >&2 "process not found")
 			fi
