@@ -32,17 +32,10 @@ alias s="git status"
 alias be="bundle exec"
 
 # preview files
-alias f.="fzf --cycle --ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
-
-# read files
-alias b.='f. | xargs bat'
-alias g.='f. | xargs glow'
-
-if [[ "$SHELL" =~ "zsh" ]]; then
-	alias -g f.bat='f. | xargs bat' 2>/dev/null || echo >&2 -e "BASH cannot support f.bat global alias"
-	alias -g f.glow='f. | xargs glow' 2>/dev/null || echo >&2 -e "BASH cannot support f.glow global alias"
-	alias -g f.hx='f. | xargs hx' 2>/dev/null || echo >&2 -e "BASH cannot support f.hx global alias"
-fi
+alias f.="fd --hidden --color=always --type file --full-path "${*:-}" | fzf --ansi --height 40% --layout reverse --border bold --preview 'bat --color=always {1} --theme=base16' --preview-window 'right,60%,border,+3/3'"
+alias f.bat="fd --hidden --color=always --type file --full-path "${*:-}" | fzf --ansi --height 40% --layout reverse --border bold --preview 'bat --color=always {1} --theme=base16' --preview-window 'right,60%,border,+3/3' --bind 'enter:become(bat {1})'"
+alias f.hx="fd --hidden --color=always --type file --full-path "${*:-}" | fzf --ansi --height 40% --layout reverse --border bold --preview 'bat --color=always {1} --theme=base16' --preview-window 'right,60%,border,+3/3' --bind 'enter:become(hx {1})'"
+alias f.code="fd --hidden --color=always --type file --full-path "${*:-}" | fzf --ansi --height 40% --layout reverse --border bold --preview 'bat --color=always {1} --theme=base16' --preview-window 'right,60%,border,+3/3' --bind 'enter:become(code {1})'"
 
 # cd directories
 alias f.cd='cd "$(f. | xargs dirname)"'
