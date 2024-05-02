@@ -3,23 +3,16 @@ local config = wezterm.config_builder()
 local act = wezterm.action
 
 config.keys = {
-  -- Clears the scrollback and viewport, and then sends CTRL-L to ask the
-  -- shell to redraw its prompt
+  -- Clears the scrollback and viewport
   {
     key = 'K',
     mods = 'CTRL|SHIFT',
-    action = act.Multiple {
-      act.ClearScrollback 'ScrollbackAndViewport',
-      act.SendKey { key = 'L', mods = 'CTRL' },
-    },
+    action = act.ClearScrollback 'ScrollbackAndViewport',
   },
   {
     key = 'k',
     mods = 'SUPER',
-    action = act.Multiple {
-      act.ClearScrollback 'ScrollbackAndViewport',
-      act.SendKey { key = 'L', mods = 'CTRL' },
-    },
+    action = act.ClearScrollback 'ScrollbackAndViewport',
   },
 }
 
