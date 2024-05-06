@@ -14,6 +14,16 @@ config.keys = {
     mods = 'SUPER',
     action = act.ClearScrollback 'ScrollbackAndViewport',
   },
+  {
+    key = 'd',
+    mods = 'SUPER',
+    action = act.SplitHorizontal
+  },
+  {
+    key = 'd',
+    mods = 'SHIFT|SUPER',
+    action = act.SplitVertical
+  },
 }
 
 config.font = wezterm.font("UbuntuMono Nerd Font")
