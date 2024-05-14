@@ -107,7 +107,7 @@
 [format]
     subjectprefix = git
 [rerere]
-    enabled = 1
+    enabled = 0
 [status]
     showUntrackedFiles = all
 [filter "lfs"]
