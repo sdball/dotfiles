@@ -341,3 +341,4 @@ babel*
 .cmake/
 .bleat/
 .quokka/
+.config/op/
