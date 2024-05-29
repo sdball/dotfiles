@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+fd . "$1" -t x -d 1 -0 | xargs -0 -I {} ln -s {}
