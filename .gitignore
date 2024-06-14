@@ -343,3 +343,4 @@ babel*
 .quokka/
 .config/op/
 .ServiceHub/
+data/
