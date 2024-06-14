@@ -60,7 +60,8 @@ for dir in \
   $HOME/.cargo/bin \
   $HOME/bin \
   $HOME/local_bin \
-  $HOME/.mix/escripts
+  $HOME/.mix/escripts \
+  $HOME/work/sball-scripts
 do
   _safe_add_to_path "$dir"
 done
