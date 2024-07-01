@@ -95,7 +95,7 @@
     tool = vimdiff
     conflictstyle = diff3
 [core]
-    pager = less -r
+    pager = less -FRX
     excludesfile = ~/.gitignore_global
 [push]
     default = simple
