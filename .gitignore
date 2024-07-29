@@ -344,3 +344,5 @@ babel*
 .config/op/
 .ServiceHub/
 data/
+.config/zed/*
+!.config/zed/settings.json
