@@ -64,14 +64,12 @@ export ZSH="$HOME/.oh-my-zsh" export ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
 plugins=(
   copypath
   fancy-ctrl-z
-  fd
   fnm
   fzf
   git
   golang
   history-substring-search
   rbenv
-  ripgrep
   safe-paste
   themes
   zoxide
