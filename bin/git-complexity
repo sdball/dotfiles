@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+count=${1:-5000}
+
+if [[ "$count" == "--all" ]]; then
+  git log --graph --format="%%" \
+  | while read line; do echo "$line" | rg -oc '[*/\|]'; done \
+  | agrind '* | parse "*" as depth | count as commits, p50(depth) as p50_depth, max(depth) as max_depth, sum(depth) as total'
+else
+  if [[ "$count" < 0 ]]; then
+    echo "Usage: git complexity [COUNT|--all]"
+    exit
+  fi
+  git log --graph --format="%%" \
+  | head -${count} \
+  | while read line; do echo "$line" | rg -oc '[*/\|]'; done \
+  | agrind '* | parse "*" as depth | count as commits, p50(depth) as p50_depth, max(depth) as max_depth, sum(depth) as total'
+fi
+
+
