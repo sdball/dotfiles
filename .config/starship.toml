@@ -17,7 +17,7 @@ add_newline = true
   format = 'on [$symbol($profile )(\($region\) )(\[$duration\] )]($style)'
   symbol = "☁️  "
   style = "bold yellow"
-  disabled = false
+  disabled = true
   expiration_symbol = "X"
   force_display = false
 
