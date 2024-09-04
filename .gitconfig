@@ -52,12 +52,12 @@
     h = !git head
     head = !git l -1
     hp = "!show_git_head"
-    l = "!pretty_git_log"
+    l = "!pretty_git_log -500"
     le = !git l --format='%n%n%Cgreen%s%Creset%n%n%n%b%n%CblueAUTHOR%x20%aN%x20<%aE>%n%H%n'
     la = !git l --all
     lae = !git l --all --format='%n%n%Cgreen%s%Creset%n%n%n%b%n%CblueAUTHOR%x20%aN%x20<%aE>%n%H%n'
     lms = !git local-master-sync-check
-    r = !git l -30
+    r = !git l -10
     re = !git r --format='%n%n%Cgreen%s%Creset%n%n%n%b%n%CblueAUTHOR%x20%aN%x20<%aE>%n%H%n'
     ra = !git r --all
     rae = !git r --all --format='%n%n%Cgreen%s%Creset%n%n%n%b%n%CblueAUTHOR%x20%aN%x20<%aE>%n%H%n'
