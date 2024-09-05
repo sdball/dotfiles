@@ -61,7 +61,8 @@ for dir in \
   $HOME/bin \
   $HOME/local_bin \
   $HOME/.mix/escripts \
-  $HOME/work/sball-scripts
+  $HOME/work/sball-scripts \
+  $HOME/.elixir-ls
 do
   _safe_add_to_path "$dir"
 done
