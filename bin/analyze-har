@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: bash analyze.sh FILENAME"
+  exit 1
+fi
+
+filename=$1
+cat "$filename" \
+  | jq -cr '[.log.entries[] | select(.time > 1000) | {url: .request.url, method: .request.method, time}] | sort_by(.time) | .[]' \
+  | agrind '* | json | p50(time), p90(time) by method, url' -o json \
+  | jq .
