@@ -142,3 +142,10 @@ alias -g .human="-- ':(exclude)*gqlgen*' ':(exclude)go.sum' ':(exclude)*.bzl' ':
 eval "$(atuin init zsh)"
 
 source /Users/sdball/.config/broot/launcher/bash/br
+
+
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        source "$BASE16_SHELL/profile_helper.sh"
+
