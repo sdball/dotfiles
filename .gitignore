@@ -346,3 +346,4 @@ babel*
 data/
 .config/zed/*
 !.config/zed/settings.json
+.config/capriole/*
