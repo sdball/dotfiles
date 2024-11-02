@@ -348,3 +348,6 @@ data/
 !.config/zed/settings.json
 .config/capriole/*
 .gk/*
+.config/gqrx/*
+.gnuradio/*
+.gr_fftw_wisdom*
