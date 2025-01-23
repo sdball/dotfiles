@@ -28,6 +28,7 @@
     root = rev-parse --show-toplevel
     untracked = ls-files --others --exclude-standard *
     un = untracked
+    show-files = show --name-only --format=""
 
     ; custom commands and workflows
     absorb = "!f() { git ff $1 && git branch -d $f }; f"
