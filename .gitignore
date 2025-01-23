@@ -351,3 +351,5 @@ data/
 .config/gqrx/*
 .gnuradio/*
 .gr_fftw_wisdom*
+.crultoken
+.vs-kubernetes/
