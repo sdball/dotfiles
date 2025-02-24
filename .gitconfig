@@ -92,6 +92,17 @@
     unique-authors = !git authors | sort -u
     unique-email-domains = !git email-domains | sort -u
     praise = blame
+
+    ; difftastic
+    dlog = -c diff.external=difft log --ext-diff
+    dshow = -c diff.external=difft show --ext-diff
+    ddiff = -c diff.external=difft diff
+    logt = -c diff.external=difft log --ext-diff
+    showt = -c diff.external=difft show --ext-diff
+    difft = -c diff.external=difft diff
+
+    ; difftastic bitbucket
+    showbb = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git showt origin/$branch; }; f"
 [merge]
     tool = vimdiff
     conflictstyle = diff3
