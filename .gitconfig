@@ -100,9 +100,12 @@
     logt = -c diff.external=difft log --ext-diff
     showt = -c diff.external=difft show --ext-diff
     difft = -c diff.external=difft diff
+    dt = -c diff.external=difft diff
 
     ; difftastic bitbucket
+    logbb = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git logt -p origin/$branch; }; f"
     showbb = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git showt origin/$branch; }; f"
+    diffbb = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git difft origin/$branch; }; f"
 [merge]
     tool = vimdiff
     conflictstyle = diff3
