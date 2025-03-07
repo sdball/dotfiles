@@ -105,7 +105,8 @@
     ; difftastic bitbucket
     logbb = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git logt -p origin/$branch; }; f"
     showbb = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git showt origin/$branch; }; f"
-    diffbb = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git difft origin/$branch; }; f"
+    diffbbdev = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git difft origin/dev origin/$branch; }; f"
+    diffbbstage = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git difft origin/stage origin/$branch; }; f"
 [merge]
     tool = vimdiff
     conflictstyle = diff3
