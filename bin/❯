@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo >&2 -e "So you're pasting in commands from your very own prompt"
+echo "$@"
