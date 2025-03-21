@@ -9,10 +9,10 @@
     changed-files = diff --name-only
     ci = commit
     co = checkout
-    dc = diff --cached
-    dh1 = diff HEAD~1
-    di = diff
-    ds = diff --stat=160,120
+    dc = difft --cached
+    dh1 = difft HEAD~1
+    di = difft
+    ds = difft --stat=160,120
     fa = fetch --all
     ff = merge --ff-only
     last-commit = log -1 -p
@@ -101,6 +101,7 @@
     showt = -c diff.external=difft show --ext-diff
     difft = -c diff.external=difft diff
     dt = -c diff.external=difft diff
+    lt = -c diff.external=difft log --ext-diff
 
     ; difftastic bitbucket
     logbb = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git logt -p origin/$branch; }; f"
