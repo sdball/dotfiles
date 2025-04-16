@@ -353,3 +353,4 @@ data/
 .gr_fftw_wisdom*
 .crultoken
 .vs-kubernetes/
+.cursor/
