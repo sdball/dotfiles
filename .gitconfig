@@ -114,7 +114,7 @@
 [core]
     pager = less -FRX
     excludesfile = ~/.gitignore_global
-	fsmonitor = true
+	fsmonitor = false
 	untrackedCache = true
 [push]
     default = simple
