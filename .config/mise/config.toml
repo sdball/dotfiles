@@ -5,3 +5,6 @@ erlang = "latest"
 ruby = "latest"
 node = "latest"
 go = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node"]
