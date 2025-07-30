@@ -872,7 +872,7 @@ add_newline = true
   format = "at [$time]($style) "
   style = "bold yellow"
   use_12hr = false
-  disabled = true
+  disabled = false
   utc_time_offset = "local"
   time_range = "-"
 
