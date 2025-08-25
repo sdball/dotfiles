@@ -52,18 +52,13 @@ alias BR='remote'
 
 alias pjs='package-json-scripts'
 
-
-# -- functions -----------------------------------------------------
-
 # List files matching ripgrep search
-y() {
-	rg -il "'$*'"
-}
+alias y="rg -il"
 
 # List files that don't match
-n() {
-  rg -ilv "'$*'"
-}
+alias n="rg -ilv"
+
+# -- functions -----------------------------------------------------
 
 # like pgrep but more
 pg() {
