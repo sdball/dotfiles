@@ -57,7 +57,7 @@ alias pjs='package-json-scripts'
 
 # List files matching ripgrep search
 y() {
-	echo rg -il "'$*'"
+	rg -il "'$*'"
 }
 
 # List files that don't match
