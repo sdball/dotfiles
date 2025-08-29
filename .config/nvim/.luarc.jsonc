@@ -1,0 +1,13 @@
+{
+  // (Optional) VS Code schema for hints; harmless elsewhere
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+
+  "runtime.version": "LuaJIT",
+  "diagnostics.globals": ["vim"],
+  "workspace.checkThirdParty": false,
+
+  // (Optional) keep scanning light
+  "workspace.maxPreload": 2000,
+  "workspace.preloadFileSize": 500
+}
+

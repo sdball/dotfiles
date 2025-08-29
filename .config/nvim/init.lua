@@ -110,17 +110,47 @@ require("lazy").setup({
       end
     },
     { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
+      'lewis6991/gitsigns.nvim',
+      opts = {
+        signs = {
+          add = { text = '+' },
+          change = { text = '~' },
+          delete = { text = '_' },
+          topdelete = { text = '‾' },
+          changedelete = { text = '~' },
+        },
       },
     },
-  },
+    {
+      "folke/which-key.nvim",
+      event = "VeryLazy",
+      opts = {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      },
+      keys = {
+        {
+          "<leader>?",
+          function()
+            require("which-key").show({ global = false })
+          end,
+          desc = "Buffer Local Keymaps (which-key)",
+        },
+      },
+    },
+    { 'nvim-mini/mini.nvim', version = false },
+    { "nvim-tree/nvim-web-devicons", opts = {} },
+    require 'plugins.telescope',
+
+    -- LSP Plugins
+    require 'plugins.lazydev',
+    require 'plugins.nvim-lspconfig',
+
+    -- others
+    require 'plugins.nvim-treesitter',
+    require 'plugins.neo-tree',
+    require 'plugins.debug',
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
@@ -129,3 +159,4 @@ require("lazy").setup({
   checker = { enabled = true },
 })
 
+-- vim: ts=2 sts=2 sw=2 et
