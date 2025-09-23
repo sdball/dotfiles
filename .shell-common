@@ -58,6 +58,9 @@ alias y="rg -il"
 # List files that don't match
 alias n="rg -ilv"
 
+# bat --plain is safer than cat, e.g. will refuse to print binarie
+alias cat="bat --plain"
+
 # -- functions -----------------------------------------------------
 
 # like pgrep but more
