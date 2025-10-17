@@ -61,6 +61,8 @@ alias n="rg -Slv"
 # bat --plain is safer than cat, e.g. will refuse to print binarie
 alias cat="bat --plain"
 
+alias cribl-log="fd -e log -E 'cribl_stderr*' 'cribl*'"
+
 # -- functions -----------------------------------------------------
 
 # like pgrep but more
