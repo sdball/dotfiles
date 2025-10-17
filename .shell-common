@@ -53,10 +53,10 @@ alias BR='remote'
 alias pjs='package-json-scripts'
 
 # List files matching ripgrep search
-alias y="rg -il"
+alias y="rg -Sl"
 
 # List files that don't match
-alias n="rg -ilv"
+alias n="rg -Slv"
 
 # bat --plain is safer than cat, e.g. will refuse to print binarie
 alias cat="bat --plain"
