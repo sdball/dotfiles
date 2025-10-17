@@ -65,10 +65,15 @@ alias cribl-log="fd -e log -E 'cribl_stderr*' 'cribl*'"
 
 # -- functions -----------------------------------------------------
 
-# like pgrep but more
-pg() {
-	[[ $# -ne 1 ]] && echo "pg PATTERN" && return
-	pgrep -f "$1" | xargs ps
+# extract tar.gz into directory with the same name
+xtar () {
+  if [[ $# -eq 0 ]]; then
+	  echo "xtar FILE.tar.gz (optional: directory)"
+		return 1
+	fi
+	dir=${2:-${1/.tar.gz/}}
+  mkdir "$dir"
+  tar xvzf "$1" -C "$dir"
 }
 
 # terminal title
