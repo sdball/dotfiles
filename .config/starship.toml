@@ -179,7 +179,7 @@ add_newline = true
 
 [directory]
   truncation_length = 3
-  truncate_to_repo = true
+  truncate_to_repo = false
   fish_style_pwd_dir_length = 0
   use_logical_path = true
   format = "[$path]($style)[$read_only]($read_only_style) "
