@@ -108,6 +108,7 @@
     showbb = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git showt origin/$branch; }; f"
     diffbbdev = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git difft origin/dev origin/$branch; }; f"
     diffbbstage = "!f() { branch=$(echo \"$*\" | sed -e 's/git checkout //'); git fetch; git difft origin/stage origin/$branch; }; f"
+	diffnt = "!f(){ git diff \"$@\" \":(exclude)**/__tests__/**\" \":(exclude)**/test-*\" ; }; f"
 [merge]
     tool = vimdiff
     conflictstyle = diff3
