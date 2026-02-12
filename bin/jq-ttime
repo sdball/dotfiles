@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+jq '
+  # Convert epoch seconds or epoch milliseconds -> ISO-8601 string (UTC).
+  # Heuristic: values >= 1e11 are treated as milliseconds.
+  def epoch_to_iso:
+    if type != "number" then empty
+    elif . >= 100000000000 then (. / 1000)
+    else .
+    end
+    | todateiso8601;
+
+  # For specific time keys, add a sibling "...Formatted" field.
+  def time_converted_entry:
+    if (.value | type) == "number" then
+      if .key == "t" then
+        { key: "tFormatted", value: (.value | epoch_to_iso) }
+      elif (.key == "startTime" or .key == "endTime") then
+        { key: (.key + "Formatted"), value: (.value | epoch_to_iso) }
+      else
+        empty
+      end
+    else
+      empty
+    end;
+
+  walk(
+    if type == "object" then
+      (
+        to_entries
+        | ( . + [ .[] | time_converted_entry ] )
+        | group_by(.key)
+        | map(last)     # derived values override on collision
+        | from_entries
+      )
+    else
+      .
+    end
+  )
+'
