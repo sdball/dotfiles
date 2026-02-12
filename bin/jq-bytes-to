@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+unit="MB"
+factor=$((1024*1024)) # default
+
+if [[ $# -gt 0 ]]; then
+  case "$1" in
+    --megabytes|--mb)
+      unit="MB"
+      factor=$((1024*1024))
+      ;;
+    --gigabytes|--gb)
+      unit="GB"
+      factor=$((1024*1024*1024))
+      ;;
+    --terabytes|--tb)
+      unit="TB"
+      factor=$((1024*1024*1024*1024))
+      ;;
+    *)
+      echo "Usage: bytes-to [--megabytes|--gigabytes|--terabytes]" >&2
+      exit 1
+      ;;
+  esac
+fi
+
+jq --argjson factor "$factor" --arg unit "$unit" '
+  def converted_entry:
+    if (.key | endswith("Bytes")) then
+      { key: (.key | sub("Bytes$"; $unit)), value: (.value / $factor) }
+    elif (.key | endswith("b")) then
+      { key: (.key | sub("b$"; $unit)), value: (.value / $factor) }
+    else
+      empty
+    end;
+
+  walk(
+    if type == "object" then
+      (
+        to_entries
+        | ( . + [ .[] | select(.value | type=="number") | converted_entry ] )
+        | group_by(.key)
+        | map(last)     # if the derived key collides, keep the last one
+        | from_entries
+      )
+    else
+      .
+    end
+  )
+'
+
