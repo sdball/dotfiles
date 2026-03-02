@@ -354,3 +354,4 @@ data/
 .crultoken
 .vs-kubernetes/
 .cursor/
+.capriole/
