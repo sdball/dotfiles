@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "open3"
+require "time"
+require "fileutils"
+
+downloads_dir = File.expand_path("~/Downloads")
+target_dir = Dir.pwd
+
+entries = Dir.children(downloads_dir, encoding: Encoding::UTF_8).filter_map do |name|
+  path = File.join(downloads_dir, name)
+
+  begin
+    st = File.lstat(path)
+    next unless st.file?
+
+    {
+      id: nil,
+      name: name,
+      path: path,
+      size: st.size,
+      mtime: st.mtime
+    }
+  rescue Errno::ENOENT, Errno::EACCES
+    nil
+  end
+end
+
+if entries.empty?
+  warn "No files found in #{downloads_dir}"
+  exit 1
+end
+
+entries.sort_by! { |e| [-e[:mtime].to_i, e[:name].downcase, e[:name]] }
+entries.each_with_index { |e, i| e[:id] = i + 1 }
+
+id_width   = [entries.size.to_s.length, 2].max
+name_width = [entries.map { |e| e[:name].dump.length }.max, 4].max
+size_width = [entries.map { |e| e[:size].to_s.length }.max, 4].max
+
+display_lines = entries.map do |e|
+  dumped_name = e[:name].dump
+  mtime_str = e[:mtime].strftime("%Y-%m-%d %H:%M:%S")
+  format("%#{id_width}d  %-#{name_width}s  %#{size_width}d  %s",
+         e[:id], dumped_name, e[:size], mtime_str)
+end
+
+gum_cmd = ["gum", "choose", "--ordered", "--no-limit"]
+selected_text, status = Open3.capture2(*gum_cmd, stdin_data: display_lines.join("\n"))
+
+unless status.success?
+  warn "Selection cancelled" if selected_text.empty?
+  exit 1
+end
+
+selected_ids = selected_text.lines.map do |line|
+  line[/^\s*(\d+)/, 1]&.to_i
+end.compact
+
+selected = entries.select { |e| selected_ids.include?(e[:id]) }
+
+if selected.empty?
+  warn "No files selected"
+  exit 1
+end
+
+selected.each do |e|
+  dest = File.join(target_dir, File.basename(e[:name]))
+  FileUtils.mv(e[:path], dest)
+  puts "moved: #{e[:name].dump} -> #{dest.dump}"
+end
