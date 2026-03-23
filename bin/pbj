@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ $# -eq 1 ]]; then
-  cat "$1" | vipe | pbcopy
+  cat "$1" | jq | pbcopy
 else
-  pbpaste | vipe | pbcopy
+  pbpaste | jq | pbcopy
 fi
