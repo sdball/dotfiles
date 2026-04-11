@@ -359,3 +359,4 @@ data/
 .codex/
 .claude.json
 .config/cagent
+.atuin/logs/*
