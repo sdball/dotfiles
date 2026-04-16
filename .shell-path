@@ -60,6 +60,7 @@ for dir in \
   $HOME/.cargo/bin \
   $HOME/bin \
   $HOME/local_bin \
+  $HOME/.local/bin \
   $HOME/.mix/escripts \
   $HOME/work/sball-scripts \
   $HOME/.elixir-ls
