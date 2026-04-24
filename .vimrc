@@ -16,39 +16,9 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 call plug#begin('~/.vim/plugged')
 
-Plug 'AndrewRadev/switch.vim' " plugin to switch segments of text with predefined replacements
-if !empty(glob('~/.config/base16-shell/*'))
-  Plug 'chriskempson/base16-vim'
-endif
 Plug 'ciaranm/detectindent'
-Plug 'dense-analysis/ale'
-Plug 'elixir-editors/vim-elixir'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'honza/vim-snippets' " vim snippets to use from coc-snippets
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy finder
 Plug 'junegunn/fzf.vim' " fuzzy finder
-Plug 'junegunn/vim-easy-align' " align text (search for EasyAlign in vimrc)
-let uname_check = system('uname -m | grep -qv armv7l') " skip CoC if we're on Raspberry Pi
-if v:shell_error == 0
-  let g:coc_available = 1
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
-endif
-Plug 'pedrohdz/vim-yaml-folds'
-Plug 'preservim/tagbar' " browse the tags of the current file and get an overview of its structure
-Plug 'rhysd/clever-f.vim' " smarter f,F,t,T commands
-Plug 'sheerun/vim-polyglot' " async language packs
-Plug 'tpope/vim-abolish' " substitution with case preservation
-Plug 'tpope/vim-commentary' " comment stuff more easily
-Plug 'tpope/vim-dispatch' " async build dispatcher
-Plug 'tpope/vim-fugitive' " git integration
-Plug 'tpope/vim-markdown' " development version of Vim's plugin for Markdown
-Plug 'tpope/vim-rhubarb' " GitHub integration
-Plug 'tpope/vim-sensible' " sensible defaults
-Plug 'tpope/vim-surround' " match matching tags and syntax
-Plug 'tpope/vim-unimpaired' " handy bracket mappings
-Plug 'wellle/targets.vim' " give vim more targets to operate on
-Plug 'z0mbix/vim-shfmt', { 'for': 'sh' } " format sh with shfmt
 call plug#end()
 " -- End Plugins -------------------------------------------------------------
 
@@ -59,22 +29,6 @@ endif
 
 " Use the system clipboard instead of internal
 set clipboard=unnamed
-
-" ALE
-let g:ale_fix_on_save = 0
-highlight! ALEWarning ctermbg=NONE
-highlight! ALEError ctermbg=NONE
-
-" tag: easy-align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-" Tagbar
-nmap <F10> :TagbarToggle<cr>
-nmap <leader>c :TagbarToggle<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
@@ -128,153 +82,6 @@ set wildmode=full
 " make tab completion for files/buffers act like bash
 set wildmenu
 
-if g:coc_available
-  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  " COC settings
-  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-  " (in ms) default is 4000ms
-  set updatetime=300
-
-  " Don't pass messages to |ins-completion-menu|.
-  set shortmess+=c
-
-  " Always show the signcolumn, otherwise it would shift the text each time
-  " diagnostics appear/become resolved.
-  set signcolumn=yes
-
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-  endfunction
-
-  " Use <c-space> to trigger completion.
-  inoremap <silent><expr> <c-space> coc#refresh()
-
-  " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-  " position. Coc only does snippet and additional edit on confirm.
-  inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-  inoremap <silent><expr> <C-x><C-z> coc#pum#visible() ? coc#pum#stop() : "\<C-x>\<C-z>"
-
-  " remap for complete to use tab and <cr>
-  inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1):
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-  inoremap <silent><expr> <c-j>
-      \ coc#pum#visible() ? coc#pum#next(1):
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-  inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-  inoremap <expr><c-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-  inoremap <silent><expr> <c-space> coc#refresh()
-
-  " Use `[g` and `]g` to navigate diagnostics
-  nmap <silent> [g <Plug>(coc-diagnostic-prev)
-  nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-  " GoTo code navigation.
-  nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gy <Plug>(coc-type-definition)
-  nmap <silent> gi <Plug>(coc-implementation)
-  nmap <silent> gr <Plug>(coc-references)
-
-  " Use K to show documentation in preview window.
-  nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-  if has('nvim-0.4.0') || has('patch-8.2.0750')
-    nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-    nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-    inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-    inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-    vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-    vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  endif
-
-  function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-      execute 'h '.expand('<cword>')
-    elseif (coc#rpc#ready())
-      call CocActionAsync('doHover')
-    else
-      execute '!' . &keywordprg . " " . expand('<cword>')
-    endif
-  endfunction
-
-  " Highlight the symbol and its references when holding the cursor.
-  autocmd CursorHold * silent call CocActionAsync('highlight')
-
-  " Symbol renaming.
-  nmap <leader>rn <Plug>(coc-rename)
-
-  " Formatting selected code.
-  xmap <leader>f  <Plug>(coc-format-selected)
-  nmap <leader>f  <Plug>(coc-format-selected)
-
-  augroup mygroup
-    autocmd!
-    " Setup formatexpr specified filetype(s).
-    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-    " Update signature help on jump placeholder.
-    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  augroup end
-
-  " Applying codeAction to the selected region.
-  " Example: `<leader>aap` for current paragraph
-  xmap <leader>a  <Plug>(coc-codeaction-selected)
-  nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-  " Remap keys for applying codeAction to the current line.
-  nmap <leader>ac  <Plug>(coc-codeaction)
-  " Apply AutoFix to problem on the current line.
-  nmap <leader>qf  <Plug>(coc-fix-current)
-
-  " Introduce function text object
-  " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-  xmap if <Plug>(coc-funcobj-i)
-  xmap af <Plug>(coc-funcobj-a)
-  omap if <Plug>(coc-funcobj-i)
-  omap af <Plug>(coc-funcobj-a)
-
-  " Use <TAB> for selections ranges.
-  " NOTE: Requires 'textDocument/selectionRange' support from the language server.
-  " coc-tsserver, coc-python are the examples of servers that support it.
-  nmap <silent> <TAB> <Plug>(coc-range-select)
-  xmap <silent> <TAB> <Plug>(coc-range-select)
-
-  " Add `:Format` command to format current buffer.
-  command! -nargs=0 Format :call CocAction('format')
-
-  " Add `:Fold` command to fold current buffer.
-  command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-  " Add `:OR` command for organize imports of the current buffer.
-  command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-  " Add (Neo)Vim's native statusline support.
-  " NOTE: Please see `:h coc-status` for integrations with external plugins that
-  " provide custom statusline: lightline.vim, vim-airline.
-  set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-  " Mappings using CoCList:
-  " Show all diagnostics.
-  nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-  " Manage extensions.
-  nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-  " Show commands.
-  nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-  " Find symbol of current document.
-  nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-  " Search workspace symbols.
-  nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-  " Do default action for next item.
-  nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-  " Do default action for previous item.
-  nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-  " Resume latest coc list.
-  nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-endif
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM AUTOCMDS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -321,7 +128,6 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 if filereadable(expand("~/.vimrc_background"))
   if has("termguicolors")
     set termguicolors
@@ -341,10 +147,6 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " just a bit of cartography
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Fix linting errors
-map <leader>f :ALEFix<cr>
-
 " Store a session
 map <leader>m :mksession! /tmp/vim-session<cr>\|:wqall<cr>
 
@@ -376,13 +178,6 @@ map <leader>e :edit %%
 " map to current file for command mode
 cnoremap $$ <C-R>=expand('%')<cr>
 
-" TESTING, WOO!
-nnoremap <leader>. :call OpenTestAlternate()<cr>
-map <leader>t :call RunTestFile()<cr>
-map <leader>T :call RunNearestTest()<cr>
-map <leader>A :call RunAllTests()<cr>
-map <leader>S :call RunStyleChecks()<cr>
-
 " when nested too deep
 nnoremap <leader>x :set cursorcolumn!<cr>
 
@@ -398,13 +193,13 @@ command W w
 command Q q
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" PASTE MODE SANITY
+" PASTE MODE MORE REASONABLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set pastetoggle=<leader>v
 set showmode
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" BIG RED UNWANTED WHITESPACE
+" HIGHLIGHT BIG RED UNWANTED WHITESPACE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /(\s\+$|\t)/
@@ -412,186 +207,6 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RUNNING TESTS AND STYLE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! RunStyleChecks()
-  if !exists("t:style_command")
-    echo "Unknown global style check command"
-  else
-    exec ":!" . t:style_command
-  end
-endfunction
-function! RunAllTests()
-  if !exists("t:all_command")
-    echo "Unknown global test suite command"
-  else
-    exec ":!" . t:all_command
-  end
-endfunction
-function! RunTestFile(...)
-    if a:0
-        let command_suffix = a:1
-    else
-        let command_suffix = ""
-    endif
-
-" Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature$\|_spec.rb$\|-spec.rb$\|_test.rb$\|_test.exs$\|spec.js$\|spec.ts$\|test.ts$\|_test.py$\|test_.*\.py$\|_test.go$\)') != -1
-    if in_test_file
-        if exists("t:sdb_marked_test")
-          unlet t:sdb_marked_test
-        end
-        echo "IN TEST FILE"
-        call SetTestFile()
-    elseif !exists("t:sdb_test_file_path")
-        echo "Not in test file and no marked test file"
-        return
-    end
-
-    call RunTests(t:sdb_test_file_path, command_suffix)
-endfunction
-
-function! RunNearestTest()
-    let spec_line_number = line('.')
-    call RunTestFile(spec_line_number)
-endfunction
-
-function! SetTestFile()
-" Set the spec file that tests will be run for.
-    let t:sdb_test_file_path=@%
-    let t:sdb_test_file_name=expand("%:t")
-    let t:sdb_test_file_fullpath=expand("%:p")
-endfunction
-
-function! RunTests(filename, line_number)
-    " Write the open files and run tests for the given filename
-    :wall
-    if a:filename =~ "\.rb$"
-        if a:filename =~ "spec"
-            if filereadable("Gemfile")
-                let command="bundle exec rspec"
-            else
-                let command="ruby"
-            end
-
-            if a:line_number
-                exec ":!" . command . " " . a:filename . ":" . a:line_number
-            else
-                exec ":!" . command . " " . a:filename
-            end
-        else
-            if filereadable("Gemfile")
-                let command="bundle exec ruby"
-            else
-                let command="ruby"
-            end
-
-            if a:line_number
-                let test_name=system("head -n " . a:line_number . " " . a:filename . " | rg '(def test_|test \")' | tail -1 | sed -e 's/.*def //' -e 's/.*test //' -e 's/ do$//' | tr '\"' / | tr \"'\" / | tr ' ' _")
-                exec ":!" . command . " -Itest " . a:filename . " -n " . test_name
-            else
-                exec ":!" . command . " -Itest " . a:filename
-            end
-        end
-    elseif a:filename =~ "\.exs$"
-        if filereadable("mix.exs")
-            let command="mix test"
-
-            if a:line_number
-                exec ":!" . command . " " . a:filename . ":" . a:line_number
-            else
-                exec ":!" . command . " " . a:filename
-            end
-        else
-            let command="elixir"
-            exec ":!" . command . " " . a:filename
-        end
-    elseif a:filename =~ "\.[jt]s$"
-      if exists("t:direct_command") && t:direct_command
-        if exists("t:nopath") && t:nopath
-          exec ":!" . t:command
-          return
-        else
-          exec ":!" . t:command . " " . t:sdb_test_file_fullpath
-          return
-        end
-      end
-      " Jest
-      :silent !command -v node_modules/.bin/jest >/dev/null
-      if v:shell_error == 0
-        echo "JEST"
-        let command="node_modules/.bin/jest --color"
-        exec ":!" . command . " " . '"' . t:sdb_test_file_fullpath . '"'
-      else
-        :silent !command -v jasmine >/dev/null
-        if v:shell_error == 0
-          echo "JASMINE"
-          " Jasmine
-          let current_file=expand('%')
-          if a:line_number && current_file == a:filename
-            " run the specific test containing the selected line by
-            " - finding the relevant it or describe declaration
-            " - changing it to fit or fdescribe
-            " - running the filtered test file
-            " - reverting the fit/fdescribe back to it/describe
-            normal j
-            ?\(\(^\|\s\)it\|\(^\|\s\)describe\)
-            normal If
-            :silent w
-            let basename=system("echo -n `basename " . a:filename . "`")
-            exec ':!' . t:command . ' --filter="\"' . basename . '\""'
-            normal x
-            :silent w
-          else
-            if exists("t:direct_command") && t:direct_command
-              if exists("t:strip_from_testfile")
-                let b:filename = substitute(a:filename, t:strip_from_testfile, '', '')
-              else
-                let b:filename = a:filename
-              end
-              echo b:filename
-              if exists("t:post_command")
-                exec ':!' . t:command . '"' . b:filename . '"' . t:post_command
-              else
-                exec ':!' . t:command . ' "' . b:filename . '"'
-              end
-            else
-              if exists("t:use_dirname") && t:use_dirname
-                let filter=system("echo -n $(dirname \"" . a:filename . "\" | sed -e 's|" . t:strip_from_dirname . "||')")
-              else
-                let filter=system("echo -n `basename \"" . a:filename . "\"`")
-              end
-              exec ':!' . t:command . ' --filter="\"' . filter . '\""'
-            end
-          end
-        else
-          echo "UNKNOWN"
-        end
-      end
-    elseif a:filename =~ "\.py$"
-      if exists("t:sdb_marked_test")
-        exec ":!" . t:command . " -k " . t:sdb_marked_test
-      elseif a:line_number
-        let test_name=system("head -n " . a:line_number . " " . a:filename . " | rg -o '(def test.*|class Test.*)' | tail -1 | sed -e 's/^def //' -e 's/^class //' -e s'/[(:].*$//'")
-        let t:sdb_marked_test=test_name
-        exec ":!" . t:command . " -k " . test_name
-      else
-        exec ':!' . t:command . ' ' . a:filename
-      end
-    elseif a:filename =~ "\.go$"
-      let t:sdball_go_test_path=system("dirname " . t:sdb_test_file_fullpath . ' | tr -d "\n"')
-      if exists("g:run_all_tests")
-        exec ':!(cd "' . t:sdball_go_test_path . '" && go test -v --json | jq-go-tests)'
-      else
-        let basename=system("echo -n `basename " . a:filename . "`")
-        exec ':!(cd "' . t:sdball_go_test_path . '" && go test -v --json | jq-go-tests)'
-      end
-    else
-      exec ':!' . t:command . ' ' . a:filename
-    end
-endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FZF                                                                        "
@@ -618,21 +233,4 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h | %
 map <C-p> :Files<cr>
 map <C-g> :Rg<space>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" REVEAL
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! SetupReveal()
-    let t:sdb_reveal_file="outline.txt"
-    let t:sdb_reveal_line=0
-endfunction
-
-function! Reveal()
-    :normal 1GdG
-    let t:sdb_reveal_line=t:sdb_reveal_line + 1
-    exec ":read !head -" . t:sdb_reveal_line . " " . t:sdb_reveal_file
-    :normal gg
-    :normal dd
-endfunction
 
