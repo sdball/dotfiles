@@ -3,32 +3,12 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 filetype off
-let g:polyglot_disabled = ['jenkins', 'markdown']
-let g:coc_available = 0
-let g:ale_disable_lsp = 1 " let coc handle LSP
 let mapleader=","
-
-" -- Plugins: https://github.com/junegunn/vim-plug ---------------------------
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-call plug#begin('~/.vim/plugged')
-
-Plug 'ciaranm/detectindent'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy finder
-Plug 'junegunn/fzf.vim' " fuzzy finder
-call plug#end()
-" -- End Plugins -------------------------------------------------------------
 
 " Machine local setup
 if filereadable(expand("~/work/vimrc"))
   source ~/work/vimrc
 endif
-
-" Use the system clipboard instead of internal
-set clipboard=unnamed
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
@@ -83,49 +63,6 @@ set wildmode=full
 set wildmenu
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CUSTOM AUTOCMDS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup vimrcEx
-  " Clear all autocmds in the group
-  autocmd!
-  autocmd FileType text setlocal textwidth=78
-  " Jump to last cursor position unless it's invalid or in an event handler
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
-
-  " spaces
-  autocmd FileType ruby,haml,eruby,yaml,toml,html,sh set ai sw=2 sts=2 et
-
-  " python autocmds
-  autocmd FileType python set sw=4 sts=4 et
-  autocmd FileType python let t:command="python -m pytest -s"
-  autocmd FileType python let t:all_command="python -m pytest -s"
-  autocmd FileType python map <leader>2 :wall\|:!python2 -m pytest -s %<cr>
-  autocmd FileType python map <leader>3 :wall\|:!python3 -m pytest -s %<cr>
-  autocmd FileType python let t:style_command="black \"%\""
-
-  " javascript autocmds
-  autocmd FileType javascript set ai sw=2 sts=2 et
-  autocmd FileType javascript let t:command="npm test"
-
-  " shell autocmds
-  autocmd FileType sh let t:style_command="shellcheck --shell=bash --exclude=SC2164,SC2001,SC2002,SC2006 \"%\""
-  autocmd FileType sh map <leader>r :wall\|:!./%<cr>
-  autocmd FileType zsh map <leader>r :wall\|:!./%<cr>
-
-  autocmd FileType ruby map <leader>r :wall\|:!ruby %<cr>
-
-  if filereadable(expand("~/work/autocmds.vim"))
-    source ~/work/autocmds.vim
-  endif
-
-  " open yaml files with all folds open
-  autocmd FileType yaml normal zR
-augroup END
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if filereadable(expand("~/.vimrc_background"))
@@ -147,9 +84,6 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " just a bit of cartography
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Store a session
-map <leader>m :mksession! /tmp/vim-session<cr>\|:wqall<cr>
-
 " Yank a movement
 map <leader>y "*y
 
@@ -158,9 +92,6 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-
-" some frequent code inserts
-imap <c-l> <space>=><space>
 
 " Can't be bothered to understand ESC vs <c-c> in insert mode
 imap <c-c> <esc>
@@ -207,30 +138,4 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FZF                                                                        "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-" --color: Search color options
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h | %<(20,trunc)%an | %s"'
-
-map <C-p> :Files<cr>
-map <C-g> :Rg<space>
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
