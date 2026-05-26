@@ -360,3 +360,4 @@ data/
 .claude.json
 .config/cagent
 .atuin/logs/*
+.vscode-shared/
