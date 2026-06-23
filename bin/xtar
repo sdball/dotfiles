@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 0 ]]; then
+  echo "xtar FILE.tar.gz (optional: directory)"
+  exit 1
+fi
+
+dir=${2:-${1/.tar.gz/}}
+
+mkdir "$dir"
+
+tar xvzf "$1" -C "$dir"
+
