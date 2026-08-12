@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+"""Read a terminal selection aloud with macOS say, minus the markdown noise.
+
+WezTerm passes the selection as argv (see the SHIFT|SUPER S binding in
+~/.config/wezterm/wezterm.lua); pipelines pass it on stdin. Fenced code
+blocks and table rows are dropped rather than spoken: say reading pipes,
+asterisks, and backticks aloud is unusable.
+"""
+
+import re
+import subprocess
+import sys
+
+# WezTerm's GUI process does not inherit the shell environment, so these are
+# constants to edit rather than env vars.
+VOICE = "Zoe (Premium)"
+RATE = None  # words per minute, or None for the system default
+
+SAY = "/usr/bin/say"
+
+FENCE_RE = re.compile(r"^\s*(```|~~~)")
+CODE_SPAN_RE = re.compile(r"`([^`]*)`")
+TABLE_ROW_RE = re.compile(r"^\s*\|")
+HEADER_RE = re.compile(r"^\s*#{1,6}\s+")
+BULLET_RE = re.compile(r"^\s*(?:[-*+]|\d+[.)])\s+")
+QUOTE_RE = re.compile(r"^\s*>+\s*")
+LINK_RE = re.compile(r"!?\[([^\]]*)\]\([^)]*\)")
+EMPHASIS_RE = re.compile(r"\*{1,3}|_{1,3}|~~")
+HRULE_RE = re.compile(r"^\s*([-*_])(\s*\1){2,}\s*$")
+
+
+def clean(text):
+    """Strip markdown to something worth hearing."""
+    out = []
+    in_fence = False
+    for line in text.splitlines():
+        if FENCE_RE.match(line):
+            if not in_fence:
+                out.append("Code block omitted.")
+            in_fence = not in_fence
+            continue
+        if in_fence or TABLE_ROW_RE.match(line) or HRULE_RE.match(line):
+            continue
+
+        line = CODE_SPAN_RE.sub(r"\1", line)
+        line = LINK_RE.sub(r"\1", line)
+        line = QUOTE_RE.sub("", line)
+        is_item = bool(HEADER_RE.match(line) or BULLET_RE.match(line))
+        line = HEADER_RE.sub("", line)
+        line = BULLET_RE.sub("", line)
+        line = EMPHASIS_RE.sub("", line).strip()
+
+        # Headers and bare list items run into each other without a pause.
+        if is_item and line and line[-1] not in ".!?:;,":
+            line += "."
+        out.append(line)
+
+    # Collapse blank runs so say does not sit in silence.
+    collapsed = []
+    for line in out:
+        if not line and (not collapsed or not collapsed[-1]):
+            continue
+        collapsed.append(line)
+    return "\n".join(collapsed).strip()
+
+
+def stop():
+    subprocess.run(["/usr/bin/pkill", "-x", "say"], check=False)
+
+
+def main(argv):
+    if "--stop" in argv:
+        stop()
+        return 0
+
+    printing = "--print" in argv
+    args = [a for a in argv if a != "--print"]
+    text = " ".join(args) if args else sys.stdin.read()
+
+    spoken = clean(text)
+    if not spoken:
+        return 0
+    if printing:
+        print(spoken)
+        return 0
+
+    # A new selection replaces the old one instead of overlapping it.
+    stop()
+    cmd = [SAY, "-v", VOICE]
+    if RATE:
+        cmd += ["-r", str(RATE)]
+    return subprocess.run(cmd, input=spoken, text=True).returncode
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

@@ -24,6 +24,27 @@ config.keys = {
     mods = 'SHIFT|SUPER',
     action = act.SplitVertical
   },
+  -- Reads the current selection aloud via macOS say
+  {
+    key = 'S',
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      local sel = window:get_selection_text_for_pane(pane)
+      if sel and #sel > 0 then
+        wezterm.background_child_process(
+          { os.getenv('HOME') .. '/bin/speak', sel })
+      end
+    end),
+  },
+  -- Stops narration
+  {
+    key = '>',
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function()
+      wezterm.background_child_process(
+        { os.getenv('HOME') .. '/bin/speak', '--stop' })
+    end),
+  },
 }
 
 config.font = wezterm.font("UbuntuMono Nerd Font")
