@@ -363,3 +363,5 @@ data/
 .vscode-shared/
 .homebrew/trust.json
 .homebrew/trust.json.lock
+.agents/
+.copilot/
