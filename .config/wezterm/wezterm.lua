@@ -62,17 +62,93 @@ local function herdr_workspace_id_for_number(number)
   return nil
 end
 
+-- Steps delta tabs from the focused one within the focused workspace,
+-- wrapping at both ends.
+local function herdr_tab_id_by_offset(delta)
+  local snap = herdr_snapshot()
+  if not snap or not snap.focused_workspace_id then return nil end
+  local ordered = {}
+  for _, t in ipairs(snap.tabs or {}) do
+    if t.workspace_id == snap.focused_workspace_id then
+      table.insert(ordered, t)
+    end
+  end
+  if #ordered < 2 then return nil end
+  local current
+  for i, t in ipairs(ordered) do
+    if t.tab_id == snap.focused_tab_id then current = i end
+  end
+  if not current then return nil end
+  local target = ((current - 1 + delta) % #ordered) + 1
+  return ordered[target].tab_id
+end
+
+-- Steps delta workspaces from the focused one in snapshot list order,
+-- wrapping at both ends. Uses list position rather than workspace.number,
+-- which is a persistent counter that drifts from on-screen order.
+local function herdr_workspace_id_by_offset(delta)
+  local snap = herdr_snapshot()
+  if not snap or not snap.focused_workspace_id then return nil end
+  local ordered = snap.workspaces or {}
+  if #ordered < 2 then return nil end
+  local current
+  for i, w in ipairs(ordered) do
+    if w.workspace_id == snap.focused_workspace_id then current = i end
+  end
+  if not current then return nil end
+  local target = ((current - 1 + delta) % #ordered) + 1
+  return ordered[target].workspace_id
+end
+
+-- Picks the agent pane most likely to want attention: the most recently
+-- changed blocked agent, else the most recently changed idle one. Skips the
+-- pane already focused. herdr's own prefix+o (open_notification_target)
+-- depends on its notification queue, which never populates here, so this
+-- derives the target from agent state directly instead.
+local function herdr_attention_pane()
+  local snap = herdr_snapshot()
+  if not snap then return nil end
+  local best, best_rank
+  for _, a in ipairs(snap.agents or {}) do
+    local rank
+    if a.agent_status == 'blocked' then
+      rank = 2
+    elseif a.agent_status == 'idle' then
+      rank = 1
+    end
+    if rank and not a.focused then
+      local seq = a.state_change_seq or 0
+      if not best
+        or rank > best_rank
+        or (rank == best_rank and seq > (best.state_change_seq or 0)) then
+        best, best_rank = a, rank
+      end
+    end
+  end
+  return best and best.pane_id or nil
+end
+
 config.keys = {
-  -- Clears the scrollback and viewport
+  -- Clears the scrollback and viewport. Inert inside herdr, which owns and
+  -- redraws that screen itself: clearing wezterm's buffer underneath it
+  -- corrupts the rendering, and it is not the `clear` it looks like.
   {
     key = 'K',
     mods = 'CTRL|SHIFT',
-    action = act.ClearScrollback 'ScrollbackAndViewport',
+    action = wezterm.action_callback(function(window, pane)
+      if not pane_is_herdr(pane) then
+        window:perform_action(act.ClearScrollback 'ScrollbackAndViewport', pane)
+      end
+    end),
   },
   {
     key = 'k',
     mods = 'SUPER',
-    action = act.ClearScrollback 'ScrollbackAndViewport',
+    action = wezterm.action_callback(function(window, pane)
+      if not pane_is_herdr(pane) then
+        window:perform_action(act.ClearScrollback 'ScrollbackAndViewport', pane)
+      end
+    end),
   },
   {
     key = 'd',
@@ -116,6 +192,74 @@ config.keys = {
         end
       else
         window:perform_action(act.SpawnTab 'CurrentPaneDomain', pane)
+      end
+    end),
+  },
+  -- Cycle tabs within the focused workspace, wrapping at both ends.
+  {
+    key = 'LeftArrow',
+    mods = 'SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then
+        local target = herdr_tab_id_by_offset(-1)
+        if target then
+          wezterm.background_child_process({ HERDR, 'tab', 'focus', target })
+        end
+      else
+        window:perform_action(act.ActivateTabRelative(-1), pane)
+      end
+    end),
+  },
+  {
+    key = 'RightArrow',
+    mods = 'SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then
+        local target = herdr_tab_id_by_offset(1)
+        if target then
+          wezterm.background_child_process({ HERDR, 'tab', 'focus', target })
+        end
+      else
+        window:perform_action(act.ActivateTabRelative(1), pane)
+      end
+    end),
+  },
+  -- Cycle workspaces, wrapping at both ends. Vertical to match herdr's
+  -- sidebar layout, where workspaces stack top to bottom.
+  {
+    key = 'UpArrow',
+    mods = 'SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then
+        local target = herdr_workspace_id_by_offset(-1)
+        if target then
+          wezterm.background_child_process({ HERDR, 'workspace', 'focus', target })
+        end
+      end
+    end),
+  },
+  {
+    key = 'DownArrow',
+    mods = 'SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then
+        local target = herdr_workspace_id_by_offset(1)
+        if target then
+          wezterm.background_child_process({ HERDR, 'workspace', 'focus', target })
+        end
+      end
+    end),
+  },
+  -- Jump to the agent pane wanting attention, blocked first then idle.
+  {
+    key = 'o',
+    mods = 'SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then
+        local target = herdr_attention_pane()
+        if target then
+          wezterm.background_child_process({ HERDR, 'agent', 'focus', target })
+        end
       end
     end),
   },
@@ -179,6 +323,25 @@ for i = 1, 9 do
         local workspace_id = herdr_workspace_id_for_number(i)
         if workspace_id then
           wezterm.background_child_process({ HERDR, 'workspace', 'focus', workspace_id })
+        end
+      end
+    end),
+  })
+end
+
+-- Vim-style pane focus within herdr. Lowercase keys with SHIFT|SUPER, matching
+-- the existing split_vertical binding; letters don't suffer the shifted-glyph
+-- remapping that rules SHIFT out for digits.
+for key, direction in pairs({ h = 'left', j = 'down', k = 'up', l = 'right' }) do
+  table.insert(config.keys, {
+    key = key,
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then
+        local f = herdr_focused()
+        if f then
+          wezterm.background_child_process(
+            { HERDR, 'pane', 'focus', '--pane', f.pane_id, '--direction', direction })
         end
       end
     end),
