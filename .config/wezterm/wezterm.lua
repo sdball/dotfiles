@@ -100,6 +100,42 @@ local function herdr_workspace_id_by_offset(delta)
   return ordered[target].workspace_id
 end
 
+-- Returns the focused pane_id when a pane genuinely borders it in direction,
+-- else nil. herdr's own `pane focus --direction` picks the right neighbor
+-- whenever one exists, but at a layout edge it jumps to an unrelated pane
+-- instead of staying put, so gate the call on real adjacency computed from
+-- the snapshot rects. Panes count as neighbors only if they sit strictly
+-- beyond the current edge and overlap on the perpendicular axis.
+local function herdr_pane_toward(direction)
+  local snap = herdr_snapshot()
+  if not snap or not snap.focused_pane_id then return nil end
+  local layout
+  for _, l in ipairs(snap.layouts or {}) do
+    if l.tab_id == snap.focused_tab_id then layout = l end
+  end
+  if not layout then return nil end
+  local current
+  for _, p in ipairs(layout.panes or {}) do
+    if p.pane_id == snap.focused_pane_id then current = p end
+  end
+  if not (current and current.rect) then return nil end
+  local c = current.rect
+  for _, p in ipairs(layout.panes or {}) do
+    local r = p.rect
+    if p.pane_id ~= current.pane_id and r then
+      local overlaps_v = r.y < c.y + c.height and c.y < r.y + r.height
+      local overlaps_h = r.x < c.x + c.width and c.x < r.x + r.width
+      local adjacent =
+        (direction == 'left' and overlaps_v and r.x + r.width <= c.x)
+        or (direction == 'right' and overlaps_v and r.x >= c.x + c.width)
+        or (direction == 'up' and overlaps_h and r.y + r.height <= c.y)
+        or (direction == 'down' and overlaps_h and r.y >= c.y + c.height)
+      if adjacent then return snap.focused_pane_id end
+    end
+  end
+  return nil
+end
+
 -- Picks the agent pane most likely to want attention: the most recently
 -- changed blocked agent, else the most recently changed idle one. Skips the
 -- pane already focused. herdr's own prefix+o (open_notification_target)
@@ -126,6 +162,19 @@ local function herdr_attention_pane()
     end
   end
   return best and best.pane_id or nil
+end
+
+-- Shared body for the pane-focus bindings below. Defined once and called with
+-- a literal direction from each binding, rather than closing over a loop
+-- variable: action_callback identities are assigned per call site, and building
+-- them in a loop made every binding resolve to a sibling's callback.
+local function herdr_focus_pane(window, pane, direction)
+  if not pane_is_herdr(pane) then return end
+  local from = herdr_pane_toward(direction)
+  if from then
+    wezterm.background_child_process(
+      { HERDR, 'pane', 'focus', '--pane', from, '--direction', direction })
+  end
 end
 
 config.keys = {
@@ -250,6 +299,65 @@ config.keys = {
       end
     end),
   },
+  -- Pane focus within herdr, by vim keys or arrows. Unshifted Cmd+arrows
+  -- already move between tabs and workspaces, so adding shift keeps arrow
+  -- navigation consistent while dropping a level down to panes.
+  {
+    key = 'h',
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      herdr_focus_pane(window, pane, 'left')
+    end),
+  },
+  {
+    key = 'j',
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      herdr_focus_pane(window, pane, 'down')
+    end),
+  },
+  {
+    key = 'k',
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      herdr_focus_pane(window, pane, 'up')
+    end),
+  },
+  {
+    key = 'l',
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      herdr_focus_pane(window, pane, 'right')
+    end),
+  },
+  {
+    key = 'LeftArrow',
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      herdr_focus_pane(window, pane, 'left')
+    end),
+  },
+  {
+    key = 'DownArrow',
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      herdr_focus_pane(window, pane, 'down')
+    end),
+  },
+  {
+    key = 'UpArrow',
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      herdr_focus_pane(window, pane, 'up')
+    end),
+  },
+  {
+    key = 'RightArrow',
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      herdr_focus_pane(window, pane, 'right')
+    end),
+  },
   -- Jump to the agent pane wanting attention, blocked first then idle.
   {
     key = 'o',
@@ -329,24 +437,6 @@ for i = 1, 9 do
   })
 end
 
--- Vim-style pane focus within herdr. Lowercase keys with SHIFT|SUPER, matching
--- the existing split_vertical binding; letters don't suffer the shifted-glyph
--- remapping that rules SHIFT out for digits.
-for key, direction in pairs({ h = 'left', j = 'down', k = 'up', l = 'right' }) do
-  table.insert(config.keys, {
-    key = key,
-    mods = 'SHIFT|SUPER',
-    action = wezterm.action_callback(function(window, pane)
-      if pane_is_herdr(pane) then
-        local f = herdr_focused()
-        if f then
-          wezterm.background_child_process(
-            { HERDR, 'pane', 'focus', '--pane', f.pane_id, '--direction', direction })
-        end
-      end
-    end),
-  })
-end
 
 config.font = wezterm.font("UbuntuMono Nerd Font")
 config.font_size = 26.0
