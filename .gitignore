@@ -365,3 +365,4 @@ data/
 .homebrew/trust.json.lock
 .agents/
 .copilot/
+.config/herdr
