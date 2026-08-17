@@ -119,6 +119,16 @@ config.keys = {
       end
     end),
   },
+  -- New herdr workspace. herdr also binds this natively as ctrl+b Shift+N.
+  {
+    key = 't',
+    mods = 'CTRL|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then
+        wezterm.background_child_process({ HERDR, 'workspace', 'create', '--focus' })
+      end
+    end),
+  },
   -- Reads the current selection aloud via macOS say
   {
     key = 'S',
