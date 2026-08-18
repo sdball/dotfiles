@@ -371,35 +371,67 @@ config.keys = {
       end
     end),
   },
-  -- New herdr workspace. herdr also binds this natively as ctrl+b Shift+N.
+  -- New herdr workspace when herdr-focused; otherwise a normal new OS window
+  -- (WezTerm's default Cmd+N action). herdr also binds this natively as
+  -- ctrl+b Shift+N.
   {
-    key = 't',
-    mods = 'CTRL|SUPER',
+    key = 'n',
+    mods = 'SUPER',
     action = wezterm.action_callback(function(window, pane)
       if pane_is_herdr(pane) then
         wezterm.background_child_process({ HERDR, 'workspace', 'create', '--focus' })
+      else
+        window:perform_action(act.SpawnWindow, pane)
       end
     end),
   },
-  -- Reads the current selection aloud via macOS say
+  -- Rename the focused herdr tab; otherwise the normal Cmd+R action
+  -- (WezTerm's default ReloadConfiguration). herdr also binds this natively
+  -- as ctrl+b Shift+T.
   {
-    key = 'S',
+    key = 'r',
+    mods = 'SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then
+        local f = herdr_focused()
+        if f then
+          window:perform_action(
+            act.PromptInputLine {
+              description = 'Rename tab:',
+              action = wezterm.action_callback(function(_, _, line)
+                if line then
+                  wezterm.background_child_process({ HERDR, 'tab', 'rename', f.tab_id, line })
+                end
+              end),
+            },
+            pane)
+        end
+      else
+        window:perform_action(act.ReloadConfiguration, pane)
+      end
+    end),
+  },
+  -- Rename the focused herdr workspace. herdr also binds this natively as
+  -- ctrl+b Shift+W.
+  {
+    key = 'r',
     mods = 'SHIFT|SUPER',
     action = wezterm.action_callback(function(window, pane)
-      local sel = window:get_selection_text_for_pane(pane)
-      if sel and #sel > 0 then
-        wezterm.background_child_process(
-          { os.getenv('HOME') .. '/bin/speak', sel })
+      if pane_is_herdr(pane) then
+        local f = herdr_focused()
+        if f then
+          window:perform_action(
+            act.PromptInputLine {
+              description = 'Rename workspace:',
+              action = wezterm.action_callback(function(_, _, line)
+                if line then
+                  wezterm.background_child_process({ HERDR, 'workspace', 'rename', f.workspace_id, line })
+                end
+              end),
+            },
+            pane)
+        end
       end
-    end),
-  },
-  -- Stops narration
-  {
-    key = '>',
-    mods = 'SHIFT|SUPER',
-    action = wezterm.action_callback(function()
-      wezterm.background_child_process(
-        { os.getenv('HOME') .. '/bin/speak', '--stop' })
     end),
   },
 }
