@@ -93,4 +93,7 @@ for s in ~/.shell-path ~/.shell-env ; do
   [[ -f "$s" ]] && source "$s"
 done
 #-----------------------------------------------------------------------------
+
+[[ -s $HOME/.local_zshenv ]] && source $HOME/.local_zshenv
+
 # vim: set syntax=zsh ft=zsh sw=2 ts=2 expandtab:
