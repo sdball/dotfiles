@@ -177,6 +177,74 @@ local function herdr_focus_pane(window, pane, direction)
   end
 end
 
+-- Moves every pane in the focused tab into a brand-new workspace/tab,
+-- rebuilding them as splits there. herdr has no tab-level move, only
+-- `pane move`; --new-tab and --new-workspace are mutually exclusive, so the
+-- first pane creates the destination workspace (which comes with its own new
+-- tab) via --new-workspace. The new tab's label carries over the original
+-- tab's label if it was custom, otherwise forced to '1' so the promoted tab
+-- reads like a fresh first tab rather than keeping its old number (herdr's
+-- move doesn't renumber it on its own). The rest join via --tab <id>.
+-- Original geometry isn't preserved, just relative left/right vs
+-- above/below of each pane to the anchor (computed from the pre-move
+-- snapshot rects, since ids/positions shift once panes start moving).
+local function herdr_promote_tab_to_workspace(window, pane)
+  if not pane_is_herdr(pane) then return end
+  local snap = herdr_snapshot()
+  if not snap or not snap.focused_tab_id then return end
+  local layout
+  for _, l in ipairs(snap.layouts or {}) do
+    if l.tab_id == snap.focused_tab_id then layout = l end
+  end
+  if not layout or not layout.panes or #layout.panes == 0 then return end
+
+  local anchor
+  for _, p in ipairs(layout.panes) do
+    if p.pane_id == snap.focused_pane_id then anchor = p end
+  end
+  anchor = anchor or layout.panes[1]
+
+  local original_tab
+  for _, t in ipairs(snap.tabs or {}) do
+    if t.tab_id == snap.focused_tab_id then original_tab = t end
+  end
+
+  -- herdr's default tab label mirrors on-screen position within the
+  -- workspace (matching herdr_tab_id_for_number below), not the `number`
+  -- field, which is a persistent creation-order counter.
+  local position = 0
+  if original_tab then
+    for _, t in ipairs(snap.tabs or {}) do
+      if t.workspace_id == original_tab.workspace_id then
+        position = position + 1
+        if t.tab_id == original_tab.tab_id then break end
+      end
+    end
+  end
+  local was_default_label = original_tab and original_tab.label == tostring(position)
+  local tab_label = (original_tab and not was_default_label) and original_tab.label or '1'
+
+  local success, stdout = wezterm.run_child_process(
+    { HERDR, 'pane', 'move', anchor.pane_id, '--new-workspace', '--focus', '--tab-label', tab_label })
+  if not success then return end
+  local ok, parsed = pcall(wezterm.json_parse, stdout)
+  if not ok or not (parsed.result and parsed.result.move_result and parsed.result.move_result.pane) then
+    return
+  end
+  local new_tab_id = parsed.result.move_result.pane.tab_id
+  if not new_tab_id then return end
+
+  for _, p in ipairs(layout.panes) do
+    if p.pane_id ~= anchor.pane_id and p.rect and anchor.rect then
+      local dx = math.abs(p.rect.x - anchor.rect.x)
+      local dy = math.abs(p.rect.y - anchor.rect.y)
+      local direction = dx >= dy and 'right' or 'down'
+      wezterm.run_child_process(
+        { HERDR, 'pane', 'move', p.pane_id, '--tab', new_tab_id, '--split', direction, '--no-focus' })
+    end
+  end
+end
+
 config.keys = {
   -- Clears the scrollback and viewport. Inert inside herdr, which owns and
   -- redraws that screen itself: clearing wezterm's buffer underneath it
@@ -383,6 +451,15 @@ config.keys = {
       else
         window:perform_action(act.SpawnWindow, pane)
       end
+    end),
+  },
+  -- Promote the focused tab into its own new workspace (no non-herdr
+  -- default for this combo).
+  {
+    key = 'n',
+    mods = 'SHIFT|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      herdr_promote_tab_to_workspace(window, pane)
     end),
   },
   -- Rename the focused herdr tab; otherwise the normal Cmd+R action
