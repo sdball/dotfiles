@@ -367,3 +367,4 @@ data/
 .agents/
 .copilot/
 .config/herdr
+.config/twg
