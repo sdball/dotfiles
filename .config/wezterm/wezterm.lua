@@ -9,6 +9,8 @@ local function pane_is_herdr(pane)
   return info ~= nil and info.name == 'herdr'
 end
 
+local SHIFT_ENTER_AGENTS = { claude = true, codex = true }
+
 -- A process launched via wezterm.background_child_process doesn't inherit
 -- the HERDR_*_ID env vars a real herdr-managed shell gets, so resolve the
 -- focused workspace/tab/pane ids from the live snapshot instead.
@@ -28,6 +30,29 @@ local function herdr_focused()
     tab_id = snap.focused_tab_id,
     pane_id = snap.focused_pane_id,
   }
+end
+
+-- Shift+Enter reaches the pty as WezTerm's modified-key escape sequence
+-- whenever herdr is the foreground process, since herdr negotiates extended
+-- keyboard reporting for its own TUI and then relays that encoding straight
+-- through to whichever inner pane is focused. Claude and Codex understand
+-- the sequence (insert newline, don't submit); a plain shell doesn't, and
+-- prints it as literal garbage. So decide per keypress whether the focused
+-- pane (inner herdr pane, or the wezterm pane itself when herdr isn't
+-- involved) is actually running an agent that wants it.
+local function pane_wants_shift_enter(pane)
+  if pane_is_herdr(pane) then
+    local snap = herdr_snapshot()
+    if not snap or not snap.focused_pane_id then return false end
+    for _, p in ipairs(snap.panes or {}) do
+      if p.pane_id == snap.focused_pane_id then
+        return SHIFT_ENTER_AGENTS[p.agent] == true
+      end
+    end
+    return false
+  end
+  local info = pane:get_foreground_process_info()
+  return info ~= nil and SHIFT_ENTER_AGENTS[info.name] == true
 end
 
 -- Finds the tab_id for the Nth visible tab within the currently focused
@@ -246,6 +271,21 @@ local function herdr_promote_tab_to_workspace(window, pane)
 end
 
 config.keys = {
+  -- Shift+Enter behaves as plain Enter everywhere except Claude/Codex agent
+  -- panes, which understand the modified-key sequence as "newline, don't
+  -- submit". Elsewhere (plain shells, herdr's own UI) that sequence is just
+  -- garbage on the input line.
+  {
+    key = 'Enter',
+    mods = 'SHIFT',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_wants_shift_enter(pane) then
+        window:perform_action(act.SendKey { key = 'Enter', mods = 'SHIFT' }, pane)
+      else
+        window:perform_action(act.SendKey { key = 'Enter', mods = 'NONE' }, pane)
+      end
+    end),
+  },
   -- Clears the scrollback and viewport. Inert inside herdr, which owns and
   -- redraws that screen itself: clearing wezterm's buffer underneath it
   -- corrupts the rendering, and it is not the `clear` it looks like.
