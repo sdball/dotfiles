@@ -2,3 +2,4 @@
 .DS_Store
 EXCL
 node_modules
+.claude/settings.local.json
