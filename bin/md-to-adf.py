@@ -16,7 +16,10 @@ Everything else passes through as plain text.
 
 Known ADF gotcha this deliberately avoids: a strong mark spanning inline code
 gets truncated on render, so inline code is always emitted as its own text node
-carrying only the `code` mark, never `code` plus `strong`.
+carrying only the `code` mark, never `code` plus `strong`. A bold run that
+contains inline code (**like `this`**) is split at the backticks into
+strong/code/strong text nodes rather than emitted as one strong node with
+literal backtick characters.
 """
 
 import json
@@ -39,6 +42,25 @@ def text_node(value, marks=None):
     return node
 
 
+def strong_with_code_nodes(inner):
+    """Split the inside of a **bold** run at `code` spans.
+
+    ADF truncates a strong mark that spans inline code, so the code span gets
+    its own text node with only the `code` mark; the surrounding text keeps
+    `strong`. This is a lossy but faithful approximation: the code segment
+    renders as code, just not bold.
+    """
+    nodes, pos = [], 0
+    for m in re.finditer(r'`([^`]+)`', inner):
+        if m.start() > pos:
+            nodes.append(text_node(inner[pos:m.start()], ['strong']))
+        nodes.append(text_node(m.group(1), ['code']))
+        pos = m.end()
+    if pos < len(inner):
+        nodes.append(text_node(inner[pos:], ['strong']))
+    return nodes
+
+
 def inline_nodes(line):
     """Split a line into ADF text nodes, honouring inline marks."""
     nodes, pos = [], 0
@@ -53,12 +75,9 @@ def inline_nodes(line):
         elif kind == 'strong':
             inner = raw[2:-2]
             if '`' in inner:
-                # ADF truncates a strong span containing inline code, and this
-                # converter does not recurse into marks, so the backticks would
-                # be emitted literally. Refuse rather than ship it silently.
-                print('md-to-adf: inline code inside bold, move the backticks '
-                      'outside the bold run: %r' % raw[:70], file=sys.stderr)
-            nodes.append(text_node(inner, ['strong']))
+                nodes.extend(strong_with_code_nodes(inner))
+            else:
+                nodes.append(text_node(inner, ['strong']))
         elif kind == 'em':
             nodes.append(text_node(raw[1:-1], ['em']))
         elif kind == 'link':
