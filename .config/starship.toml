@@ -846,7 +846,7 @@ add_newline = true
   symbol = "🧙 "
   style = "bold blue"
   allow_windows = false
-  disabled = false
+  disabled = true
 
 [swift]
   format = "via [$symbol($version )]($style)"
