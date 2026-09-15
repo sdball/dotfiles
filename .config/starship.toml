@@ -926,6 +926,6 @@ add_newline = true
   when = true
   shell = ["bash", "--noprofile", "--norc"]
   style = "bold green"
-  format = '([\$$output]($style) )'
+  format = '([$output]($style) )'
   description = "Current quota balance"
 
