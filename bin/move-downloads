@@ -46,7 +46,7 @@ display_lines = entries.map do |e|
          e[:id], dumped_name, e[:size], mtime_str)
 end
 
-gum_cmd = ["gum", "choose", "--ordered", "--no-limit"]
+gum_cmd = ["gum", "choose", "--no-limit"]
 selected_text, status = Open3.capture2(*gum_cmd, stdin_data: display_lines.join("\n"))
 
 unless status.success?
