@@ -368,3 +368,4 @@ data/
 .copilot/
 .config/herdr
 .config/twg
+.matplotlib/*
