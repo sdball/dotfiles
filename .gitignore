@@ -157,7 +157,6 @@
 /.rbenv
 /.kerl
 /.docker
-dev
 .base16_theme
 .vimrc_background
 .exenv
