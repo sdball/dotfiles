@@ -56,8 +56,8 @@ local function pane_wants_shift_enter(pane)
 end
 
 -- Finds the tab_id for the Nth visible tab within the currently focused
--- workspace. Matches by position in snapshot.tabs (herdr has no tab-reorder
--- command, so list order tracks on-screen left-to-right order) rather than
+-- workspace. Matches by position in snapshot.tabs (list order tracks
+-- on-screen left-to-right order, including after tab.move) rather than
 -- label, so renaming a tab doesn't break its Cmd+N slot.
 local function herdr_tab_id_for_number(number)
   local snap = herdr_snapshot()
@@ -123,6 +123,63 @@ local function herdr_workspace_id_by_offset(delta)
   if not current then return nil end
   local target = ((current - 1 + delta) % #ordered) + 1
   return ordered[target].workspace_id
+end
+
+-- The herdr CLI has no reorder commands, so workspace.move and tab.move go
+-- over the socket API directly.
+local function herdr_socket_request(method, params)
+  local request = wezterm.json_encode({ id = 'wezterm-' .. method, method = method, params = params })
+  wezterm.background_child_process({
+    '/bin/sh', '-c', 'printf "%s\\n" "$1" | /usr/bin/nc -U -w 2 "$2"', 'sh',
+    request, wezterm.home_dir .. '/.config/herdr/herdr.sock',
+  })
+end
+
+-- Returns the insert_index that moves the item at 1-based position current
+-- one slot by delta, or nil at the ends. insert_index is a 0-based gap in
+-- the list before removal, so moving forward one slot needs current + 1,
+-- not current.
+local function herdr_move_insert_index(current, delta, count)
+  local target = current + delta
+  if target < 1 or target > count then return nil end
+  return delta < 0 and target - 1 or target
+end
+
+-- Moves the focused workspace one slot up (-1) or down (1), stopping at the ends.
+local function herdr_move_workspace(delta)
+  local snap = herdr_snapshot()
+  if not snap or not snap.focused_workspace_id then return end
+  local ordered = snap.workspaces or {}
+  local current
+  for i, w in ipairs(ordered) do
+    if w.workspace_id == snap.focused_workspace_id then current = i end
+  end
+  if not current then return end
+  local insert_index = herdr_move_insert_index(current, delta, #ordered)
+  if not insert_index then return end
+  herdr_socket_request('workspace.move',
+    { workspace_id = snap.focused_workspace_id, insert_index = insert_index })
+end
+
+-- Moves the focused tab one slot left (-1) or right (1) within its
+-- workspace, stopping at the ends.
+local function herdr_move_tab(delta)
+  local snap = herdr_snapshot()
+  if not snap or not snap.focused_tab_id then return end
+  local ordered = {}
+  for _, t in ipairs(snap.tabs or {}) do
+    if t.workspace_id == snap.focused_workspace_id then
+      table.insert(ordered, t)
+    end
+  end
+  local current
+  for i, t in ipairs(ordered) do
+    if t.tab_id == snap.focused_tab_id then current = i end
+  end
+  if not current then return end
+  local insert_index = herdr_move_insert_index(current, delta, #ordered)
+  if not insert_index then return end
+  herdr_socket_request('tab.move', { tab_id = snap.focused_tab_id, insert_index = insert_index })
 end
 
 -- Returns the focused pane_id when a pane genuinely borders it in direction,
@@ -203,8 +260,8 @@ local function herdr_focus_pane(window, pane, direction)
 end
 
 -- Moves every pane in the focused tab into a brand-new workspace/tab,
--- rebuilding them as splits there. herdr has no tab-level move, only
--- `pane move`; --new-tab and --new-workspace are mutually exclusive, so the
+-- rebuilding them as splits there. herdr can't move a tab to another
+-- workspace (tab.move only reorders within one), only `pane move`; --new-tab and --new-workspace are mutually exclusive, so the
 -- first pane creates the destination workspace (which comes with its own new
 -- tab) via --new-workspace. The new tab's label carries over the original
 -- tab's label if it was custom, otherwise forced to '1' so the promoted tab
@@ -405,6 +462,36 @@ config.keys = {
           wezterm.background_child_process({ HERDR, 'workspace', 'focus', target })
         end
       end
+    end),
+  },
+  -- Reorder the focused workspace in herdr's sidebar.
+  {
+    key = 'UpArrow',
+    mods = 'CTRL|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then herdr_move_workspace(-1) end
+    end),
+  },
+  {
+    key = 'DownArrow',
+    mods = 'CTRL|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then herdr_move_workspace(1) end
+    end),
+  },
+  -- Reorder the focused tab within its workspace.
+  {
+    key = 'LeftArrow',
+    mods = 'CTRL|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then herdr_move_tab(-1) end
+    end),
+  },
+  {
+    key = 'RightArrow',
+    mods = 'CTRL|SUPER',
+    action = wezterm.action_callback(function(window, pane)
+      if pane_is_herdr(pane) then herdr_move_tab(1) end
     end),
   },
   -- Pane focus within herdr, by vim keys or arrows. Unshifted Cmd+arrows
