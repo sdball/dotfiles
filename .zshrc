@@ -149,3 +149,7 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
         source "$BASE16_SHELL/profile_helper.sh"
 
+# hack to keep ego-lite from trying to manipulate PATH here with a sledgehammer
+typeset -U path
+path+=($HOME/.local/bin)  # no-op; satisfies ego lite's .zshrc PATH scan
+
